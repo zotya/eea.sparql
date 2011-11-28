@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="eea.sparql">
+
+  <include package="plone.app.contentmenu" />
+
+  <!-- -*- extra stuff goes here -*- -->
+    <browser:page
+        for="*"
+        name="test_query"
+        class=".sparql.SPARQL"
+        permission="zope.Public"
+        />
+
+</configure>
