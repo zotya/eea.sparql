@@ -73,6 +73,13 @@ Then we select the type of item we want to add. In this case we select
 Now we fill the form and submit it.
 
     >>> browser.getControl(name='title').value = 'SPARQL Sample'
+    >>> browser.getControl(name='endpoint').value = 'http://semantic.eea.europa.eu/sparql'
+    >>> browser.getControl(name='query').value = """
+    ...     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    ...     SELECT DISTINCT * WHERE {
+    ...       _:subj a ?class .
+    ...       OPTIONAL { ?class rdfs:label ?label }
+    ...     } LIMIT 50"""
     >>> browser.getControl('Save').click()
     >>> 'Changes saved' in browser.contents
     True
@@ -155,6 +162,13 @@ We select 'SPARQL' and click the 'Add' button to get to the add form.
 Now we fill the form and submit it.
 
     >>> browser.getControl(name='title').value = 'SPARQL Sample'
+    >>> browser.getControl(name='endpoint').value = 'http://semantic.eea.europa.eu/sparql'
+    >>> browser.getControl(name='query').value = """
+    ...     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    ...     SELECT DISTINCT * WHERE {
+    ...       _:subj a ?class .
+    ...       OPTIONAL { ?class rdfs:label ?label }
+    ...     } LIMIT 50"""
     >>> browser.getControl('Save').click()
     >>> 'Changes saved' in browser.contents
     True
