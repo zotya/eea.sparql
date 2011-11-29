@@ -10,6 +10,7 @@
         for="*"
         name="test_query"
         class=".sparql.SPARQL"
+        attribute="test_query"
         permission="zope.Public"
         />
 
