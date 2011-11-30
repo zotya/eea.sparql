@@ -4,19 +4,19 @@
 from zope.interface import implements
 
 from Products.Archetypes import atapi
-from Products.ATContentTypes.content import base
 from Products.ATContentTypes.content import schemata
 from Products.Archetypes.atapi import StringField, StringWidget, IntegerField, IntegerWidget, TextField, TextAreaWidget
 
 from Products.ZSPARQLMethod.Method import ZSPARQLMethod, parse_arg_spec, map_arg_values
 
 from AccessControl import ClassSecurityInfo
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-
+from Products.ATContentTypes.content.folder import ATBTreeFolder
+from Products.Archetypes.atapi import Schema
 from eea.sparql.interfaces import ISPARQL
 from eea.sparql.config import PROJECTNAME
 
-SPARQLSchema = schemata.ATContentTypeSchema.copy() + atapi.Schema((
+
+SPARQLSchema = getattr(ATBTreeFolder, 'schema', Schema(())).copy() + atapi.Schema((
     StringField(
         name='endpoint_url',
         widget=StringWidget(
@@ -58,7 +58,7 @@ SPARQLSchema['description'].storage = atapi.AnnotationStorage()
 schemata.finalizeATCTSchema(SPARQLSchema, moveDiscussion=False)
 
 
-class SPARQL(base.ATCTContent, ZSPARQLMethod):
+class SPARQL(ATBTreeFolder, ZSPARQLMethod):
     """SPARQL"""
     implements(ISPARQL)
 
@@ -73,11 +73,6 @@ class SPARQL(base.ATCTContent, ZSPARQLMethod):
     @property
     def query(self):
         return self.sparql_query()
-
-    security.declarePublic("index_html")
-    def index_html(self):
-        """index_html"""
-        return self()
 
     security.declarePublic("execute_query")
     def execute_query(self, args=None):

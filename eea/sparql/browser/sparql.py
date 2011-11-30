@@ -1,7 +1,5 @@
 from Products.Five import BrowserView
-from Products.ZSPARQLMethod.Method import ZSPARQLMethod, parse_arg_spec, map_arg_values, interpolate_query_html
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from Products.ZSPARQLMethod.Method import parse_arg_spec, map_arg_values, interpolate_query_html
 from time import time
 
 class SPARQL(BrowserView):
