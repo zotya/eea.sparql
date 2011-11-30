@@ -5,7 +5,7 @@
 
 <body>
 
-<div metal:fill-slot="content-core">
+<div metal:fill-slot="content-core" tal:define="options view/test_query">
 
 <style>
   blockquote.sparql-query,
@@ -73,7 +73,7 @@
 
 <p class="sparql-stats" tal:condition="options/data">
   Received
-  <span class="number" tal:content="python:len(options['data'].rdfterm_rows)"/>
+  <span class="number" tal:content="python:len(options['data']['rows'])"/>
   rows<tal:block condition="python:'duration' in options"> in
     <span class="number" tal:content="python:'%.3f' % options['duration']"/>
   seconds</tal:block>.
@@ -87,7 +87,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr tal:repeat="row options/data/rdfterm_rows">
+    <tr tal:repeat="row options/data/rows">
       <td tal:repeat="value row"
           tal:content="value/n3|string:&quot;${value}&quot;"/>
     </tr>
