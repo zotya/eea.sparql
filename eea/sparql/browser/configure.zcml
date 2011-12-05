@@ -13,4 +13,12 @@
         template="test_query.pt"
         />
 
+    <browser:page
+        for="eea.sparql.interfaces.ISPARQL2TSV"
+        name="daviz-view.json"
+        class=".sparql2tsv.SPARQL2TSV"
+        attribute="json"
+        permission="zope2.View"
+        />
+
 </configure>
