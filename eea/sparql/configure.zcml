@@ -19,4 +19,8 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+    <class class="eea.sparql.content.sparql2tsv.SPARQL2TSV">
+      <implements interface="eea.daviz.interfaces.IPossibleExhibitJson" />
+    </class>
+
 </configure>

@@ -9,5 +9,11 @@
         interface="..interfaces.ISPARQL"
         />
   </class>
+  <class class=".sparql2tsv.SPARQL2TSV">
+    <require
+        permission="zope2.View"
+        interface="..interfaces.ISPARQL2TSV"
+        />
+  </class>
 
 </configure>

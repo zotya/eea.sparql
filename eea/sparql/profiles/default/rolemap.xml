@@ -5,5 +5,9 @@
       <role name="Manager" />
       <role name="Contributor" />
     </permission>
+    <permission name="eea.sparql: Add SPARQL2TSV" acquire="False">
+      <role name="Manager" />
+      <role name="Contributor" />
+    </permission>
   </permissions>
 </rolemap>
