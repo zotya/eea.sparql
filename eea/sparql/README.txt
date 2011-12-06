@@ -48,14 +48,14 @@ Finally, let's return to the front page of our site before continuing
     >>> browser.open(portal_url)
 
 -*- extra stuff goes here -*-
-The SPARQL content type
+The Sparql content type
 ===============================
 
-In this section we are tesing the SPARQL content type by performing
-basic operations like adding, updadating and deleting SPARQL content
+In this section we are tesing the Sparql content type by performing
+basic operations like adding, updadating and deleting Sparql content
 items.
 
-Adding a new SPARQL content item
+Adding a new Sparql content item
 --------------------------------
 
 We use the 'Add new' menu to add a new content item.
@@ -63,16 +63,16 @@ We use the 'Add new' menu to add a new content item.
     >>> browser.getLink('Add new').click()
 
 Then we select the type of item we want to add. In this case we select
-'SPARQL' and click the 'Add' button to get to the add form.
+'Sparql' and click the 'Add' button to get to the add form.
 
-    >>> browser.getControl('SPARQL').click()
+    >>> browser.getControl('Sparql').click()
     >>> browser.getControl(name='form.button.Add').click()
-    >>> 'SPARQL' in browser.contents
+    >>> 'Sparql' in browser.contents
     True
 
 Now we fill the form and submit it.
 
-    >>> browser.getControl(name='title').value = 'SPARQL Sample'
+    >>> browser.getControl(name='title').value = 'Sparql Sample'
     >>> browser.getControl(name='endpoint_url').value = 'http://semantic.eea.europa.eu/sparql'
     >>> browser.getControl(name='sparql_query').value = """
     ...     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -84,40 +84,40 @@ Now we fill the form and submit it.
     >>> 'Changes saved' in browser.contents
     True
 
-And we are done! We added a new 'SPARQL' content item to the portal.
+And we are done! We added a new 'Sparql' content item to the portal.
 
-Updating an existing SPARQL content item
+Updating an existing Sparql content item
 ---------------------------------------
 
 Let's click on the 'edit' tab and update the object attribute values.
 
     >>> browser.getLink('Edit').click()
-    >>> browser.getControl(name='title').value = 'New SPARQL Sample'
+    >>> browser.getControl(name='title').value = 'New Sparql Sample'
     >>> browser.getControl('Save').click()
 
 We check that the changes were applied.
 
     >>> 'Changes saved' in browser.contents
     True
-    >>> 'New SPARQL Sample' in browser.contents
+    >>> 'New Sparql Sample' in browser.contents
     True
 
-Removing a/an SPARQL content item
+Removing a/an Sparql content item
 --------------------------------
 
-If we go to the home page, we can see a tab with the 'New SPARQL
+If we go to the home page, we can see a tab with the 'New Sparql
 Sample' title in the global navigation tabs.
 
     >>> browser.open(portal_url)
-    >>> 'New SPARQL Sample' in browser.contents
+    >>> 'New Sparql Sample' in browser.contents
     True
 
-Now we are going to delete the 'New SPARQL Sample' object. First we
-go to the contents tab and select the 'New SPARQL Sample' for
+Now we are going to delete the 'New Sparql Sample' object. First we
+go to the contents tab and select the 'New Sparql Sample' for
 deletion.
 
     >>> browser.getLink('Contents').click()
-    >>> browser.getControl('New SPARQL Sample').click()
+    >>> browser.getControl('New Sparql Sample').click()
 
 We click on the 'Delete' button.
 
@@ -125,17 +125,17 @@ We click on the 'Delete' button.
     >>> 'Item(s) deleted' in browser.contents
     True
 
-So, if we go back to the home page, there is no longer a 'New SPARQL
+So, if we go back to the home page, there is no longer a 'New Sparql
 Sample' tab.
 
     >>> browser.open(portal_url)
-    >>> 'New SPARQL Sample' in browser.contents
+    >>> 'New Sparql Sample' in browser.contents
     False
 
-Adding a new SPARQL content item as contributor
+Adding a new Sparql content item as contributor
 ------------------------------------------------
 
-Not only site managers are allowed to add SPARQL content items, but
+Not only site managers are allowed to add Sparql content items, but
 also site contributors.
 
 Let's logout and then login as 'contributor', a portal member that has the
@@ -152,16 +152,16 @@ We use the 'Add new' menu to add a new content item.
 
     >>> browser.getLink('Add new').click()
 
-We select 'SPARQL' and click the 'Add' button to get to the add form.
+We select 'Sparql' and click the 'Add' button to get to the add form.
 
-    >>> browser.getControl('SPARQL').click()
+    >>> browser.getControl('Sparql').click()
     >>> browser.getControl(name='form.button.Add').click()
-    >>> 'SPARQL' in browser.contents
+    >>> 'Sparql' in browser.contents
     True
 
 Now we fill the form and submit it.
 
-    >>> browser.getControl(name='title').value = 'SPARQL Sample'
+    >>> browser.getControl(name='title').value = 'Sparql Sample'
     >>> browser.getControl(name='endpoint_url').value = 'http://semantic.eea.europa.eu/sparql'
     >>> browser.getControl(name='sparql_query').value = """
     ...     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -173,7 +173,7 @@ Now we fill the form and submit it.
     >>> 'Changes saved' in browser.contents
     True
 
-Done! We added a new SPARQL content item logged in as contributor.
+Done! We added a new Sparql content item logged in as contributor.
 
 Finally, let's login back as manager.
 

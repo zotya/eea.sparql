@@ -1,4 +1,4 @@
-"""Definition of the SPARQL content type
+"""Definition of the Sparql content type
 """
 
 from zope.interface import implements
@@ -12,15 +12,15 @@ from Products.ZSPARQLMethod.Method import ZSPARQLMethod, parse_arg_spec, map_arg
 from AccessControl import ClassSecurityInfo
 from Products.ATContentTypes.content.folder import ATBTreeFolder
 from Products.Archetypes.atapi import Schema
-from eea.sparql.interfaces import ISPARQL
+from eea.sparql.interfaces import ISparql
 from eea.sparql.config import PROJECTNAME
 
 
-SPARQLSchema = getattr(ATBTreeFolder, 'schema', Schema(())).copy() + atapi.Schema((
+SparqlSchema = getattr(ATBTreeFolder, 'schema', Schema(())).copy() + atapi.Schema((
     StringField(
         name='endpoint_url',
         widget=StringWidget(
-            label="SPARQL endpoint URL",
+            label="Sparql endpoint URL",
         ),
         required=1
     ),
@@ -52,18 +52,18 @@ SPARQLSchema = getattr(ATBTreeFolder, 'schema', Schema(())).copy() + atapi.Schem
 
 ))
 
-SPARQLSchema['title'].storage = atapi.AnnotationStorage()
-SPARQLSchema['description'].storage = atapi.AnnotationStorage()
+SparqlSchema['title'].storage = atapi.AnnotationStorage()
+SparqlSchema['description'].storage = atapi.AnnotationStorage()
 
-schemata.finalizeATCTSchema(SPARQLSchema, moveDiscussion=False)
+schemata.finalizeATCTSchema(SparqlSchema, moveDiscussion=False)
 
 
-class SPARQL(ATBTreeFolder, ZSPARQLMethod):
-    """SPARQL"""
-    implements(ISPARQL)
+class Sparql(ATBTreeFolder, ZSPARQLMethod):
+    """Sparql"""
+    implements(ISparql)
 
-    meta_type = "SPARQL"
-    schema = SPARQLSchema
+    meta_type = "Sparql"
+    schema = SparqlSchema
 
     title = atapi.ATFieldProperty('title')
     description = atapi.ATFieldProperty('description')
@@ -81,4 +81,4 @@ class SPARQL(ATBTreeFolder, ZSPARQLMethod):
         arg_values = map_arg_values(arg_spec, args)[1]
         return self.execute(**self.map_arguments(**arg_values))
 
-atapi.registerType(SPARQL, PROJECTNAME)
+atapi.registerType(Sparql, PROJECTNAME)

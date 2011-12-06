@@ -3,17 +3,21 @@
     xmlns:five="http://namespaces.zope.org/five"
     i18n_domain="eea.sparql">
 
-  <class class=".sparql.SPARQL">
+  <class class=".sparql.Sparql">
     <require
         permission="zope2.View"
-        interface="..interfaces.ISPARQL"
+        interface="..interfaces.ISparql"
         />
   </class>
-  <class class=".sparql2tsv.SPARQL2TSV">
+  <class class=".sparql2daviz.Sparql2Daviz">
     <require
         permission="zope2.View"
-        interface="..interfaces.ISPARQL2TSV"
+        interface="..interfaces.ISparql2Daviz"
         />
   </class>
+
+  <subscriber
+        for="eea.sparql.interfaces.ISparql2Daviz Products.Archetypes.event.ObjectInitializedEvent"
+        handler=".sparql2daviz.handle_object_initialized"/>
 
 </configure>

@@ -2,7 +2,7 @@ from Products.Five import BrowserView
 from Products.ZSPARQLMethod.Method import parse_arg_spec, map_arg_values, interpolate_query_html
 from time import time
 
-class SPARQL(BrowserView):
+class Sparql(BrowserView):
 
     def test_query(self):
         arg_spec = parse_arg_spec(self.context.arg_spec)

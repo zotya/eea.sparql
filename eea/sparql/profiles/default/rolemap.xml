@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <rolemap>
   <permissions>
-    <permission name="eea.sparql: Add SPARQL" acquire="False">
+    <permission name="eea.sparql: Add Sparql" acquire="False">
       <role name="Manager" />
       <role name="Contributor" />
     </permission>
-    <permission name="eea.sparql: Add SPARQL2TSV" acquire="False">
+    <permission name="eea.sparql: Add Sparql2Daviz" acquire="False">
       <role name="Manager" />
       <role name="Contributor" />
     </permission>

@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
-<object name="SPARQL2TSV"
+<object name="Sparql2Daviz"
    meta_type="Factory-based Type Information with dynamic views"
    i18n:domain="eea.sparql" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
-  <property name="title" i18n:translate="">SPARQL TO TSV Converter</property>
+  <property name="title" i18n:translate="">Sparql To Daviz Converter</property>
   <property name="description"
-    i18n:translate="">SPARQL TO TSV Converter</property>
-  <property name="content_meta_type">SPARQL2TSV</property>
+    i18n:translate="">Sparql To Daviz Converter</property>
+  <property name="content_meta_type">Sparql2Daviz</property>
   <property name="content_icon">document_icon.gif</property>
   <property name="product">eea.sparql</property>
-  <property name="factory">addSPARQL2TSV</property>
+  <property name="factory">addSparql2Daviz</property>
   <property name="immediate_view">atct_edit</property>
   <property name="global_allow">False</property>
   <property name="filter_content_types">False</property>

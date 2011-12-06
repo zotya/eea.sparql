@@ -13,13 +13,13 @@
   <!-- Register the installation GenericSetup extension profile -->
   <genericsetup:registerProfile
       name="default"
-      title="EEA SPARQL"
+      title="EEA Sparql"
       directory="profiles/default"
       description="Wrapper for Products.ZSPARQLMethod"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
-    <class class="eea.sparql.content.sparql2tsv.SPARQL2TSV">
+    <class class="eea.sparql.content.sparql2daviz.Sparql2Daviz">
       <implements interface="eea.daviz.interfaces.IPossibleExhibitJson" />
     </class>
 

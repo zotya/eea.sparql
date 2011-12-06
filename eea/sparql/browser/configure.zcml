@@ -8,17 +8,26 @@
     <browser:page
         for="*"
         name="test_query"
-        class=".sparql.SPARQL"
+        class=".sparql.Sparql"
         permission="zope.Public"
         template="test_query.pt"
         />
 
     <browser:page
-        for="eea.sparql.interfaces.ISPARQL2TSV"
+        for="eea.sparql.interfaces.ISparql2Daviz"
         name="daviz-view.json"
-        class=".sparql2tsv.SPARQL2TSV"
+        class=".sparql2daviz.Sparql2Daviz"
         attribute="json"
         permission="zope2.View"
         />
+
+
+  <browser:page
+    name="daviz.properties.edit"
+    for="eea.sparql.interfaces.ISparql2Daviz"
+    class=".app.properties.EditForm"
+    permission="cmf.ModifyPortalContent"
+    />
+
 
 </configure>
