@@ -1,9 +1,6 @@
 import unittest
 import doctest
 
-#from zope.testing import doctestunit
-#from zope.component import testing, eventtesting
-
 from Testing import ZopeTestCase as ztc
 
 from eea.sparql.tests import base
@@ -12,9 +9,14 @@ from eea.sparql.tests import base
 def test_suite():
     return unittest.TestSuite([
 
-        # Demonstrate the main content types
         ztc.ZopeDocFileSuite(
             'README.txt', package='eea.sparql',
+            test_class=base.FunctionalTestCase,
+            optionflags=doctest.REPORT_ONLY_FIRST_FAILURE |
+                doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS),
+
+        ztc.ZopeDocFileSuite(
+            'converter/sparql2daviz.py', package='eea.sparql',
             test_class=base.FunctionalTestCase,
             optionflags=doctest.REPORT_ONLY_FIRST_FAILURE |
                 doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS),
@@ -23,3 +25,6 @@ def test_suite():
 
 if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')
+
+
+

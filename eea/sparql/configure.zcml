@@ -19,8 +19,4 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
-    <class class="eea.sparql.content.sparql2daviz.Sparql2Daviz">
-      <implements interface="eea.daviz.interfaces.IPossibleExhibitJson" />
-    </class>
-
 </configure>

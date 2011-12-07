@@ -10,6 +10,7 @@
         />
   </class>
   <class class=".sparql2daviz.Sparql2Daviz">
+    <implements interface="eea.daviz.interfaces.IPossibleExhibitJson" />
     <require
         permission="zope2.View"
         interface="..interfaces.ISparql2Daviz"
