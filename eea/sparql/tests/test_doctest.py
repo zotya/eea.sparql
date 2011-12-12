@@ -11,13 +11,13 @@ def test_suite():
 
         ztc.ZopeDocFileSuite(
             'README.txt', package='eea.sparql',
-            test_class=base.FunctionalTestCase,
+            test_class=base.SparqlFunctionalTestCase,
             optionflags=doctest.REPORT_ONLY_FIRST_FAILURE |
                 doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS),
 
         ztc.ZopeDocFileSuite(
             'converter/sparql2daviz.py', package='eea.sparql',
-            test_class=base.FunctionalTestCase,
+            test_class=base.SparqlFunctionalTestCase,
             optionflags=doctest.REPORT_ONLY_FIRST_FAILURE |
                 doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS),
 

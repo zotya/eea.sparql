@@ -6,6 +6,8 @@ logger = logging.getLogger('eea.sparql.converter.sparql2daviz')
 """
     Helper functions to convert sparql data to json
     >>> from eea.sparql.converter import sparql2daviz
+    >>> from eea.sparql.tests import mock_data
+    >>> test_data = mock_data.loadSparql()
 
 """
 
@@ -146,6 +148,27 @@ def column_type(column):
 
 def sparql2json(data):
     """ Returns JSON output after converting source data.
+        >>> data = sparql2daviz.sparql2json(test_data)
+        >>> print (data['items'])
+        [{'available': True, 
+        'name': 'Name1', 
+        'tags': [u'a', u'b', u'c', u'd'], 
+        'url': 'http://www.url1.com', 
+        'age': 30, 
+        'label': 1}, 
+        {'available': False, 
+        'name': 'Name2', 
+        'tags': [u'single item'], 
+        'url': 'http://www.url2.com', 
+        'age': 25, 
+        'label': 2}, 
+        {'available': False, 
+        'name': 'Name3', 
+        'tags': [], 
+        'url': '', 
+        'age': 0, 
+        'label': 3}]
+
     """
 
     items = []
@@ -189,4 +212,20 @@ def sparql2json(data):
         items.append(rowdata)
     return {'items': items, 'properties': properties}
 
+def getColumns(data):
+    """ Returns the columns with their types 
+        >>> columns = sparql2daviz.getColumns(test_data)
+        >>> print columns.next()
+        ('name', 'text')
+        >>> print columns.next()
+        ('url', 'url')
+        >>> print columns.next()
+        ('tags', 'list')
+        >>> print columns.next()
+        ('available', 'boolean')
+        >>> print columns.next()
+        ('age', 'number')
+
+    """
+    return (column_type(col) for col in data['var_names'])
 
