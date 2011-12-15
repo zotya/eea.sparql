@@ -1,9 +1,14 @@
+""" Mock data for testing
+"""
+
 import os
 import json
 from StringIO import StringIO
 import sparql
 
 def loadSparql():
+    """ Load data from file
+    """
     json_file = os.path.join(os.path.dirname(__file__),"sparql.json")
     f = open(json_file, 'r')
     json_str = f.read()

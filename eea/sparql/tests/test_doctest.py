@@ -1,3 +1,6 @@
+""" Test doctests module
+"""
+
 import unittest
 import doctest
 
@@ -7,6 +10,8 @@ from eea.sparql.tests import base
 
 
 def test_suite():
+    """ Suite
+    """
     return unittest.TestSuite([
 
         ztc.ZopeDocFileSuite(

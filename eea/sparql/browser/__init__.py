@@ -1,1 +1,2 @@
-#
+""" Daviz/browser/ init
+"""

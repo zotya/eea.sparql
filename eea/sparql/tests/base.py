@@ -13,6 +13,8 @@ import eea.sparql
 
 @onsetup
 def setup_sparql():
+    """Set up the additional products.
+    """
     fiveconfigure.debug_mode = True
     zcml.load_config('configure.zcml', eea.sparql)
     fiveconfigure.debug_mode = False
@@ -24,7 +26,10 @@ ptc.setupPloneSite(products=['eea.sparql'])
 
 
 class SparqlFunctionalTestCase(ptc.FunctionalTestCase):
+    """ Base class for functional integration tests for the Sparql product.
+    """
     def afterSetUp(self):
+        """ After setup """
         roles = ('Member', 'Contributor')
         self.portal.portal_membership.addMember('contributor',
                                                 'secret',

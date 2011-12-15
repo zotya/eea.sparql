@@ -1,3 +1,6 @@
+""" Sparql interfaces module
+"""
+
 from zope.interface import Interface
 from eea.daviz.interfaces import IExhibitJson
 

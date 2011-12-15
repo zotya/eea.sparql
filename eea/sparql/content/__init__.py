@@ -1,1 +1,2 @@
-#
+""" Content init module 
+"""
