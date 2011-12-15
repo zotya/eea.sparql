@@ -1,7 +1,8 @@
 """ sparql
 """
 from Products.Five import BrowserView
-from Products.ZSPARQLMethod.Method import parse_arg_spec, map_arg_values, interpolate_query_html
+from Products.ZSPARQLMethod.Method import parse_arg_spec, map_arg_values, \
+                                        interpolate_query_html
 from time import time
 
 class Sparql(BrowserView):
