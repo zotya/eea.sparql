@@ -33,6 +33,7 @@ class Sparql2Daviz(base.ATCTContent):
 atapi.registerType(Sparql2Daviz, PROJECTNAME)
 
 def handle_object_initialized(obj, event):
+    """Handle object initialized"""
     sparqldata = obj.aq_parent.execute_query()
     columns = getColumns(sparqldata)
 

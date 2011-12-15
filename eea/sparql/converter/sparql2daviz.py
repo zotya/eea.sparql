@@ -1,10 +1,12 @@
+""" Converter module responsible for converting from sparql to json
+"""
+
 import logging
 from Products.CMFPlone.utils import normalizeString
 
 logger = logging.getLogger('eea.sparql.converter.sparql2daviz')
 
-"""
-    Helper functions to convert sparql data to json
+""" Helper functions to convert sparql data to json
     >>> from eea.sparql.converter import sparql2daviz
     >>> from eea.sparql.tests import mock_data
     >>> test_data = mock_data.loadSparql()
@@ -142,7 +144,7 @@ def column_type(column):
         colname = column.split("_type")[0]
         coltype = column.split("_type")[-1]
     if colname.lower().endswith("label"):
-        colname = "label";
+        colname = "label"
     return colname, coltype
 
 
@@ -181,7 +183,7 @@ def sparql2json(data):
         coltype = col[1].encode('utf8')
         if colname == 'label':
             hasLabel = True
-        properties[colname]= {'value_type':coltype}
+        properties[colname] = {'value_type':coltype}
 
     index = 0
     for row in data['rows']:

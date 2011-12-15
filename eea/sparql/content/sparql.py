@@ -5,9 +5,12 @@ from zope.interface import implements
 
 from Products.Archetypes import atapi
 from Products.ATContentTypes.content import schemata
-from Products.Archetypes.atapi import StringField, StringWidget, IntegerField, IntegerWidget, TextField, TextAreaWidget
+from Products.Archetypes.atapi import StringField, StringWidget, \
+                                    IntegerField, IntegerWidget, \
+                                    TextField, TextAreaWidget
 
-from Products.ZSPARQLMethod.Method import ZSPARQLMethod, parse_arg_spec, map_arg_values
+from Products.ZSPARQLMethod.Method import ZSPARQLMethod, \
+                                        parse_arg_spec, map_arg_values
 
 from AccessControl import ClassSecurityInfo
 from Products.ATContentTypes.content.folder import ATBTreeFolder
@@ -16,7 +19,8 @@ from eea.sparql.interfaces import ISparql
 from eea.sparql.config import PROJECTNAME
 
 
-SparqlSchema = getattr(ATBTreeFolder, 'schema', Schema(())).copy() + atapi.Schema((
+SparqlSchema = getattr(ATBTreeFolder, 'schema', Schema(())).copy() + \
+            atapi.Schema((
     StringField(
         name='endpoint_url',
         widget=StringWidget(
@@ -72,6 +76,7 @@ class Sparql(ATBTreeFolder, ZSPARQLMethod):
 
     @property
     def query(self):
+        """query"""
         return self.sparql_query()
 
     security.declarePublic("execute_query")
