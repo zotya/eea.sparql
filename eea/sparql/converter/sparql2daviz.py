@@ -10,6 +10,8 @@ logger = logging.getLogger('eea.sparql.converter.sparql2daviz')
     >>> from eea.sparql.converter import sparql2daviz
     >>> from eea.sparql.tests import mock_data
     >>> test_data = mock_data.loadSparql()
+    >>> type(test_data)
+    <type 'dict'>
 
 """
 
