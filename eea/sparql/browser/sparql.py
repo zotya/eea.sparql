@@ -24,7 +24,7 @@ class Sparql(BrowserView):
             try:
                 data = self.context.execute(**arg_values)
 
-            except Exception, e:
+            except Exception:
                 import traceback
                 error = traceback.format_exc()
                 data = None

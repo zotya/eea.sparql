@@ -1,12 +1,6 @@
-""" Converter module responsible for converting from sparql to json
 """
+Helper functions to convert sparql data to json
 
-import logging
-from Products.CMFPlone.utils import normalizeString
-
-logger = logging.getLogger('eea.sparql.converter.sparql2daviz')
-
-""" Helper functions to convert sparql data to json
     >>> from eea.sparql.converter import sparql2daviz
     >>> from eea.sparql.tests import mock_data
     >>> test_data = mock_data.loadSparql()
@@ -14,6 +8,13 @@ logger = logging.getLogger('eea.sparql.converter.sparql2daviz')
     <type 'dict'>
 
 """
+
+import logging
+from Products.CMFPlone.utils import normalizeString
+
+logger = logging.getLogger('eea.sparql.converter.sparql2daviz')
+
+
 
 def item2text(value):
     """ Get utf8 string from value
