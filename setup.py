@@ -17,7 +17,7 @@ setup(name=NAME,
           "Programming Language :: Python",
           "Topic :: Software Development :: Libraries :: Python Modules",
         ],
-      keywords='eea geotags widget field zope plone',
+      keywords='eea sparql zope plone',
       author='Zoltan Szabo, European Environment Agency',
       author_email='webadmin@eea.europa.eu',
       url='http://svn.eionet.europa.eu/projects/'
