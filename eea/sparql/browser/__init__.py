@@ -1,2 +1,2 @@
-""" Daviz/browser/ init
+""" sparql/browser/ init
 """
