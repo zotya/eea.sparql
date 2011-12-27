@@ -10,6 +10,7 @@ Helper functions to convert sparql data to json
 """
 
 import logging
+import json
 from Products.CMFPlone.utils import normalizeString
 
 logger = logging.getLogger('eea.sparql.converter.sparql2daviz')
@@ -191,10 +192,10 @@ def sparql2json(data):
     index = 0
     for row in data['rows']:
         index += 1
-        rowdata = {}
         if not hasLabel:
             rowdata['label'] = index
         idx = 0
+        datarow = []
         for item in row:
             if not item:
                 itemvalue = None
@@ -211,11 +212,10 @@ def sparql2json(data):
                     else:
                         value = item2text(itemvalue)
 
-            rowdata[cols[idx][0].encode('utf8')] = value
-
+            datarow.append(value)
             idx += 1
-        items.append(rowdata)
-    return {'items': items, 'properties': properties}
+        items.append(datarow)
+    return json.dumps({"dataTable": items})
 
 def getColumns(data):
     """ Returns the columns with their types 

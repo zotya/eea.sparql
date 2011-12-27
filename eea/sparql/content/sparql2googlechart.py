@@ -11,8 +11,6 @@ from eea.googlechartsconfig.events import GoogleChartEnabledEvent
 from eea.sparql.interfaces import ISparql2GoogleChart
 from eea.sparql.config import PROJECTNAME
 from eea.sparql.converter.sparql2googlechart import getColumns
-from eea.googlechartsconfig.config import ANNO_JSON
-from zope.annotation.interfaces import IAnnotations
 
 
 Sparql2GoogleChartSchema = schemata.ATContentTypeSchema.copy()
@@ -32,20 +30,12 @@ class Sparql2GoogleChart(base.ATCTContent):
     title = atapi.ATFieldProperty('title')
     description = atapi.ATFieldProperty('description')
 
-    @property
-    def json(self):
-        import pdb; pdb.set_trace()
-        return {'dataTable':[[1,2],[3,4],[5,7]]}
-        
+
 atapi.registerType(Sparql2GoogleChart, PROJECTNAME)
 
 def handle_object_initialized(obj, event):
     """Handle object initialized"""
     sparqldata = obj.aq_parent.execute_query()
     columns = getColumns(sparqldata)
-
-#    import pdb; pdb.set_trace()
-    anno = IAnnotations(obj)
-    anno[ANNO_JSON] = obj.json
 
     notify(GoogleChartEnabledEvent(obj, columns=columns))
