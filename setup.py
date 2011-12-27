@@ -30,6 +30,7 @@ setup(name=NAME,
       install_requires=[
           'setuptools',
           'eea.daviz',
+          'eea.googlechartsconfig',
           'Products.ZSPARQLMethod'
       ],
       entry_points="""

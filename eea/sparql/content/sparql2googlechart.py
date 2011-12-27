@@ -10,7 +10,7 @@ from Products.ATContentTypes.content import schemata, base
 from eea.googlechartsconfig.events import GoogleChartEnabledEvent
 from eea.sparql.interfaces import ISparql2GoogleChart
 from eea.sparql.config import PROJECTNAME
-from eea.sparql.converter.sparql2googlechart import getColumns
+from eea.sparql.converter.mixin import getColumns
 
 
 Sparql2GoogleChartSchema = schemata.ATContentTypeSchema.copy()

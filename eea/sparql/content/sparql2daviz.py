@@ -10,7 +10,7 @@ from Products.ATContentTypes.content import schemata, base
 from eea.daviz.events import DavizEnabledEvent
 from eea.sparql.interfaces import ISparql2Daviz
 from eea.sparql.config import PROJECTNAME
-from eea.sparql.converter.sparql2daviz import getColumns
+from eea.sparql.converter.mixin import getColumns
 
 
 Sparql2DavizSchema = schemata.ATContentTypeSchema.copy()
