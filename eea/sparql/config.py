@@ -6,4 +6,5 @@ PROJECTNAME = 'eea.sparql'
 ADD_PERMISSIONS = {
     'Sparql': 'eea.sparql: Add Sparql',
     'Sparql2Daviz': 'eea.sparql: Add Sparql2Daviz',
+    'Sparql2GoogleChart': 'eea.sparql: Add Sparql2GoogleChart',
 }

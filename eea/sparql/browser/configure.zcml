@@ -13,6 +13,7 @@
         template="test_query.pt"
         />
 
+
     <browser:page
         for="eea.sparql.interfaces.ISparql2Daviz"
         name="daviz-view.json"
@@ -22,12 +23,19 @@
         />
 
 
-  <browser:page
-    name="daviz.properties.edit"
-    for="eea.sparql.interfaces.ISparql2Daviz"
-    class=".app.properties.EditForm"
-    permission="cmf.ModifyPortalContent"
-    />
+    <browser:page
+        name="daviz.properties.edit"
+        for="eea.sparql.interfaces.ISparql2Daviz"
+        class=".app.sparql2daviz.EditForm"
+        permission="cmf.ModifyPortalContent"
+        />
+
+    <browser:page
+        name="googlechart.properties.edit"
+        for="eea.sparql.interfaces.ISparql2GoogleChart"
+        class=".app.sparql2googlechart.EditForm"
+        permission="cmf.ModifyPortalContent"
+        />
 
 
 </configure>
