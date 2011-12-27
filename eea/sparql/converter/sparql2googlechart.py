@@ -13,9 +13,19 @@ import json
 from eea.sparql.converter import mixin
 
 def sparql2json(data):
+    """ Returns JSON output after converting source data
+        >>> data = sparql2googlechart.sparql2json(test_data)
+        >>> import StringIO
+        >>> import json
+        >>> data = json.load(StringIO.StringIO(data))
+        >>> print (data['dataTable'])
+        [[u'Name1', u'http://www.url1.com', [u'a', u'b', u'c', u'd'], True, 30],
+        [u'Name2', u'http://www.url2.com', [u'single item'], False, 25],
+        [u'Name3', u'', [], False, 0]]
+
+    """
 
     items = []
-    hasLabel = False
     cols = [mixin.column_type(col) for col in data['var_names']]
 
     properties = {}
@@ -26,11 +36,7 @@ def sparql2json(data):
             hasLabel = True
         properties[colname] = {'value_type':coltype}
 
-    index = 0
     for row in data['rows']:
-        index += 1
-        if not hasLabel:
-            rowdata['label'] = index
         idx = 0
         datarow = []
         for item in row:

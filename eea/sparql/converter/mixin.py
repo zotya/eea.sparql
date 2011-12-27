@@ -1,7 +1,11 @@
 """
 Helper functions to convert sparql data to json
 
-    >>> from eea.sparql.converter import sparql2daviz
+    >>> from eea.sparql.converter import mixin
+    >>> from eea.sparql.tests import mock_data
+    >>> test_data = mock_data.loadSparql()
+    >>> type(test_data)
+    <type 'dict'>
 
 """
 
