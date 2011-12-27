@@ -32,8 +32,6 @@ def sparql2json(data):
     for col in cols:
         colname = col[0].encode('utf8')
         coltype = col[1].encode('utf8')
-        if colname == 'label':
-            hasLabel = True
         properties[colname] = {'value_type':coltype}
 
     for row in data['rows']:
