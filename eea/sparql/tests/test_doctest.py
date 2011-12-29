@@ -32,11 +32,6 @@ def test_suite():
             optionflags=doctest.REPORT_ONLY_FIRST_FAILURE |
                 doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS),
 
-        ztc.ZopeDocFileSuite(
-            'converter/sparql2googlechart.py', package='eea.sparql',
-            test_class=base.SparqlFunctionalTestCase,
-            optionflags=doctest.REPORT_ONLY_FIRST_FAILURE |
-                doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS),
 
         ])
 

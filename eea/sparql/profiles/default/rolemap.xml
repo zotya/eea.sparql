@@ -9,9 +9,5 @@
       <role name="Manager" />
       <role name="Contributor" />
     </permission>
-    <permission name="eea.sparql: Add Sparql2GoogleChart" acquire="False">
-      <role name="Manager" />
-      <role name="Contributor" />
-    </permission>
   </permissions>
 </rolemap>

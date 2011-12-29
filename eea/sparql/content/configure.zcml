@@ -21,16 +21,5 @@
         for="eea.sparql.interfaces.ISparql2Daviz Products.Archetypes.event.ObjectInitializedEvent"
         handler=".sparql2daviz.handle_object_initialized"/>
 
-  <class class=".sparql2googlechart.Sparql2GoogleChart">
-    <implements interface="eea.googlechartsconfig.interfaces.IPossibleGoogleChartJson" />
-    <require
-        permission="zope2.View"
-        interface="..interfaces.ISparql2GoogleChart"
-        />
-  </class>
-
-  <subscriber
-        for="eea.sparql.interfaces.ISparql2GoogleChart Products.Archetypes.event.ObjectInitializedEvent"
-        handler=".sparql2googlechart.handle_object_initialized"/>
 
 </configure>

@@ -4,6 +4,4 @@
     meta_type="Factory-based Type Information with dynamic views" />
   <object name="Sparql2Daviz"
     meta_type="Factory-based Type Information with dynamic views" />
-  <object name="Sparql2GoogleChart"
-    meta_type="Factory-based Type Information with dynamic views" />
 </object>

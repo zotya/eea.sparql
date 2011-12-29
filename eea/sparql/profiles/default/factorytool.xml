@@ -3,6 +3,5 @@
   <factorytypes>
     <type portal_type="Sparql" />
     <type portal_type="Sparql2Daviz" />
-    <type portal_type="Sparql2GoogleChart" />
   </factorytypes>
 </object>

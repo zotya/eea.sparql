@@ -30,20 +30,5 @@
         permission="cmf.ModifyPortalContent"
         />
 
-    <browser:page
-        name="googlechart.properties.edit"
-        for="eea.sparql.interfaces.ISparql2GoogleChart"
-        class=".app.sparql2googlechart.EditForm"
-        permission="cmf.ModifyPortalContent"
-        />
-
-
-    <browser:page
-        for="eea.sparql.interfaces.ISparql2GoogleChart"
-        name="googlechart-view.json"
-        class=".sparql2googlechart.Sparql2GoogleChart"
-        attribute="json"
-        permission="zope.Public"
-        />
 
 </configure>
