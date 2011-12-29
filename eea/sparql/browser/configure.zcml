@@ -19,7 +19,7 @@
         name="daviz-view.json"
         class=".sparql2daviz.Sparql2Daviz"
         attribute="json"
-        permission="zope2.View"
+        permission="zope.Public"
         />
 
 
