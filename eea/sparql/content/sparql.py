@@ -4,7 +4,7 @@
 from zope.interface import implements
 
 from Products.Archetypes import atapi
-from Products.ATContentTypes.content import schemata
+from Products.ATContentTypes.content import schemata, base
 from Products.Archetypes.atapi import StringField, StringWidget, \
                                     IntegerField, IntegerWidget, \
                                     TextField, TextAreaWidget
@@ -13,13 +13,12 @@ from Products.ZSPARQLMethod.Method import ZSPARQLMethod, \
                                         parse_arg_spec, map_arg_values
 
 from AccessControl import ClassSecurityInfo
-from Products.ATContentTypes.content.folder import ATBTreeFolder
 from Products.Archetypes.atapi import Schema
 from eea.sparql.interfaces import ISparql
 from eea.sparql.config import PROJECTNAME
 
 
-SparqlSchema = getattr(ATBTreeFolder, 'schema', Schema(())).copy() + \
+SparqlSchema = getattr(base.ATCTContent, 'schema', Schema(())).copy() + \
             atapi.Schema((
     StringField(
         name='endpoint_url',
@@ -62,7 +61,7 @@ SparqlSchema['description'].storage = atapi.AnnotationStorage()
 schemata.finalizeATCTSchema(SparqlSchema, moveDiscussion=False)
 
 
-class Sparql(ATBTreeFolder, ZSPARQLMethod):
+class Sparql(base.ATCTContent, ZSPARQLMethod):
     """Sparql"""
     implements(ISparql)
 

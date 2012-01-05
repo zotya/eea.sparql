@@ -4,6 +4,9 @@ from Products.Five import BrowserView
 from Products.ZSPARQLMethod.Method import parse_arg_spec, map_arg_values, \
                                         interpolate_query_html
 from time import time
+import json
+
+from eea.sparql.converter.sparql2json import sparql2json
 
 class Sparql(BrowserView):
     """Sparql view"""
@@ -40,3 +43,8 @@ class Sparql(BrowserView):
         }
 
         return options
+
+    def json(self):
+        """json"""
+        data = self.context.execute_query()
+        return json.dumps(sparql2json(data))

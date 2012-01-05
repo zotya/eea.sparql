@@ -9,17 +9,5 @@
         interface="..interfaces.ISparql"
         />
   </class>
-  <class class=".sparql2daviz.Sparql2Daviz">
-    <implements interface="eea.daviz.interfaces.IPossibleExhibitJson" />
-    <require
-        permission="zope2.View"
-        interface="..interfaces.ISparql2Daviz"
-        />
-  </class>
-
-  <subscriber
-        for="eea.sparql.interfaces.ISparql2Daviz Products.Archetypes.event.ObjectInitializedEvent"
-        handler=".sparql2daviz.handle_object_initialized"/>
-
 
 </configure>

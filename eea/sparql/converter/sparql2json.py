@@ -1,7 +1,7 @@
 """
-Helper functions to convert sparql data to exhibit json
+Helper functions to convert sparql data to json json
 
-    >>> from eea.sparql.converter import sparql2daviz
+    >>> from eea.sparql.converter import sparql2json
     >>> from eea.sparql.tests import mock_data
     >>> test_data = mock_data.loadSparql()
     >>> type(test_data)
@@ -14,7 +14,7 @@ from eea.sparql.converter import mixin
 
 def sparql2json(data):
     """ Returns JSON output after converting source data
-        >>> data = sparql2daviz.sparql2json(test_data)
+        >>> data = sparql2json.sparql2json(test_data)
         >>> print (data['items'])
         [{'available': True,
         'name': 'Name1',

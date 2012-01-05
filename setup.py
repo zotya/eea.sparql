@@ -29,7 +29,6 @@ setup(name=NAME,
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'eea.daviz',
           'Products.ZSPARQLMethod'
       ],
       entry_points="""

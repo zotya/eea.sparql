@@ -3,8 +3,6 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="eea.sparql">
 
-  <include package="plone.app.contentmenu" />
-
     <browser:page
         for="*"
         name="test_query"
@@ -13,22 +11,12 @@
         template="test_query.pt"
         />
 
-
     <browser:page
-        for="eea.sparql.interfaces.ISparql2Daviz"
-        name="daviz-view.json"
-        class=".sparql2daviz.Sparql2Daviz"
+        for="eea.sparql.interfaces.ISparql"
+        name="json-view.json"
+        class=".sparql.Sparql"
         attribute="json"
         permission="zope.Public"
         />
-
-
-    <browser:page
-        name="daviz.properties.edit"
-        for="eea.sparql.interfaces.ISparql2Daviz"
-        class=".app.sparql2daviz.EditForm"
-        permission="cmf.ModifyPortalContent"
-        />
-
 
 </configure>
