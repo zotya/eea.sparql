@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+  metal:use-macro="here/main_template/macros/master"
+  i18n:domain="indicators">
+  <head>
+    <metal:slot fill-slot="head_slot">
+      <title>Set caching</title>
+    </metal:slot>
+    <metal:slot fill-slot="css_slot">
+    </metal:slot>
+  </head>
+  <body>
+    <div metal:fill-slot="main" tal:define="selected_manager view/current_manager">
+      <form method="POST" action="" tal:attributes="action string:${context/absolute_url}/@@caching">
+
+        <div>
+          <input type="checkbox" name="enabled" 
+            tal:attributes="checked python:'checked' and view.enabled() or None" />
+          <label for="enabled">Caching is enabled</label>
+        </div>
+
+        <div>
+          <label for="manager_id">Cache in manager:</label>
+          <select name="manager_id" >
+            <option value="">(None)</option>
+            <option tal:repeat="manager view/cache_managers" 
+              tal:attributes="selected python:manager['id']==selected_manager and 'selected' or ''; value manager/id" 
+              tal:content="python:manager['title'] or manager['id']">Manager id</option>
+          </select>
+        </div>
+        <input type="submit" name='submit' value="Save" />
+
+      </form>
+    </div>
+  </body>
+</html>

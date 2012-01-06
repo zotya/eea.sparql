@@ -33,5 +33,9 @@
     url_expr="string:${object_url}/test_query" visible="True">
     <permission value="Modify portal content"/>
   </action>
+  <action title="Test" action_id="caching" category="object"
+    url_expr="string:${object_url}/@@caching" visible="True">
+    <permission value="Modify portal content"/>
+  </action>
 
 </object>

@@ -19,4 +19,12 @@
         permission="zope.Public"
         />
 
+    <browser:page
+        for="eea.sparql.interfaces.ISparql"
+        name="caching"
+        class=".sparql.Caching"
+        permission="zope.Public"
+        template="caching.pt"
+        />
+
 </configure>
