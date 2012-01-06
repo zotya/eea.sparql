@@ -1,21 +1,19 @@
 """Definition of the Sparql content type
 """
 
-from zope.interface import implements
-
-from Products.Archetypes import atapi
-from Products.ATContentTypes.content import schemata, base
-from Products.Archetypes.atapi import StringField, StringWidget, \
-                                    IntegerField, IntegerWidget, \
-                                    TextField, TextAreaWidget
-
-from Products.ZSPARQLMethod.Method import ZSPARQLMethod, \
-                                        parse_arg_spec, map_arg_values
-
 from AccessControl import ClassSecurityInfo
+from Products.ATContentTypes.content import schemata, base
+from Products.Archetypes import atapi
+from Products.Archetypes.atapi import IntegerField, IntegerWidget
 from Products.Archetypes.atapi import Schema
-from eea.sparql.interfaces import ISparql
+from Products.Archetypes.atapi import StringField, StringWidget
+from Products.Archetypes.atapi import TextField, TextAreaWidget
+from Products.ZSPARQLMethod.Method import ZSPARQLMethod
+from Products.ZSPARQLMethod.Method import parse_arg_spec, map_arg_values
+from eea.cache import cache
 from eea.sparql.config import PROJECTNAME
+from eea.sparql.interfaces import ISparql
+from zope.interface import implements
 
 
 SparqlSchema = getattr(base.ATCTContent, 'schema', Schema(())).copy() + \
@@ -60,6 +58,9 @@ SparqlSchema['description'].storage = atapi.AnnotationStorage()
 
 schemata.finalizeATCTSchema(SparqlSchema, moveDiscussion=False)
 
+def cacheKeySparql(fun, self):
+    return str(self.getArg_spec()) + str(self.getSparql_query())
+
 
 class Sparql(base.ATCTContent, ZSPARQLMethod):
     """Sparql"""
@@ -84,6 +85,7 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
         return self.sparql_query()
 
     security.declarePublic("execute_query")
+    @cache(get_key=cacheKeySparql)
     def execute_query(self, args=None):
         """execute query"""
         arg_spec = parse_arg_spec(self.arg_spec)
