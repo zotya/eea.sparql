@@ -73,6 +73,11 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
 
     security = ClassSecurityInfo()
 
+    security.declarePublic('index_html')
+    def index_html(self, REQUEST=None, **kwargs):
+        """index_html"""
+        return self.REQUEST.response.redirect(self.absolute_url()+"/@@view")
+
     @property
     def query(self):
         """query"""
