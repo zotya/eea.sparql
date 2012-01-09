@@ -11,6 +11,7 @@ Helper functions to convert sparql data to json json
 
 from eea.sparql.converter import mixin
 
+from Products.ZSPARQLMethod.Method import MethodResult
 
 def sparql2json(data):
     """ Returns JSON output after converting source data
@@ -74,6 +75,32 @@ def sparql2json(data):
 
             rowdata[cols[idx][0].encode('utf8')] = value
 
+            idx += 1
+        items.append(rowdata)
+    return {'items': items, 'properties': properties}
+
+def sparql2json2(data):
+    items = []
+    hasLabel = False
+    mr = MethodResult(data)
+    cols = mr.var_names
+
+    properties = {}
+    for col in cols:
+        if col.lower().endswith("label"):
+            col = 'label'
+            hasLabel = True
+        properties[col] = 'text'
+
+    index = 0
+    for row in mr:
+        index += 1
+        rowdata = {}
+        if not hasLabel:
+            rowdata['label'] = index
+        idx = 0
+        for item in row:
+            rowdata[cols[idx]] = item
             idx += 1
         items.append(rowdata)
     return {'items': items, 'properties': properties}
