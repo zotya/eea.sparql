@@ -29,7 +29,8 @@ setup(name=NAME,
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'Products.ZSPARQLMethod'
+          'Products.ZSPARQLMethod',
+          'eea.cache'
       ],
       entry_points="""
       # -*- Entry points: -*-
