@@ -1,0 +1,43 @@
+blockquote.sparql-query,
+blockquote.sparql-error {
+    font-family: monospace;
+    font-size: 12px;
+    white-space: pre;
+    background: #ddd !important;
+    border: 2px solid #bbb;
+    padding:5px !important;
+    overflow:auto;
+    width:100% !important;
+}
+
+.sparql-query span.variable {
+    background: #c90;
+}
+.sparql-query span.variable.interpolated {
+    background: #6d6;
+}
+
+table.sparql-results {
+    border-collapse: collapse;
+}
+
+table.sparql-results th, table.sparql-results td {
+    border: 1px solid #999;
+    padding: 3px;
+}
+
+p.sparql-stats .number {
+    font-family: monospace;
+    font-weight: bold;
+    color: #a50;
+}
+
+p.sparql-has-result .boolean {
+    font-weight: bold;
+    color: #a50;
+}
+
+.sparql-error {
+    white-space: pre;
+    border: 2px solid #f00;
+}

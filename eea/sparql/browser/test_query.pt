@@ -3,54 +3,14 @@
   metal:use-macro="here/main_template/macros/master"
   i18n:domain="eea">
 
+<metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+        tal:content="string: @import url(${context/absolute_url}/++resource++sparql.css);"></style>
+</metal:css>
+
 <body>
 
 <div metal:fill-slot="content-core" tal:define="options view/test_query">
-
-<style>
-  blockquote.sparql-query,
-  blockquote.sparql-error {
-    font-family: monospace;
-    font-size: 12px;
-    white-space: pre;
-    background: #ddd !important;
-    border: 2px solid #bbb;
-    padding:5px !important;
-    overflow:auto;
-    width:100% !important;
-  }
-
-  .sparql-query span.variable {
-    background: #c90;
-  }
-  .sparql-query span.variable.interpolated {
-    background: #6d6;
-  }
-
-  table.sparql-results {
-    border-collapse: collapse;
-  }
-  table.sparql-results th, table.sparql-results td {
-    border: 1px solid #999;
-    padding: 3px;
-  }
-
-  p.sparql-stats .number {
-    font-family: monospace;
-    font-weight: bold;
-    color: #a50;
-  }
-
-  p.sparql-has-result .boolean {
-    font-weight: bold;
-    color: #a50;
-  }
-
-  .sparql-error {
-    white-space: pre;
-    border: 2px solid #f00;
-  }
-</style>
 
 <form tal:condition="options/arg_spec"
       name="method-arguments" method="get">

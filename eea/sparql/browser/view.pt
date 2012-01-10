@@ -3,14 +3,33 @@
   metal:use-macro="here/main_template/macros/master"
   i18n:domain="eea">
 
-<body>
 
+
+<metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+        tal:content="string: @import url(${context/absolute_url}/++resource++sparql.css);"></style>
+</metal:css>
+
+<body>
 <div metal:fill-slot="content-core">
 
     <label>JSON Url:</label>
     <br/>
     <a tal:attributes="href string:${context/absolute_url}/@@json-view.json" 
        tal:content="string:${context/absolute_url}/@@json-view.json">link</a>
+
+    <br/>
+    <br/>
+    <label>Endpoint:</label>
+    <br/>
+    <span tal:content="context/endpoint_url">endpoint</span>
+
+    <br/>
+    <br/>
+    <label>Query:</label>
+    <br/>
+    <blockquote class="sparql-query"
+            tal:content="context/query"/>
 
 </div>
 </body>
