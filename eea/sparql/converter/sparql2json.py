@@ -1,96 +1,69 @@
-"""
-Helper functions to convert sparql data to json json
+import sparql
+from Products.ZSPARQLMethod import Method
 
-    >>> from eea.sparql.converter import sparql2json
-    >>> from eea.sparql.tests import mock_data
-    >>> test_data = mock_data.loadSparql()
-    >>> type(test_data)
-    <type 'dict'>
+#define our own converters
+sparql_converters = Method.sparql_converters.copy()
+sparql_converters[sparql.XSD_DECIMAL] = float
+sparql_converters[sparql.XSD_DATE] = str
+sparql_converters[sparql.XSD_DATETIME] = str
+sparql_converters[sparql.XSD_TIME] = str
 
-"""
+class MethodResult (Method.MethodResult):
+    """Override MethodResult with our sparql_converters"""
+    def __iter__(self):
+        return (sparql.unpack_row(r, convert_type=sparql_converters)
+                for r in self.rdfterm_rows)
 
-from eea.sparql.converter import mixin
-
-from Products.ZSPARQLMethod.Method import MethodResult
+    def __getitem__(self, n):
+        return sparql.unpack_row(self.rdfterm_rows[n],
+                                 convert_type=sparql_converters)
 
 def sparql2json(data):
-    """ Returns JSON output after converting source data
-        >>> data = sparql2json.sparql2json(test_data)
+    """ test the converter
+        >>> from eea.sparql.converter import sparql2json
+        >>> from eea.sparql.tests import mock_data
+        >>> from eea.sparql.converter.sparql2json import sparql2json
+        >>> test_data = mock_data.loadSparql()
+        >>> data = sparql2json(test_data)
         >>> print (data['items'])
-        [{'available': True,
-        'name': 'Name1',
-        'tags': [u'a', u'b', u'c', u'd'],
-        'url': 'http://www.url1.com',
-        'age': 30,
-        'label': 1},
-        {'available': False,
-        'name': 'Name2',
-        'tags': [u'single item'],
-        'url': 'http://www.url2.com',
-        'age': 25,
-        'label': 2},
-        {'available': False,
-        'name': 'Name3',
-        'tags': [],
-        'url': '',
-        'age': 0,
-        'label': 3}]
+        [{'name': u'NAME', 
+        'double': 2.5, 
+        'decimal': 5.21, 
+        'float': 4.5, 
+        'long': 15, 
+        'label': 1, 
+        'boolean': True, 
+        'time': '2012-01-10 14:31:27', 
+        'date': '14:31:03', 
+        'integer': 1,
+        'datetime': u'2012-01-10', 
+        'string': u'STRING'}, 
+        {'name': u'', 
+        'double': 0.0, 
+        'decimal': 0.0, 
+        'float': 0.0, 
+        'long': 0, 
+        'label': 2, 
+        'boolean': False, 
+        'time': '', 
+        'date': '', 
+        'integer': 0, 
+        'datetime': u'', 
+        'string': u''}]
 
     """
-
-    items = []
-    hasLabel = False
-    cols = [mixin.column_type(col) for col in data['var_names']]
-
-    properties = {}
-    for col in cols:
-        colname = col[0].encode('utf8')
-        coltype = col[1].encode('utf8')
-        if colname == 'label':
-            hasLabel = True
-        properties[colname] = {'value_type':coltype}
-
-    index = 0
-    for row in data['rows']:
-        index += 1
-        rowdata = {}
-        if not hasLabel:
-            rowdata['label'] = index
-        idx = 0
-        for item in row:
-            if not item:
-                itemvalue = None
-            else:
-                itemvalue = item.value
-            if cols[idx][1] == 'number':
-                value = mixin.item2number(itemvalue)
-            else:
-                if cols[idx][1] == 'boolean':
-                    value = mixin.item2boolean(itemvalue)
-                else:
-                    if cols[idx][1] == 'list':
-                        value = mixin.item2list(itemvalue)
-                    else:
-                        value = mixin.item2text(itemvalue)
-
-            rowdata[cols[idx][0].encode('utf8')] = value
-
-            idx += 1
-        items.append(rowdata)
-    return {'items': items, 'properties': properties}
-
-def sparql2json2(data):
     items = []
     hasLabel = False
     mr = MethodResult(data)
+
     cols = mr.var_names
 
-    properties = {}
+    idx = 0
     for col in cols:
         if col.lower().endswith("label"):
-            col = 'label'
+            cols[idx] = 'label'
             hasLabel = True
-        properties[col] = 'text'
+        idx += 1
 
     index = 0
     for row in mr:
@@ -100,7 +73,7 @@ def sparql2json2(data):
             rowdata['label'] = index
         idx = 0
         for item in row:
-            rowdata[cols[idx]] = item
+            rowdata[cols[idx].encode('utf8')] = item
             idx += 1
         items.append(rowdata)
-    return {'items': items, 'properties': properties}
+    return {'items':items}
