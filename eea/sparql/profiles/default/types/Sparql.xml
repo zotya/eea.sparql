@@ -29,11 +29,11 @@
     url_expr="string:${object_url}/edit" visible="True">
     <permission value="Modify portal content" />
   </action>
-  <action title="Caching" action_id="test" category="object"
+  <action title="Test" action_id="test" category="object"
     url_expr="string:${object_url}/test_query" visible="True">
     <permission value="Modify portal content"/>
   </action>
-  <action title="Test" action_id="caching" category="object"
+  <action title="Caching" action_id="caching" category="object"
     url_expr="string:${object_url}/@@caching" visible="True">
     <permission value="Modify portal content"/>
   </action>
