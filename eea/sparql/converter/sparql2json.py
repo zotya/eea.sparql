@@ -1,3 +1,6 @@
+""" Convert sparql results to json
+"""
+
 import sparql
 from Products.ZSPARQLMethod import Method
 

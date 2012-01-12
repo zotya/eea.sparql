@@ -6,6 +6,7 @@ from Products.ZSPARQLMethod.Method import parse_arg_spec, map_arg_values
 from eea.sparql.tests.base import PORT
 
 def mock_sparql_query():
+    """ mock query for sparql """
     return "mock"
 
 def loadSparql():

@@ -5,8 +5,10 @@ import sys
 import os
 
 class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
-
+    """ Mock http request handler"""
+    
     def do_POST(self):
+        """ On post return the contents of sparql.xml file"""
         self.send_response(200)
         self.send_header("Content-type", "application/sparql-results+json")
         self.end_headers()

@@ -59,6 +59,7 @@ SparqlSchema['description'].storage = atapi.AnnotationStorage()
 schemata.finalizeATCTSchema(SparqlSchema, moveDiscussion=False)
 
 def cacheKeySparql(fun, self):
+    """ Cache key for Sparql Query """
     return str(self.getArg_spec()) + str(self.getSparql_query())
 
 

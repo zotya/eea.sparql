@@ -58,7 +58,7 @@ class Sparql(BrowserView):
 
 
 class Caching(BrowserView):
-
+    """ Caching for sparql query results """
 
     def __call__(self):
         if not "submit" in self.request.form:
