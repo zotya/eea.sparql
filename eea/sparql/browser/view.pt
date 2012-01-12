@@ -15,8 +15,8 @@
 
     <label>JSON Url:</label>
     <br/>
-    <a tal:attributes="href string:${context/absolute_url}/@@json-view.json" 
-       tal:content="string:${context/absolute_url}/@@json-view.json">link</a>
+    <a tal:attributes="href string:${context/absolute_url}/@@daviz-view.json" 
+       tal:content="string:${context/absolute_url}/@@daviz-view.json">link</a>
 
     <br/>
     <br/>

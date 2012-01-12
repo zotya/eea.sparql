@@ -13,7 +13,7 @@
 
     <browser:page
         for="eea.sparql.interfaces.ISparql"
-        name="json-view.json"
+        name="daviz-view.json"
         class=".sparql.Sparql"
         attribute="json"
         permission="zope.Public"
