@@ -11,6 +11,20 @@ sparql_converters[sparql.XSD_DATE] = str
 sparql_converters[sparql.XSD_DATETIME] = str
 sparql_converters[sparql.XSD_TIME] = str
 
+propertytype_dict = {
+                 '': 'text',
+                 sparql.XSD_STRING : 'text',
+                 sparql.XSD_INTEGER : 'number',
+                 sparql.XSD_LONG : 'number',
+                 sparql.XSD_DOUBLE : 'number',
+                 sparql.XSD_FLOAT : 'number',
+                 sparql.XSD_DECIMAL : 'number',
+                 sparql.XSD_DATETIME : 'datetime',
+                 sparql.XSD_DATE : 'date',
+                 sparql.XSD_TIME : 'time',
+                 sparql.XSD_BOOLEAN : 'boolean'
+                 }
+
 class MethodResult (Method.MethodResult):
     """Override MethodResult with our sparql_converters"""
     def __iter__(self):
@@ -60,7 +74,8 @@ def sparql2json(data):
     mr = MethodResult(data)
 
     cols = mr.var_names
-
+    properties = {}
+    
     idx = 0
     for col in cols:
         if col.lower().endswith("label"):
@@ -71,12 +86,19 @@ def sparql2json(data):
     index = 0
     for row in mr:
         index += 1
+
         rowdata = {}
         if not hasLabel:
             rowdata['label'] = index
         idx = 0
         for item in row:
             rowdata[cols[idx].encode('utf8')] = item
+            if (index == 1):
+                datatype = data['rows'][0][idx].datatype
+                if not datatype:
+                    datatype = ''
+                properties[cols[idx].encode('utf8')] = propertytype_dict[datatype]
             idx += 1
+
         items.append(rowdata)
-    return {'items':items}
+    return {'items':items, 'properties':properties}
