@@ -43,29 +43,29 @@ def sparql2json(data):
         >>> test_data = mock_data.loadSparql()
         >>> data = sparql2json(test_data)
         >>> print (data['items'])
-        [{'name': u'NAME', 
-        'double': 2.5, 
-        'decimal': 5.21, 
-        'float': 4.5, 
-        'long': 15, 
-        'label': 1, 
-        'boolean': True, 
-        'time': '2012-01-10 14:31:27', 
-        'date': '14:31:03', 
+        [{'name': u'NAME',
+        'double': 2.5,
+        'decimal': 5.21,
+        'float': 4.5,
+        'long': 15,
+        'label': 1,
+        'boolean': True,
+        'time': '2012-01-10 14:31:27',
+        'date': '14:31:03',
         'integer': 1,
-        'datetime': u'2012-01-10', 
-        'string': u'STRING'}, 
-        {'name': u'', 
-        'double': 0.0, 
-        'decimal': 0.0, 
-        'float': 0.0, 
-        'long': 0, 
-        'label': 2, 
-        'boolean': False, 
-        'time': '', 
-        'date': '', 
-        'integer': 0, 
-        'datetime': u'', 
+        'datetime': u'2012-01-10',
+        'string': u'STRING'},
+        {'name': u'',
+        'double': 0.0,
+        'decimal': 0.0,
+        'float': 0.0,
+        'long': 0,
+        'label': 2,
+        'boolean': False,
+        'time': '',
+        'date': '',
+        'integer': 0,
+        'datetime': u'',
         'string': u''}]
 
     """
@@ -75,7 +75,7 @@ def sparql2json(data):
 
     cols = mr.var_names
     properties = {}
-    
+
     idx = 0
     for col in cols:
         if col.lower().endswith("label"):
@@ -97,7 +97,8 @@ def sparql2json(data):
                 datatype = data['rows'][0][idx].datatype
                 if not datatype:
                     datatype = ''
-                properties[cols[idx].encode('utf8')] = propertytype_dict[datatype]
+                properties[
+                    cols[idx].encode('utf8')] = propertytype_dict[datatype]
             idx += 1
 
         items.append(rowdata)
