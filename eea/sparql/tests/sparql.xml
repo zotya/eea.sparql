@@ -39,7 +39,7 @@
 				<literal datatype='http://www.w3.org/2001/XMLSchema#decimal'>5.21</literal>
 			</binding>
 			<binding name='datetime'>
-				<literal datatype='http://www.w3.org/2001/XMLSchema#datetime'>2012-01-10</literal>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#dateTime'>2012-01-10</literal>
 			</binding>
 			<binding name='date'>
 				<literal datatype='http://www.w3.org/2001/XMLSchema#date'>14:31:03</literal>
@@ -74,7 +74,7 @@
 				<literal datatype='http://www.w3.org/2001/XMLSchema#decimal'>0</literal>
 			</binding>
 			<binding name='datetime'>
-				<literal datatype='http://www.w3.org/2001/XMLSchema#datetime'></literal>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#dateTime'></literal>
 			</binding>
 			<binding name='date'>
 				<literal datatype='http://www.w3.org/2001/XMLSchema#date'></literal>

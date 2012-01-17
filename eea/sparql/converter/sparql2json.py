@@ -53,7 +53,7 @@ def sparql2json(data):
         'time': '2012-01-10 14:31:27',
         'date': '14:31:03',
         'integer': 1,
-        'datetime': u'2012-01-10',
+        'datetime': '2012-01-10',
         'string': u'STRING'},
         {'name': u'',
         'double': 0.0,
@@ -65,7 +65,7 @@ def sparql2json(data):
         'time': '',
         'date': '',
         'integer': 0,
-        'datetime': u'',
+        'datetime': '',
         'string': u''}]
 
     """
