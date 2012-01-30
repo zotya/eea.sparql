@@ -15,6 +15,7 @@ propertytype_dict = {
                  '': 'text',
                  sparql.XSD_STRING : 'text',
                  sparql.XSD_INTEGER : 'number',
+                 sparql.XSD_INT : 'number',
                  sparql.XSD_LONG : 'number',
                  sparql.XSD_DOUBLE : 'number',
                  sparql.XSD_FLOAT : 'number',
