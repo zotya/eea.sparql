@@ -62,12 +62,15 @@ class Sparql(BrowserView):
         if format in ['exhibit', 'html', 'tsv', 'csv']:
             data = self.context.execute_query()
             jsonData = sparql2json(data)
+            result = ''
+
             if format == 'exhibit':
                 self.request.response.setHeader('Content-Type', 'application/json')
                 self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.json"' %title)
-                return json.dumps(jsonData)
+                result = json.dumps(jsonData)
+
             if format == 'html':
-                result = "<style type='text/css'>\r\n"
+                result += "<style type='text/css'>\r\n"
                 result += "table{border-collapse:collapse}\r\n"
                 result += "th,td {border:1px solid black}\r\n"
                 result += "</style>\r\n"
@@ -82,7 +85,34 @@ class Sparql(BrowserView):
                         result += "\t\t<td>" + str(row[col]) + "</td>\r\n"
                     result += "\t</tr>\r\n"
                 result += "</table>\r\n"
-                return result
+
+            if format in ['csv', 'tsv']:
+                self.request.response.setHeader('Content-Type', 'application/csv')
+                self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.csv"' %title)
+                separator = ', '
+                if format == 'tsv':
+                    self.request.response.setHeader('Content-Type', 'application/tsv')
+                    self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.tsv"' %title)
+                    separator = '\t'
+                first = True
+                for col in jsonData['properties'].keys():
+                    if not first:
+                        result += separator
+                    result += col + ":" + jsonData['properties'][col]
+                    first = False
+
+                result += "\r\n"
+                for row in jsonData['items']:
+                    first = True
+                    for col in jsonData['properties'].keys():
+                        if not first:
+                            result += separator
+                        result += str(row[col])
+                        first = False
+
+                    result += "\r\n"
+
+            return result
 
         if format in ['json', 'xml', 'xml_with_schema']:
             endpoint = self.context.endpoint_url
