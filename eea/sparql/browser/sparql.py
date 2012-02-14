@@ -12,7 +12,7 @@ from time import time
 from zope.event import notify
 import hashlib
 import json
-
+import urllib2
 
 class Sparql(BrowserView):
     """Sparql view"""
@@ -55,6 +55,39 @@ class Sparql(BrowserView):
         """json"""
         data = self.context.execute_query()
         return json.dumps(sparql2json(data))
+
+    def sparql_download(self):
+        format = self.request['format']
+        title = self.context.title
+        if format == 'exhibit':
+            data = self.context.execute_query()
+            self.request.response.setHeader('Content-Type', 'application/json')
+            self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.json"' %title)
+            return json.dumps(sparql2json(data))
+
+        if format in ['json', 'xml', 'xml_with_schema']:
+            endpoint = self.context.endpoint_url
+            query = 'query='+self.context.query
+            headers = ''
+            if format == 'json':
+                headers = {'Accept' : 'application/sparql-results+json'}
+                self.request.response.setHeader('Content-Type', 'application/json')
+                self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.json"' %title)
+
+            if format == 'xml':
+                headers = {'Accept' : 'application/sparql-results+xml'}
+                self.request.response.setHeader('Content-Type', 'application/xml')
+                self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.xml"' %title)
+
+            if format == 'xml_with_schema':
+                headers = {'Accept' : 'application/x-ms-access-export+xml'}
+                self.request.response.setHeader('Content-Type', 'application/xml')
+                self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.xml"' %title)
+
+            request = urllib2.Request(endpoint, query, headers)
+            results = urllib2.urlopen(request).fp.read()
+
+            return results
 
 
 class Caching(BrowserView):

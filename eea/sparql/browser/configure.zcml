@@ -35,6 +35,14 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        name="sparql-download"
+        for="eea.sparql.interfaces.ISparql"
+        class=".sparql.Sparql"
+        permission="zope2.View"
+        attribute="sparql_download"
+        />
+
     <browser:resource
         name="sparql.css"
         file="sparql.css"
