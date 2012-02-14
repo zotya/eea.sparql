@@ -59,11 +59,30 @@ class Sparql(BrowserView):
     def sparql_download(self):
         format = self.request['format']
         title = self.context.title
-        if format == 'exhibit':
+        if format in ['exhibit', 'html', 'tsv', 'csv']:
             data = self.context.execute_query()
-            self.request.response.setHeader('Content-Type', 'application/json')
-            self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.json"' %title)
-            return json.dumps(sparql2json(data))
+            jsonData = sparql2json(data)
+            if format == 'exhibit':
+                self.request.response.setHeader('Content-Type', 'application/json')
+                self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.json"' %title)
+                return json.dumps(jsonData)
+            if format == 'html':
+                result = "<style type='text/css'>\r\n"
+                result += "table{border-collapse:collapse}\r\n"
+                result += "th,td {border:1px solid black}\r\n"
+                result += "</style>\r\n"
+                result += "<table>\r\n"
+                result += "\t<tr>\r\n"
+                for col in jsonData['properties'].keys():
+                    result += "\t\t<th>" + col + "</th>\r\n"
+                result += "\t</tr>\r\n"
+                for row in jsonData['items']:
+                    result += "\t<tr>\r\n"
+                    for col in jsonData['properties'].keys():
+                        result += "\t\t<td>" + str(row[col]) + "</td>\r\n"
+                    result += "\t</tr>\r\n"
+                result += "</table>\r\n"
+                return result
 
         if format in ['json', 'xml', 'xml_with_schema']:
             endpoint = self.context.endpoint_url
