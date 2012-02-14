@@ -41,3 +41,26 @@ p.sparql-has-result .boolean {
     white-space: pre;
     border: 2px solid #f00;
 }
+
+.row_0,
+.row_1,
+.row_2,
+.row_3,
+.row_4{
+    color:#000000;
+}
+.row_5{
+    color:#222222;
+}
+.row_6 {
+    color:#444444;
+}
+.row_7 {
+    color:#666666;
+}
+.row_8 {
+    color:#888888;
+}
+.row_9 {
+    color:#AAAAAA;
+}

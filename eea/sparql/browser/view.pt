@@ -67,7 +67,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr tal:repeat="row python: options['data']['rows'][:10]">
+    <tr tal:repeat="row python: options['data']['rows'][:10]" tal:attributes="class string:row_${repeat/row/index}">
       <td tal:repeat="value row"
           tal:content="value/n3|string:&quot;${value}&quot;"/>
     </tr>
