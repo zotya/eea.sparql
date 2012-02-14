@@ -30,6 +30,7 @@
     <browser:page
         name="view"
         for="eea.sparql.interfaces.ISparql"
+        class=".sparql.Sparql"
         template="view.pt"
         permission="zope2.View"
         />
