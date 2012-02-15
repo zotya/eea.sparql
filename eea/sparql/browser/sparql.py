@@ -57,19 +57,23 @@ class Sparql(BrowserView):
         return json.dumps(sparql2json(data))
 
     def sparql_download(self):
-        format = self.request['format']
+        """download sparql results in various formats"""
+        download_format = self.request['format']
         title = self.context.title
-        if format in ['exhibit', 'html', 'tsv', 'csv']:
+        if download_format in ['exhibit', 'html', 'tsv', 'csv']:
             data = self.context.execute_query()
             jsonData = sparql2json(data)
             result = ''
 
-            if format == 'exhibit':
-                self.request.response.setHeader('Content-Type', 'application/json')
-                self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.json"' %title)
+            if download_format == 'exhibit':
+                self.request.response.setHeader(
+                    'Content-Type', 'application/json')
+                self.request.response.setHeader(
+                    'Content-Disposition',
+                        'attachment; filename="%s.json"' %title)
                 result = json.dumps(jsonData)
 
-            if format == 'html':
+            if download_format == 'html':
                 result += "<style type='text/css'>\r\n"
                 result += "table{border-collapse:collapse}\r\n"
                 result += "th,td {border:1px solid black}\r\n"
@@ -86,13 +90,19 @@ class Sparql(BrowserView):
                     result += "\t</tr>\r\n"
                 result += "</table>\r\n"
 
-            if format in ['csv', 'tsv']:
-                self.request.response.setHeader('Content-Type', 'application/csv')
-                self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.csv"' %title)
+            if download_format in ['csv', 'tsv']:
+                self.request.response.setHeader(
+                    'Content-Type', 'application/csv')
+                self.request.response.setHeader(
+                    'Content-Disposition',
+                        'attachment; filename="%s.csv"' %title)
                 separator = ', '
-                if format == 'tsv':
-                    self.request.response.setHeader('Content-Type', 'application/tsv')
-                    self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.tsv"' %title)
+                if download_format == 'tsv':
+                    self.request.response.setHeader(
+                        'Content-Type', 'application/tsv')
+                    self.request.response.setHeader(
+                        'Content-Disposition',
+                            'attachment; filename="%s.tsv"' %title)
                     separator = '\t'
                 first = True
                 for col in jsonData['properties'].keys():
@@ -114,24 +124,33 @@ class Sparql(BrowserView):
 
             return result
 
-        if format in ['json', 'xml', 'xml_with_schema']:
+        if download_format in ['json', 'xml', 'xml_with_schema']:
             endpoint = self.context.endpoint_url
             query = 'query='+self.context.query
             headers = ''
-            if format == 'json':
+            if download_format == 'json':
                 headers = {'Accept' : 'application/sparql-results+json'}
-                self.request.response.setHeader('Content-Type', 'application/json')
-                self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.json"' %title)
+                self.request.response.setHeader(
+                    'Content-Type', 'application/json')
+                self.request.response.setHeader(
+                    'Content-Disposition',
+                        'attachment; filename="%s.json"' %title)
 
-            if format == 'xml':
+            if download_format == 'xml':
                 headers = {'Accept' : 'application/sparql-results+xml'}
-                self.request.response.setHeader('Content-Type', 'application/xml')
-                self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.xml"' %title)
+                self.request.response.setHeader(
+                    'Content-Type', 'application/xml')
+                self.request.response.setHeader(
+                    'Content-Disposition', 
+                        'attachment; filename="%s.xml"' %title)
 
-            if format == 'xml_with_schema':
+            if download_format == 'xml_with_schema':
                 headers = {'Accept' : 'application/x-ms-access-export+xml'}
-                self.request.response.setHeader('Content-Type', 'application/xml')
-                self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s.xml"' %title)
+                self.request.response.setHeader(
+                    'Content-Type', 'application/xml')
+                self.request.response.setHeader(
+                    'Content-Disposition', 
+                        'attachment; filename="%s.xml"' %title)
 
             request = urllib2.Request(endpoint, query, headers)
             results = urllib2.urlopen(request).fp.read()
