@@ -36,6 +36,22 @@
         />
 
     <browser:page
+        name="view"
+        for="eea.sparql.interfaces.ISparqlBookmarksFolder"
+        class=".sparql.SparqlBookmarksFolder"
+        template="view-bookmarks.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        name="addQueryFromBookmark"
+        for="eea.sparql.interfaces.ISparqlBookmarksFolder"
+        class=".sparql.SparqlBookmarksFolder"
+        attribute="addQuery"
+        permission="zope2.View"
+        />
+
+    <browser:page
         name="sparql-download"
         for="eea.sparql.interfaces.ISparql"
         class=".sparql.Sparql"

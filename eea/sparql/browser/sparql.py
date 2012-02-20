@@ -48,7 +48,6 @@ class Sparql(BrowserView):
             'arg_spec': arg_spec,
             'error': error,
         }
-
         return options
 
     def json(self):
@@ -149,13 +148,22 @@ class Sparql(BrowserView):
                 self.request.response.setHeader(
                     'Content-Type', 'application/xml')
                 self.request.response.setHeader(
-                    'Content-Disposition', 
+                    'Content-Disposition',
                         'attachment; filename="%s.xml"' %title)
 
             request = urllib2.Request(endpoint, query, headers)
             results = urllib2.urlopen(request).fp.read()
 
             return results
+
+class SparqlBookmarksFolder(Sparql):
+    """SparqlBookmarksFolder view"""
+
+    def addQuery(self):
+        ob = self.context.addQuery(self.request['title'],
+                 self.context.endpoint_url,
+                 self.request['query'])
+        self.request.response.redirect(ob.absolute_url() + "/@@view")
 
 
 class Caching(BrowserView):
@@ -173,5 +181,3 @@ class Caching(BrowserView):
 
         IStatusMessage(self.request).addStatusMessage("Cache invalidated")
         return self.index()
-
-

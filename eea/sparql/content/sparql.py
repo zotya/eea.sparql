@@ -3,6 +3,8 @@
 
 from AccessControl import ClassSecurityInfo
 from Products.ATContentTypes.content import schemata, base
+from Products.ATContentTypes.content.folder import ATFolder
+
 from Products.Archetypes import atapi
 from Products.Archetypes.atapi import IntegerField, IntegerWidget
 from Products.Archetypes.atapi import Schema
@@ -12,12 +14,10 @@ from Products.ZSPARQLMethod.Method import ZSPARQLMethod
 from Products.ZSPARQLMethod.Method import parse_arg_spec, map_arg_values
 from eea.cache import cache
 from eea.sparql.config import PROJECTNAME
-from eea.sparql.interfaces import ISparql
+from eea.sparql.interfaces import ISparql, ISparqlBookmarksFolder
 from zope.interface import implements
 
-
-SparqlSchema = getattr(base.ATCTContent, 'schema', Schema(())).copy() + \
-            atapi.Schema((
+SparqlBaseSchema = atapi.Schema((
     StringField(
         name='endpoint_url',
         widget=StringWidget(
@@ -49,9 +49,13 @@ SparqlSchema = getattr(base.ATCTContent, 'schema', Schema(())).copy() + \
         ),
         required=1
     ),
-
-
 ))
+
+SparqlSchema = getattr(base.ATCTContent, 'schema', Schema(())).copy() + \
+        SparqlBaseSchema
+
+SparqlBookmarksFolderSchema = getattr(ATFolder, 'schema', Schema(())).copy() + \
+        SparqlBaseSchema
 
 SparqlSchema['title'].storage = atapi.AnnotationStorage()
 SparqlSchema['description'].storage = atapi.AnnotationStorage()
@@ -93,4 +97,32 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
         arg_values = map_arg_values(arg_spec, args)[1]
         return self.execute(**self.map_arguments(**arg_values))
 
+
+class SparqlBookmarksFolder(ATFolder, Sparql):
+    """Sparql Bookmarks Folder"""
+    implements(ISparqlBookmarksFolder)
+    meta_type = "SparqlBookmarksFolder"
+    schema = SparqlBookmarksFolderSchema
+
+    def addQuery(self, title, endpoint, query):
+        """Add Query"""
+        ob = None
+        for sparql in self.values():
+            if sparql.query == query:
+                ob = sparql
+
+        if not ob:
+            _id = self.generateUniqueId("Sparql")
+            _id = self.invokeFactory(type_name="Sparql", id=_id)
+            ob = self[_id]
+            ob.edit(
+                title          = title,
+                endpoint_url   = endpoint,
+                sparql_query   = query,
+            )
+            ob._renameAfterCreation(check_auto_id=True)
+
+        return ob
+
 atapi.registerType(Sparql, PROJECTNAME)
+atapi.registerType(SparqlBookmarksFolder, PROJECTNAME)

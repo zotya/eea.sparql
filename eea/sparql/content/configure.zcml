@@ -10,4 +10,11 @@
         />
   </class>
 
+  <class class=".sparql.SparqlBookmarksFolder">
+    <require
+        permission="zope2.View"
+        interface="..interfaces.ISparqlBookmarksFolder"
+        />
+  </class>
+
 </configure>
