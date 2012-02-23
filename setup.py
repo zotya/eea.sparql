@@ -30,7 +30,7 @@ setup(name=NAME,
       install_requires=[
           'setuptools',
           'Products.ZSPARQLMethod',
-          'eea.cache'
+          'eea.cache',
           'eea.versions'
       ],
       entry_points="""
