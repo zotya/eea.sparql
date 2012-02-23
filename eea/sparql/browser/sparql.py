@@ -159,12 +159,38 @@ class Sparql(BrowserView):
 class SparqlBookmarksFolder(Sparql):
     """SparqlBookmarksFolder view"""
 
-    def addQuery(self):
-        ob = self.context.addQuery(self.request['title'],
+    def getBookmarks(self):
+        results = self.test_query()
+        queries = results['data']['rows']
+        bookmarks = {}
+        bookmarks['data'] = []
+        bookmarks['arg_spec'] = results['arg_spec']
+        bookmarks['error'] = results['error']
+        bookmarks['duration'] = results['duration']
+        query_endpoint = self.context.endpoint_url
+        for query in queries:
+            query_details = {}
+            query_details['name'] = query[0].value
+            query_details['sparql'] = query[2].value
+            query_details['bookmark'] = query[1].value
+            query_details['status'] = self.context.checkQuery(query_details['name'], query_endpoint, query_details['sparql'])
+            bookmarks['data'].append(query_details)
+        return bookmarks
+
+    def addOrUpdateQuery(self):
+        ob = self.context.addOrUpdateQuery(self.request['title'],
                  self.context.endpoint_url,
                  self.request['query'])
         self.request.response.redirect(ob.absolute_url() + "/@@view")
 
+    def syncQueries(self):
+        queries = self.test_query()['data']['rows']
+        for query in queries:
+            query_name = query[0].value
+            query_sparql = query[2].value
+            ob = self.context.addOrUpdateQuery(query_name,
+                     self.context.endpoint_url,
+                     query_sparql)
 
 class Caching(BrowserView):
     """ Caching for sparql query results """

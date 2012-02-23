@@ -15,6 +15,9 @@ from Products.ZSPARQLMethod.Method import parse_arg_spec, map_arg_values
 from eea.cache import cache
 from eea.sparql.config import PROJECTNAME
 from eea.sparql.interfaces import ISparql, ISparqlBookmarksFolder
+from eea.versions.interfaces import IVersionEnhanced
+from eea.versions import versions
+
 from zope.interface import implements
 
 SparqlBaseSchema = atapi.Schema((
@@ -69,7 +72,7 @@ def cacheKeySparql(fun, self):
 
 class Sparql(base.ATCTContent, ZSPARQLMethod):
     """Sparql"""
-    implements(ISparql)
+    implements(ISparql, IVersionEnhanced)
 
     meta_type = "Sparql"
     schema = SparqlSchema
@@ -104,12 +107,39 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
     meta_type = "SparqlBookmarksFolder"
     schema = SparqlBookmarksFolderSchema
 
-    def addQuery(self, title, endpoint, query):
-        """Add Query"""
-        ob = None
+    def checkQuery(self, title, endpoint, query):
+        """Check if a query already exists
+           0 - missing
+           1 - exists
+           2 - exists but changed"""
+
+        found = False
+        changed = True
         for sparql in self.values():
-            if sparql.query == query:
+            if sparql.title == title:
+                found = True
+                if sparql.query == query:
+                    changed = False
+        if not found:
+            return 0
+        else:
+            if not changed:
+                return 1
+            else:
+                return 2
+
+    def addOrUpdateQuery(self, title, endpoint, query):
+        """Update an already existing query
+           Create new version"""
+
+        ob = None
+
+        changed = True
+        for sparql in self.values():
+            if sparql.title == title:
                 ob = sparql
+                if sparql.query == query:
+                    changed = False
 
         if not ob:
             _id = self.generateUniqueId("Sparql")
@@ -121,8 +151,15 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
                 sparql_query   = query,
             )
             ob._renameAfterCreation(check_auto_id=True)
+        else:
+            if changed:
+                ob = versions.create_version(ob)
+                ob.edit(
+                    sparql_query   = query,
+                )
 
         return ob
+
 
 atapi.registerType(Sparql, PROJECTNAME)
 atapi.registerType(SparqlBookmarksFolder, PROJECTNAME)

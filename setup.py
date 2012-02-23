@@ -31,6 +31,7 @@ setup(name=NAME,
           'setuptools',
           'Products.ZSPARQLMethod',
           'eea.cache'
+          'eea.versions'
       ],
       entry_points="""
       # -*- Entry points: -*-

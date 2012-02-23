@@ -12,6 +12,9 @@
 
 <body>
 <div metal:fill-slot="content-core"  tal:define="options view/test_query">
+    <metal:versions use-macro="here/portlet_versions/macros/versions">
+        <metal:old fill-slot="old" />
+    </metal:versions>
 
     <label>JSON Url:</label>
     <br/>
@@ -118,6 +121,10 @@
         TSV
     </a>
     <br/>
+
+    <metal:versions use-macro="here/portlet_versions/macros/versions">
+        <metal:new fill-slot="new" />
+    </metal:versions>
 
 </div>
 </body>

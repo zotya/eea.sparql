@@ -44,10 +44,26 @@
         />
 
     <browser:page
-        name="addQueryFromBookmark"
+        name="addOrUpdateQueryFromBookmark"
         for="eea.sparql.interfaces.ISparqlBookmarksFolder"
         class=".sparql.SparqlBookmarksFolder"
-        attribute="addQuery"
+        attribute="addOrUpdateQuery"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        name="sync"
+        for="eea.sparql.interfaces.ISparqlBookmarksFolder"
+        class=".sparql.SparqlBookmarksFolder"
+        permission="zope2.View"
+        template="sync-queries.pt"
+        />
+
+    <browser:page
+        name="syncQueriesWithBookmarks"
+        for="eea.sparql.interfaces.ISparqlBookmarksFolder"
+        class=".sparql.SparqlBookmarksFolder"
+        attribute="syncQueries"
         permission="zope2.View"
         />
 
