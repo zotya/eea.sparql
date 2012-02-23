@@ -52,14 +52,6 @@
         />
 
     <browser:page
-        name="sync"
-        for="eea.sparql.interfaces.ISparqlBookmarksFolder"
-        class=".sparql.SparqlBookmarksFolder"
-        permission="zope2.View"
-        template="sync-queries.pt"
-        />
-
-    <browser:page
         name="syncQueriesWithBookmarks"
         for="eea.sparql.interfaces.ISparqlBookmarksFolder"
         class=".sparql.SparqlBookmarksFolder"
