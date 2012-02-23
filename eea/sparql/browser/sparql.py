@@ -197,6 +197,7 @@ class SparqlBookmarksFolder(Sparql):
             self.context.addOrUpdateQuery(query_name,
                      self.context.endpoint_url,
                      query_sparql)
+        self.request.response.redirect(self.context.absolute_url() + "/@@view")
 
 class Caching(BrowserView):
     """ Caching for sparql query results """
