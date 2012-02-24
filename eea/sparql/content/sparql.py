@@ -55,15 +55,17 @@ SparqlBaseSchema = atapi.Schema((
 ))
 
 SparqlSchema = getattr(base.ATCTContent, 'schema', Schema(())).copy() + \
-        SparqlBaseSchema
-
-SparqlBookmarksFolderSchema = getattr(ATFolder, 'schema', Schema(())).copy() + \
-        SparqlBaseSchema
+        SparqlBaseSchema.copy()
 
 SparqlSchema['title'].storage = atapi.AnnotationStorage()
 SparqlSchema['description'].storage = atapi.AnnotationStorage()
 
 schemata.finalizeATCTSchema(SparqlSchema, moveDiscussion=False)
+
+SparqlBookmarksFolderSchema = getattr(ATFolder, 'schema', Schema(())).copy() + \
+        SparqlBaseSchema.copy()
+SparqlBookmarksFolderSchema['sparql_query'].widget.description = \
+        'The query should return label, bookmark url, query'
 
 def cacheKeySparql(fun, self):
     """ Cache key for Sparql Query """
@@ -160,6 +162,15 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
 
         return ob
 
+    def syncQueries(self):
+        """sync all queries from bookmarks"""
+        queries = self.execute()['rows']
+        for query in queries:
+            query_name = query[0].value
+            query_sparql = query[2].value
+            self.addOrUpdateQuery(query_name,
+                     self.endpoint_url,
+                     query_sparql)
 
 atapi.registerType(Sparql, PROJECTNAME)
 atapi.registerType(SparqlBookmarksFolder, PROJECTNAME)

@@ -19,4 +19,10 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <subscriber
+      for="eea.sparql.interfaces.ISparqlBookmarksFolder
+           Products.Archetypes.interfaces.IObjectInitializedEvent"
+      handler=".events.bookmarksfolder_added"
+      />
+
 </configure>

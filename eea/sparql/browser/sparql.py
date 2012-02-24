@@ -190,13 +190,7 @@ class SparqlBookmarksFolder(Sparql):
 
     def syncQueries(self):
         """Synchronize all Queries"""
-        queries = self.test_query()['data']['rows']
-        for query in queries:
-            query_name = query[0].value
-            query_sparql = query[2].value
-            self.context.addOrUpdateQuery(query_name,
-                     self.context.endpoint_url,
-                     query_sparql)
+        self.context.syncQueries()
         self.request.response.redirect(self.context.absolute_url() + "/@@view")
 
 class Caching(BrowserView):
