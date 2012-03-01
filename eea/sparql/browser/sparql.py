@@ -62,7 +62,7 @@ class Sparql(BrowserView):
         if download_format in ['exhibit', 'html', 'tsv', 'csv']:
             data = self.context.execute_query()
             jsonData = sparql2json(data)
-            result = ''
+            result = u''
 
             if download_format == 'exhibit':
                 self.request.response.setHeader(
@@ -73,21 +73,21 @@ class Sparql(BrowserView):
                 result = json.dumps(jsonData)
 
             if download_format == 'html':
-                result += "<style type='text/css'>\r\n"
-                result += "table{border-collapse:collapse}\r\n"
-                result += "th,td {border:1px solid black}\r\n"
-                result += "</style>\r\n"
-                result += "<table>\r\n"
-                result += "\t<tr>\r\n"
+                result += u"<style type='text/css'>\r\n"
+                result += u"table{border-collapse:collapse}\r\n"
+                result += u"th,td {border:1px solid black}\r\n"
+                result += u"</style>\r\n"
+                result += u"<table>\r\n"
+                result += u"\t<tr>\r\n"
                 for col in jsonData['properties'].keys():
-                    result += "\t\t<th>" + col + "</th>\r\n"
-                result += "\t</tr>\r\n"
+                    result += u"\t\t<th>" + col + u"</th>\r\n"
+                result += u"\t</tr>\r\n"
                 for row in jsonData['items']:
-                    result += "\t<tr>\r\n"
+                    result += u"\t<tr>\r\n"
                     for col in jsonData['properties'].keys():
-                        result += "\t\t<td>" + str(row[col]) + "</td>\r\n"
-                    result += "\t</tr>\r\n"
-                result += "</table>\r\n"
+                        result += u"\t\t<td>" + unicode(row[col]) + "</td>\r\n"
+                    result += u"\t</tr>\r\n"
+                result += u"</table>\r\n"
 
             if download_format in ['csv', 'tsv']:
                 self.request.response.setHeader(
@@ -110,16 +110,16 @@ class Sparql(BrowserView):
                     result += col + ":" + jsonData['properties'][col]
                     first = False
 
-                result += "\r\n"
+                result += u"\r\n"
                 for row in jsonData['items']:
                     first = True
                     for col in jsonData['properties'].keys():
                         if not first:
                             result += separator
-                        result += str(row[col])
+                        result += unicode(row[col])
                         first = False
 
-                    result += "\r\n"
+                    result += u"\r\n"
 
             return result
 
