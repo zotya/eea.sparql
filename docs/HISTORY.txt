@@ -1,7 +1,8 @@
 Changelog
 =========
 
-1.0-dev - (unreleased)
--------------------
- * Added cache configuration page [tiberich #4854]
+1.0 - (2012-03-05)
+------------------
+* Initial release
+  [Zoltan Szabo]
 
