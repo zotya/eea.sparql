@@ -95,17 +95,19 @@ def sparql2json(data):
         for item in row:
             rowdata[cols[idx].encode('utf8')] = item
             if (index == 1):
+                propertyValueType = 'text'
                 if isinstance(data['rows'][0][idx], sparql.Literal):
                     datatype = data['rows'][0][idx].datatype
                     if not datatype:
                         datatype = ''
-                    properties[
-                        cols[idx].encode('utf8')] = propertytype_dict[datatype]
+                    propertyValueType = propertytype_dict[datatype]
                 else:
                     if isinstance(data['rows'][0][idx], sparql.IRI):
-                        properties[cols[idx].encode('utf8')] = 'url'
+                        propertyValueType = 'url'
                     else:
-                        properties[cols[idx].encode('utf8')] = 'text'
+                        propertyValueType = 'text'
+                properties[cols[idx].encode('utf8')] = \
+                    {"valueType" : propertyValueType}
             idx += 1
 
         items.append(rowdata)
