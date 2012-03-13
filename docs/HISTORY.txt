@@ -3,6 +3,7 @@ Changelog
 
 1.1-dev - (unreleased)
 ----------------------
+* Change: added default icons for sparql and sparql bookmarks folder [demarant]
 * Change: Improved table preview dissolve design and template headings
   [demarant]
 * Bug fix: Fixed default view for sparql, so workflow dropdown is now displayed

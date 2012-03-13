@@ -71,5 +71,9 @@
         name="sparql.css"
         file="sparql.css"
     />
+    
+    <browser:resourceDirectory
+        name="eea.sparql.images"
+        directory="./img" />
 
 </configure>

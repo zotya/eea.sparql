@@ -6,7 +6,8 @@
   <property name="description"
     i18n:translate="">Sparql</property>
   <property name="content_meta_type">SparqlBookmarksFolder</property>
-  <property name="content_icon">document_icon.gif</property>
+  <property name="content_icon">
+  string:${portal_url}/++resource++eea.sparql.images/cloud.png</property>
   <property name="product">eea.sparql</property>
   <property name="factory">addSparqlBookmarksFolder</property>
   <property name="immediate_view">view</property>
