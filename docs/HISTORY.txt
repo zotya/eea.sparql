@@ -3,6 +3,8 @@ Changelog
 
 1.1-dev - (unreleased)
 ----------------------
+* Change: Improved table preview dissolve design and template headings
+  [demarant]
 * Bug fix: Fixed default view for sparql, so workflow dropdown is now displayed
   [szabozo0 #5002]
 * Bug fix: Fixed format of column properties in exhibit json
