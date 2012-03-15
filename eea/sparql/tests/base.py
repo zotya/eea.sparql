@@ -30,7 +30,7 @@ setup_sparql()
 ptc.setupPloneSite(products=['eea.sparql'])
 
 #port for mock http server
-PORT = 8888
+from eea.sparql.tests.mock_server import PORT
 
 class SparqlFunctionalTestCase(ptc.FunctionalTestCase):
     """ Base class for functional integration tests for the Sparql product.

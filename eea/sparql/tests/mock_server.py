@@ -1,12 +1,15 @@
 """ Mock http server for testing sparql"""
 
+from random import randint
 import BaseHTTPServer
 import sys
 import os
 
+PORT = randint(17000, 19000)
+
 class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     """ Mock http request handler"""
-    
+
     def do_POST(self):
         """ On post return the contents of sparql.xml file"""
         self.send_response(200)
@@ -23,6 +26,5 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    PORT = 8888
     httpd = BaseHTTPServer.HTTPServer(("", PORT), Handler)
     httpd.serve_forever()
