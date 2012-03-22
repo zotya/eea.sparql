@@ -71,9 +71,16 @@
         name="sparql.css"
         file="sparql.css"
     />
-    
+
     <browser:resourceDirectory
         name="eea.sparql.images"
         directory="./img" />
 
+    <browser:page
+        name="syncAllBookmarkFolders"
+        for="*"
+        class=".sparql.SparqlBookmarkFoldersSync"
+        permission="zope2.View"
+        />
+        
 </configure>

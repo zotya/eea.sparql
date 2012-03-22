@@ -1,5 +1,6 @@
 """ sparql
 """
+import logging
 
 from Products.Five import BrowserView
 from Products.ZSPARQLMethod.Method import interpolate_query_html
@@ -7,12 +8,15 @@ from Products.ZSPARQLMethod.Method import map_arg_values
 from Products.ZSPARQLMethod.Method import parse_arg_spec
 from eea.sparql.converter.sparql2json import sparql2json
 from Products.statusmessages.interfaces import IStatusMessage
+from Products.CMFCore.utils import getToolByName
 from lovely.memcached.event import InvalidateCacheEvent
 from time import time
 from zope.event import notify
 import hashlib
 import json
 import urllib2
+
+logger = logging.getLogger('eea.sparql')
 
 class Sparql(BrowserView):
     """Sparql view"""
@@ -208,3 +212,16 @@ class Caching(BrowserView):
 
         IStatusMessage(self.request).addStatusMessage("Cache invalidated")
         return self.index()
+
+class SparqlBookmarkFoldersSync(BrowserView):
+    """ Sync all Bookmark Folders """
+
+    def __call__(self):
+        catalog = getToolByName(self, 'portal_catalog')
+        brains = catalog.searchResults(portal_type = 'SparqlBookmarksFolder')
+        for brain in brains:
+            try:
+                brain.getObject().syncQueries()
+            except Exception, err:
+                logger.exception(err)
+        return "Sync done"

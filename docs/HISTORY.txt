@@ -3,6 +3,8 @@ Changelog
 
 1.1-dev - (unreleased)
 ----------------------
+* Feature: added page for syncing all sparql bookmark folders
+  [szabozo0 #5004]
 * Change: added default icons for sparql and sparql bookmarks folder [demarant]
 * Change: Improved table preview dissolve design and template headings
   [demarant]
