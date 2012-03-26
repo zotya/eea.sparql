@@ -68,7 +68,7 @@
         />
 
     <browser:resource
-        name="sparql.css"
+        name="eea.sparql.css"
         file="sparql.css"
     />
 

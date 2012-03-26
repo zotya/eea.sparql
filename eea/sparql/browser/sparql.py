@@ -217,6 +217,7 @@ class SparqlBookmarkFoldersSync(BrowserView):
     """ Sync all Bookmark Folders """
 
     def __call__(self):
+        import pdb; pdb.set_trace()
         catalog = getToolByName(self, 'portal_catalog')
         brains = catalog.searchResults(portal_type = 'SparqlBookmarksFolder')
         for brain in brains:

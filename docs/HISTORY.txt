@@ -3,6 +3,10 @@ Changelog
 
 1.1-dev - (unreleased)
 ----------------------
+* Change: moved sparql.css in portal_css
+  Upgrade step:
+  ZMI > portal_setup > profile "EEA Sparql" > import Stylesheet registry
+  [szabozo0 #4968]
 * Feature: added page for syncing all sparql bookmark folders
   [szabozo0 #5004]
 * Change: added default icons for sparql and sparql bookmarks folder [demarant]

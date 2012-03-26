@@ -3,11 +3,6 @@
   metal:use-macro="here/main_template/macros/master"
   i18n:domain="eea">
 
-<metal:css fill-slot="css_slot">
-    <style type="text/css" media="all"
-        tal:content="string: @import url(${context/absolute_url}/++resource++sparql.css);"></style>
-</metal:css>
-
 <body>
 
 <div metal:fill-slot="content-core" tal:define="options view/test_query">
