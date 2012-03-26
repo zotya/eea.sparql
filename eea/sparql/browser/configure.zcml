@@ -13,6 +13,13 @@
 
     <browser:page
         for="eea.sparql.interfaces.ISparql"
+        name="faceted-preview-item"
+        template="faceted-preview.pt"
+        permission="zope.Public"
+        />
+
+    <browser:page
+        for="eea.sparql.interfaces.ISparql"
         name="daviz-view.json"
         class=".sparql.Sparql"
         attribute="json"
@@ -67,9 +74,22 @@
         attribute="sparql_download"
         />
 
+    <browser:page
+        name="sparql.preview"
+        for="eea.sparql.interfaces.ISparql"
+        class=".sparql.Sparql"
+        permission="zope2.View"
+        template="table-preview.pt"
+        />
+
     <browser:resource
         name="eea.sparql.css"
-        file="sparql.css"
+        file="css/view.css"
+    />
+
+    <browser:resource
+        name="eea.sparql.js"
+        file="js/view.js"
     />
 
     <browser:resourceDirectory
@@ -82,5 +102,5 @@
         class=".sparql.SparqlBookmarkFoldersSync"
         permission="zope2.View"
         />
-        
+
 </configure>

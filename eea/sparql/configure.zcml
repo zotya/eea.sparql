@@ -9,6 +9,7 @@
 
   <include package=".browser" />
   <include package=".content" />
+  <include package=".upgrades" />
 
   <!-- Register the installation GenericSetup extension profile -->
   <genericsetup:registerProfile

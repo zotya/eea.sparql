@@ -144,7 +144,7 @@ class Sparql(BrowserView):
                 self.request.response.setHeader(
                     'Content-Type', 'application/xml')
                 self.request.response.setHeader(
-                    'Content-Disposition', 
+                    'Content-Disposition',
                         'attachment; filename="%s.xml"' %title)
 
             if download_format == 'xml_with_schema':

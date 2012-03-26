@@ -3,9 +3,13 @@ Changelog
 
 1.1-dev - (unreleased)
 ----------------------
+* Upgrade step: Within "Plone > Site setup > Add-ons" click on
+  upgrade button available for eea.sparql
+  [voineali #4968]
+* Feature: Added a table preview for sparql objects when used togheter with
+  eea.relations and eea.facetednavigation
+  [voineali #4968]
 * Change: moved sparql.css in portal_css
-  Upgrade step:
-  ZMI > portal_setup > profile "EEA Sparql" > import Stylesheet registry
   [szabozo0 #4968]
 * Feature: added page for syncing all sparql bookmark folders
   [szabozo0 #5004]

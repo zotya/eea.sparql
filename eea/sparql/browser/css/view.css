@@ -86,3 +86,41 @@ p.sparql-has-result .boolean {
     color:#F8F8F8 ;
     border: 1px solid #F8F8F8;
 }
+
+.eea-sparql-item span.preview {
+    font-size: 14px;
+    display: none;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+}
+
+.eea-sparql-item:hover span.photoAlbumEntryWrapper {
+    display: none;
+}
+
+.eea-sparql-item:hover .photoAlbumEntryTitle {
+    padding-top: 2em;
+    font-size: 16px;
+}
+
+.eea-sparql-item:hover span.preview {
+    display: block;
+}
+
+#eea-sparql-overlay {
+    background: white;
+    width: 70%;
+    height: 70%;
+    overflow: auto;
+}
+
+#eea-sparql-overlay .contentWrap table,
+#eea-sparql-overlay .loading {
+    width: 90%;
+    margin: 3em auto;
+}
+
+#eea-sparql-overlay .loading {
+    text-align: center;
+}
