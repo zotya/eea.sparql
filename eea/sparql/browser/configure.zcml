@@ -100,7 +100,7 @@
         name="syncAllBookmarkFolders"
         for="*"
         class=".sparql.SparqlBookmarkFoldersSync"
-        permission="zope2.View"
+        permission="zope.Public"
         />
 
 </configure>
