@@ -3,6 +3,14 @@ Changelog
 
 1.1-dev - (unreleased)
 ----------------------
+* Change: Added default workflow mapping. 
+  [demarant #5002]
+  Upgrade step: Within ZMI > Site setup > Import types.
+  For workflow change if have old content to migrate: 
+  Plone > Types > change workflow
+    Sparql -> one_state_workflow
+    SparqlBookmarksFolder -> folder_workflow
+    define the state mapping as you prefer.
 * Upgrade step: Within "Plone > Site setup > Add-ons" click on
   upgrade button available for eea.sparql
   [voineali #4968]
