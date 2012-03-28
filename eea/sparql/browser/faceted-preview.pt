@@ -18,7 +18,8 @@
     <span class="photoAlbumEntryWrapper" tal:condition="python:not image_thumb and image_tag">
       <img tal:replace="structure python:image_tag(scale='thumb', title=description)" />
     </span>
-    <span class="preview" i18n:translate="">Preview</span>
+    <div class="preview ui-icon ui-icon-search" title="Preview"
+     i18n:attributes="title">p</div>
     <script tal:content="string:
         jQuery('a[href=$url]').EEASparqlPreview();
     "></script>

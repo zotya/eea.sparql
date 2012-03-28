@@ -87,12 +87,14 @@ p.sparql-has-result .boolean {
     border: 1px solid #F8F8F8;
 }
 
-.eea-sparql-item span.preview {
+.eea-sparql-item div.preview {
     font-size: 14px;
-    display: none;
     position: absolute;
-    bottom: 1em;
-    right: 1em;
+    bottom: 0.7em;
+    left: 0.7em;
+    visibility: hidden;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
 .eea-sparql-item:hover span.photoAlbumEntryWrapper {
@@ -104,8 +106,8 @@ p.sparql-has-result .boolean {
     font-size: 16px;
 }
 
-.eea-sparql-item:hover span.preview {
-    display: block;
+.eea-sparql-item:hover div.preview {
+    visibility: visible;
 }
 
 #eea-sparql-overlay {
