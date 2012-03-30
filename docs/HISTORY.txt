@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.1-dev - (unreleased)
-----------------------
+1.1 - (2012-03-30)
+------------------
 * Change: Added default workflow mapping. 
   [demarant #5002]
   Upgrade step: Within ZMI > Site setup > Import types.
