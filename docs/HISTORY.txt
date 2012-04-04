@@ -3,6 +3,7 @@ Changelog
 
 1.2-dev - (unreleased)
 ----------------------
+* Upgrade step: Manually remove apache quickfixes from frontend servers
 
 1.1 - (2012-03-30)
 ------------------
