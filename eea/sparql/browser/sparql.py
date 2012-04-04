@@ -15,6 +15,7 @@ from zope.event import notify
 import hashlib
 import json
 import urllib2
+import contextlib
 
 logger = logging.getLogger('eea.sparql')
 
@@ -156,7 +157,11 @@ class Sparql(BrowserView):
                         'attachment; filename="%s.xml"' %title)
 
             request = urllib2.Request(endpoint, query, headers)
-            results = urllib2.urlopen(request).fp.read()
+
+#            results = urllib2.urlopen(request).fp.read()
+            results = ""
+            with contextlib.closing(urllib2.urlopen(request)) as x:
+                results = x.fp.read()
 
             return results
 
