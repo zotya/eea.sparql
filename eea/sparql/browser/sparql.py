@@ -112,7 +112,7 @@ class Sparql(BrowserView):
                 for col in jsonData['properties'].keys():
                     if not first:
                         result += separator
-                        result += col + ":" + jsonData['properties'][col]['valueType']
+                    result += col + ":" + jsonData['properties'][col]['valueType']
                     first = False
 
                 result += u"\r\n"
