@@ -48,6 +48,7 @@ class Sparql(BrowserView):
 
         options = {
             'query': interpolate_query_html(self.context.query, arg_values),
+            'query_with_comments': interpolate_query_html(self.context.query_with_comments, arg_values),
             'data': data,
             'duration': dt,
             'arg_spec': arg_spec,

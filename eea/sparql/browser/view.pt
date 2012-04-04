@@ -44,8 +44,8 @@
     </form>
 
     <blockquote class="sparql-query"
-            tal:condition="options/query|nothing"
-            tal:content="structure options/query"/>
+            tal:condition="options/query_with_comments|nothing"
+            tal:content="structure options/query_with_comments"/>
 
 
     <h3>Data preview</h3>

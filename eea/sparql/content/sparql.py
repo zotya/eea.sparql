@@ -92,6 +92,11 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
     @property
     def query(self):
         """query"""
+        return "\n".join(filter(lambda x:not x.strip().startswith("#"), self.sparql_query().splitlines()))
+
+    @property
+    def query_with_comments(self):
+        """query"""
         return self.sparql_query()
 
     security.declarePublic("execute_query")
@@ -120,7 +125,7 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
         for sparql in self.values():
             if sparql.title == title:
                 found = True
-                if sparql.query == query:
+                if sparql.query_with_comments == query:
                     changed = False
         if not found:
             return 0
@@ -140,7 +145,7 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
         for sparql in self.values():
             if sparql.title == title:
                 ob = sparql
-                if sparql.query == query:
+                if sparql.query_with_comments == query:
                     changed = False
 
         if not ob:

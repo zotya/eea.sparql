@@ -3,6 +3,8 @@ Changelog
 
 1.2-dev - (unreleased)
 ----------------------
+* Bug fix: Remove comments from queries so sparql-query should not fail
+  [szabozo0 #5073]
 * Bug fix: Explicitly close connections with remote servers and serve files in
   small chuncks on sparql to JSON/XML export.
   [voineali #5073]
