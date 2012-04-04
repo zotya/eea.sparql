@@ -3,6 +3,9 @@ Changelog
 
 1.2-dev - (unreleased)
 ----------------------
+* Bug fix: Explicitly close connections with remote servers and serve files in
+  small chuncks on sparql to JSON/XML export.
+  [voineali #5073]
 * Upgrade step: Manually remove apache quickfixes from frontend servers
 
 1.1 - (2012-03-30)

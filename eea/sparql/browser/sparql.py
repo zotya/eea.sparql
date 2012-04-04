@@ -61,9 +61,11 @@ class Sparql(BrowserView):
         return json.dumps(sparql2json(data))
 
     def sparql_download(self):
-        """download sparql results in various formats"""
+        """ Download sparql results in various formats
+        """
         download_format = self.request['format']
         title = self.context.title
+        results = ''
         if download_format in ['exhibit', 'html', 'tsv', 'csv']:
             data = self.context.execute_query()
             jsonData = sparql2json(data)
@@ -112,7 +114,8 @@ class Sparql(BrowserView):
                 for col in jsonData['properties'].keys():
                     if not first:
                         result += separator
-                    result += col + ":" + jsonData['properties'][col]['valueType']
+                    result += col + ":" + jsonData[
+                        'properties'][col]['valueType']
                     first = False
 
                 result += u"\r\n"
@@ -128,7 +131,7 @@ class Sparql(BrowserView):
 
             return result
 
-        if download_format in ['json', 'xml', 'xml_with_schema']:
+        elif download_format in ['json', 'xml', 'xml_with_schema']:
             endpoint = self.context.endpoint_url
             query = 'query='+self.context.query
             headers = ''
@@ -158,12 +161,12 @@ class Sparql(BrowserView):
 
             request = urllib2.Request(endpoint, query, headers)
 
-#            results = urllib2.urlopen(request).fp.read()
             results = ""
-            with contextlib.closing(urllib2.urlopen(request)) as x:
-                results = x.fp.read()
-
+            with contextlib.closing(urllib2.urlopen(request)) as conn:
+                for data in conn:
+                    self.request.response.write(data)
             return results
+        return results
 
 class SparqlBookmarksFolder(Sparql):
     """SparqlBookmarksFolder view"""
