@@ -124,9 +124,11 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
         changed = True
         for sparql in self.values():
             if sparql.title == title:
+                latest_sparql = versions.get_versions_api(sparql).latest_version()
                 found = True
-                if sparql.query_with_comments == query:
+                if latest_sparql.query_with_comments == query:
                     changed = False
+                break
         if not found:
             return 0
         else:
@@ -144,9 +146,11 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
         changed = True
         for sparql in self.values():
             if sparql.title == title:
-                ob = sparql
-                if sparql.query_with_comments == query:
+                latest_sparql = versions.get_versions_api(sparql).latest_version()
+                ob = latest_sparql
+                if latest_sparql.query_with_comments == query:
                     changed = False
+                break
 
         if not ob:
             _id = self.generateUniqueId("Sparql")
