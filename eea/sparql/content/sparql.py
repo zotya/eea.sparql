@@ -6,7 +6,8 @@ from Products.ATContentTypes.content import schemata, base
 from Products.ATContentTypes.content.folder import ATFolder
 
 from Products.Archetypes import atapi
-from Products.Archetypes.atapi import IntegerField, IntegerWidget
+from Products.Archetypes.atapi import IntegerField
+from Products.Archetypes.atapi import SelectionWidget
 from Products.Archetypes.atapi import Schema
 from Products.Archetypes.atapi import StringField, StringWidget
 from Products.Archetypes.atapi import TextField, TextAreaWidget
@@ -30,10 +31,14 @@ SparqlBaseSchema = atapi.Schema((
     ),
     IntegerField(
         name='timeout',
-        widget=IntegerWidget(
-            label="Timeout",
+        widget=SelectionWidget(
+            label="Timeout (seconds)",
         ),
-        required=0
+        required=1,
+        vocabulary=['10', '20', '30', '40', '50', '60'],
+        accessor='getTimeout',
+        edit_accessor='getTimeout',
+        mutator='setTimeout'
     ),
     StringField(
         name='arg_spec',
@@ -107,6 +112,15 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
         arg_values = map_arg_values(arg_spec, args)[1]
         return self.execute(**self.map_arguments(**arg_values))
 
+    security.declarePublic("getTimeout")
+    def getTimeout(self):
+        """timeout"""
+        return str(self.timeout)
+
+    security.declarePublic("setTimeout")
+    def setTimeout(self, value):
+        """timeout"""
+        self.timeout = int(value)
 
 class SparqlBookmarksFolder(ATFolder, Sparql):
     """Sparql Bookmarks Folder"""
