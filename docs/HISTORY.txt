@@ -3,6 +3,8 @@ Changelog
 
 1.2-dev - (unreleased)
 ----------------------
+* Feature: Made timeout mandatory, and set default value to 10 seconds
+  [szabozo0 #5079]
 * Bug fix: Fixed synchronization problems for sparql bookmark folders
   [szabozo0 #5078]
 * Bug fix: Remove comments from queries so sparql-query should not fail

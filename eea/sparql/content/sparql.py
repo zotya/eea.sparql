@@ -108,6 +108,8 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
     @cache(get_key=cacheKeySparql)
     def execute_query(self, args=None):
         """execute query"""
+        self.timeout = max(getattr(self,'timeout', 10), 10)
+
         arg_spec = parse_arg_spec(self.arg_spec)
         arg_values = map_arg_values(arg_spec, args)[1]
         return self.execute(**self.map_arguments(**arg_values))
