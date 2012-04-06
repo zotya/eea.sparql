@@ -68,8 +68,13 @@ class Sparql(BrowserView):
         title = self.context.title
         results = ''
         if download_format in ['exhibit', 'html', 'tsv', 'csv']:
-            data = self.context.execute_query()
-            jsonData = sparql2json(data)
+            try:
+                data = self.context.execute_query()
+                jsonData = sparql2json(data)
+            except:
+                data = None
+                jsonData = {'properties':{}, 'items':{}}
+
             result = u''
 
             if download_format == 'exhibit':
@@ -163,9 +168,13 @@ class Sparql(BrowserView):
             request = urllib2.Request(endpoint, query, headers)
 
             results = ""
-            with contextlib.closing(urllib2.urlopen(request)) as conn:
-                for data in conn:
-                    self.request.response.write(data)
+            try:
+                with contextlib.closing(urllib2.urlopen(request, timeout = self.context.timeout)) as conn:
+                    for data in conn:
+                        self.request.response.write(data)
+            except:
+                # timeout
+                pass
             return results
         return results
 

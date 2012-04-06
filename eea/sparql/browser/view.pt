@@ -58,9 +58,41 @@
       seconds</tal:block>.
     </p>
 
-    <tal:table define="data options/data" tal:condition="data">
-        <metal:table use-macro="here/@@sparql.preview/macros/table" />
-    </tal:table>
+    <tal:block define="data options/data" tal:condition="data">
+        <tal:table>
+            <metal:table use-macro="here/@@sparql.preview/macros/table" />
+        </tal:table>
+        <br/>
+        <h3>Downloads</h3>
+        <br/>
+        <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=json">
+            JSON
+        </a>
+        <br/>
+        <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=exhibit">
+            Exhibit JSON
+        </a>
+        <br/>
+        <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=html">
+            HTML
+        </a>
+        <br/>
+        <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=xml">
+            XML
+        </a>
+        <br/>
+        <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=xml_with_schema">
+            XML with Schema
+        </a>
+        <br/>
+        <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=csv">
+            CSV
+        </a>
+        <br/>
+        <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=tsv">
+            TSV
+        </a>
+    </tal:block>
 
     <p class="sparql-has-result"
        tal:define="has_result options/data/has_result|nothing"
@@ -75,36 +107,6 @@
             tal:condition="options/error|nothing"
             tal:content="options/error"/>
 
-    <br/>
-    <h3>Downloads</h3>
-    <br/>
-    <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=json">
-        JSON
-    </a>
-    <br/>
-    <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=exhibit">
-        Exhibit JSON
-    </a>
-    <br/>
-    <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=html">
-        HTML
-    </a>
-    <br/>
-    <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=xml">
-        XML
-    </a>
-    <br/>
-    <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=xml_with_schema">
-        XML with Schema
-    </a>
-    <br/>
-    <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=csv">
-        CSV
-    </a>
-    <br/>
-    <a tal:attributes="href string:${context/absolute_url}/@@sparql-download?format=tsv">
-        TSV
-    </a>
     <br/>
 
     <metal:versions use-macro="here/portlet_versions/macros/versions">
