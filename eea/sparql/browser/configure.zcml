@@ -27,14 +27,6 @@
         />
 
     <browser:page
-        for="eea.sparql.interfaces.ISparql"
-        name="caching"
-        class=".sparql.Caching"
-        permission="zope.Public"
-        template="caching.pt"
-        />
-
-    <browser:page
         name="view"
         for="eea.sparql.interfaces.ISparql"
         class=".sparql.Sparql"

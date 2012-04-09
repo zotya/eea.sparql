@@ -7,12 +7,8 @@ from Products.ZSPARQLMethod.Method import interpolate_query_html
 from Products.ZSPARQLMethod.Method import map_arg_values
 from Products.ZSPARQLMethod.Method import parse_arg_spec
 from eea.sparql.converter.sparql2json import sparql2json
-from Products.statusmessages.interfaces import IStatusMessage
 from Products.CMFCore.utils import getToolByName
-from lovely.memcached.event import InvalidateCacheEvent
 from time import time
-from zope.event import notify
-import hashlib
 import json
 import urllib2
 import contextlib
@@ -49,7 +45,8 @@ class Sparql(BrowserView):
 
         options = {
             'query': interpolate_query_html(self.context.query, arg_values),
-            'query_with_comments': interpolate_query_html(self.context.query_with_comments, arg_values),
+            'query_with_comments': interpolate_query_html(
+                self.context.query_with_comments, arg_values),
             'data': data,
             'duration': dt,
             'arg_spec': arg_spec,
@@ -72,7 +69,7 @@ class Sparql(BrowserView):
             try:
                 data = self.context.execute_query()
                 jsonData = sparql2json(data)
-            except:
+            except Exception:
                 data = None
                 jsonData = {'properties':{}, 'items':{}}
 
@@ -173,12 +170,13 @@ class Sparql(BrowserView):
             self.context.timeout = max(getattr(self.context,'timeout', 10), 10)
 
             try:
-                with contextlib.closing(urllib2.urlopen(request, timeout = self.context.timeout)) as conn:
+                with contextlib.closing(urllib2.urlopen(
+                    request, timeout = self.context.timeout)) as conn:
                     for data in conn:
                         self.request.response.write(data)
-            except:
+            except Exception:
                 # timeout
-                pass
+                return results
             return results
         return results
 
@@ -218,22 +216,6 @@ class SparqlBookmarksFolder(Sparql):
         """Synchronize all Queries"""
         self.context.syncQueries()
         self.request.response.redirect(self.context.absolute_url() + "/@@view")
-
-class Caching(BrowserView):
-    """ Caching for sparql query results """
-
-    def __call__(self):
-        if not "submit" in self.request.form:
-            return self.index()
-
-        c = self.context
-        key = str(c.getArg_spec()) + str(c.getSparql_query())
-        key = hashlib.md5(key).hexdigest()
-
-        notify(InvalidateCacheEvent())
-
-        IStatusMessage(self.request).addStatusMessage("Cache invalidated")
-        return self.index()
 
 class SparqlBookmarkFoldersSync(BrowserView):
     """ Sync all Bookmark Folders """

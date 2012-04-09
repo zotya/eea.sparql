@@ -13,7 +13,7 @@ from Products.Archetypes.atapi import StringField, StringWidget
 from Products.Archetypes.atapi import TextField, TextAreaWidget
 from Products.ZSPARQLMethod.Method import ZSPARQLMethod
 from Products.ZSPARQLMethod.Method import parse_arg_spec, map_arg_values
-from eea.cache import cache
+from eea.sparql.cache import ramcache, cacheSparqlKey
 from eea.sparql.config import PROJECTNAME
 from eea.sparql.interfaces import ISparql, ISparqlBookmarksFolder
 from eea.versions.interfaces import IVersionEnhanced
@@ -72,11 +72,6 @@ SparqlBookmarksFolderSchema = getattr(ATFolder, 'schema', Schema(())).copy() + \
 SparqlBookmarksFolderSchema['sparql_query'].widget.description = \
         'The query should return label, bookmark url, query'
 
-def cacheKeySparql(fun, self):
-    """ Cache key for Sparql Query """
-    return str(self.getArg_spec()) + str(self.getSparql_query())
-
-
 class Sparql(base.ATCTContent, ZSPARQLMethod):
     """Sparql"""
     implements(ISparql, IVersionEnhanced)
@@ -97,7 +92,8 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
     @property
     def query(self):
         """query"""
-        return "\n".join(filter(lambda x:not x.strip().startswith("#"), self.sparql_query().splitlines()))
+        return "\n".join(x for x in self.sparql_query().splitlines()
+                         if not x.strip().startswith("#"))
 
     @property
     def query_with_comments(self):
@@ -105,7 +101,7 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
         return self.sparql_query()
 
     security.declarePublic("execute_query")
-    @cache(get_key=cacheKeySparql)
+    @ramcache(cacheSparqlKey, dependencies=['eea.sparql'])
     def execute_query(self, args=None):
         """execute query"""
         self.timeout = max(getattr(self,'timeout', 10), 10)
@@ -140,7 +136,8 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
         changed = True
         for sparql in self.values():
             if sparql.title == title:
-                latest_sparql = versions.get_versions_api(sparql).latest_version()
+                latest_sparql = versions.get_versions_api(
+                    sparql).latest_version()
                 found = True
                 if latest_sparql.query_with_comments == query:
                     changed = False
@@ -162,7 +159,8 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
         changed = True
         for sparql in self.values():
             if sparql.title == title:
-                latest_sparql = versions.get_versions_api(sparql).latest_version()
+                latest_sparql = versions.get_versions_api(
+                    sparql).latest_version()
                 ob = latest_sparql
                 if latest_sparql.query_with_comments == query:
                     changed = False

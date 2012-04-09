@@ -1,0 +1,13 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  i18n_domain="eea">
+
+  <browser:page
+    for="eea.sparql.interfaces.ISparql"
+    name="caching"
+    class=".browser.InvalidateCache"
+    permission="zope.Public"
+    template="caching.pt"
+    />
+
+</configure>
