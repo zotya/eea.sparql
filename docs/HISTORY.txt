@@ -3,6 +3,9 @@ Changelog
 
 1.2-dev - (unreleased)
 ----------------------
+* Bug fix: Invalidate memcache and varnish for Sparql instances and
+  related items
+  [voineali #5074]
 * Feature: Made timeout mandatory, and set default value to 10 seconds
   [szabozo0 #5079]
 * Bug fix: Fixed synchronization problems for sparql bookmark folders

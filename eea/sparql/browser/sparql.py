@@ -165,11 +165,8 @@ class Sparql(BrowserView):
                         'attachment; filename="%s.xml"' %title)
 
             request = urllib2.Request(endpoint, query, headers)
-
             results = ""
-
             self.context.timeout = max(getattr(self.context, 'timeout', 10), 10)
-
             try:
                 with contextlib.closing(urllib2.urlopen(
                     request, timeout = self.context.timeout)) as conn:

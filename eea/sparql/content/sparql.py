@@ -105,7 +105,6 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
     def execute_query(self, args=None):
         """execute query"""
         self.timeout = max(getattr(self, 'timeout', 10), 10)
-
         arg_spec = parse_arg_spec(self.arg_spec)
         arg_values = map_arg_values(arg_spec, args)[1]
         return self.execute(**self.map_arguments(**arg_values))
@@ -118,7 +117,10 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
     security.declarePublic("setTimeout")
     def setTimeout(self, value):
         """timeout"""
-        self.timeout = int(value)
+        try:
+            self.timeout = int(value)
+        except Exception:
+            self.timeout = 10
 
 class SparqlBookmarksFolder(ATFolder, Sparql):
     """Sparql Bookmarks Folder"""
