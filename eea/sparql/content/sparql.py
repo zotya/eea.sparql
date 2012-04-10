@@ -34,6 +34,7 @@ SparqlBaseSchema = atapi.Schema((
         widget=SelectionWidget(
             label="Timeout (seconds)",
         ),
+        default=10,
         required=1,
         vocabulary=['10', '20', '30', '40', '50', '60'],
         accessor='getTimeout',
