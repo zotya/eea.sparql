@@ -33,7 +33,8 @@ class Sparql(BrowserView):
             t0 = time()
 
             try:
-                self.context.timeout = max(getattr(self.context,'timeout', 10), 10)
+                self.context.timeout = max(
+                    getattr(self.context, 'timeout', 10), 10)
                 data = self.context.execute(**arg_values)
 
             except Exception:
@@ -167,7 +168,7 @@ class Sparql(BrowserView):
 
             results = ""
 
-            self.context.timeout = max(getattr(self.context,'timeout', 10), 10)
+            self.context.timeout = max(getattr(self.context, 'timeout', 10), 10)
 
             try:
                 with contextlib.closing(urllib2.urlopen(

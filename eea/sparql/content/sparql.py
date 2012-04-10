@@ -104,7 +104,7 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
     @ramcache(cacheSparqlKey, dependencies=['eea.sparql'])
     def execute_query(self, args=None):
         """execute query"""
-        self.timeout = max(getattr(self,'timeout', 10), 10)
+        self.timeout = max(getattr(self, 'timeout', 10), 10)
 
         arg_spec = parse_arg_spec(self.arg_spec)
         arg_values = map_arg_values(arg_spec, args)[1]
