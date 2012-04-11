@@ -1,6 +1,9 @@
 Changelog
 =========
 
+1.3-dev - (unreleased)
+----------------------
+
 1.2 - (2012-04-11)
 ------------------
 * Bug fix: Invalidate memcache and varnish for Sparql instances and
