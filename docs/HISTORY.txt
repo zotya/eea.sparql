@@ -3,6 +3,9 @@ Changelog
 
 1.3-dev - (unreleased)
 ----------------------
+* Bug fix: Split @@sparql-download into multiple views (sparql.tsv,
+  sparql.csv, etc) in order to easily cache and purge them with plone.app.caching
+  [voineali #5074]
 * Bug fix: Set default format to html on download view
   [szabozo0 #5089]
 
@@ -29,8 +32,8 @@ Changelog
 * Upgrade step: Within ZMI > Site setup > Import types.
   For workflow change if have old content to migrate:
   Plone > Types > change workflow:
-   - Sparql -> one_state_workflow
-   - SparqlBookmarksFolder -> folder_workflow define the state mapping as you prefer.
+  - Sparql -> one_state_workflow;
+  - SparqlBookmarksFolder -> folder_workflow define the state mapping as you prefer.
 * Upgrade step: Within "Plone > Site setup > Add-ons" click on
   upgrade button available for eea.sparql
   [voineali #4968]

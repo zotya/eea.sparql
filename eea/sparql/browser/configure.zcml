@@ -59,11 +59,59 @@
         />
 
     <browser:page
-        name="sparql-download"
+        name="sparql.exhibit"
         for="eea.sparql.interfaces.ISparql"
         class=".sparql.Sparql"
         permission="zope2.View"
-        attribute="sparql_download"
+        attribute="sparql2exhibit"
+        />
+
+    <browser:page
+        name="sparql.html"
+        for="eea.sparql.interfaces.ISparql"
+        class=".sparql.Sparql"
+        permission="zope2.View"
+        attribute="sparql2html"
+        />
+
+    <browser:page
+        name="sparql.tsv"
+        for="eea.sparql.interfaces.ISparql"
+        class=".sparql.Sparql"
+        permission="zope2.View"
+        attribute="sparql2tsv"
+        />
+
+    <browser:page
+        name="sparql.csv"
+        for="eea.sparql.interfaces.ISparql"
+        class=".sparql.Sparql"
+        permission="zope2.View"
+        attribute="sparql2csv"
+        />
+
+    <browser:page
+        name="sparql.json"
+        for="eea.sparql.interfaces.ISparql"
+        class=".sparql.Sparql"
+        permission="zope2.View"
+        attribute="sparql2json"
+        />
+
+    <browser:page
+        name="sparql.xml"
+        for="eea.sparql.interfaces.ISparql"
+        class=".sparql.Sparql"
+        permission="zope2.View"
+        attribute="sparql2xml"
+        />
+
+    <browser:page
+        name="sparql.schema.xml"
+        for="eea.sparql.interfaces.ISparql"
+        class=".sparql.Sparql"
+        permission="zope2.View"
+        attribute="sparql2xmlWithSchema"
         />
 
     <browser:page

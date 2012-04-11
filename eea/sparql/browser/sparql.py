@@ -1,7 +1,7 @@
 """ sparql
 """
 import logging
-
+import csv
 from Products.Five import BrowserView
 from Products.ZSPARQLMethod.Method import interpolate_query_html
 from Products.ZSPARQLMethod.Method import map_arg_values
@@ -14,6 +14,12 @@ import urllib2
 import contextlib
 
 logger = logging.getLogger('eea.sparql')
+
+class ExcelTSV(csv.excel):
+    """ CSV Tab Separated Dialect
+    """
+    delimiter = '\t'
+csv.register_dialect("excel.tsv", ExcelTSV)
 
 class Sparql(BrowserView):
     """Sparql view"""
@@ -58,122 +64,137 @@ class Sparql(BrowserView):
         data = self.context.execute_query()
         return json.dumps(sparql2json(data))
 
-    def sparql_download(self):
-        """ Download sparql results in various formats
+    def sparql2exhibit(self):
+        """ Download sparql results as Exhibit JSON
         """
-        download_format = self.request.get('format', 'html')
-        title = self.context.title
-        results = ''
-        if download_format in ['exhibit', 'html', 'tsv', 'csv']:
-            try:
-                data = self.context.execute_query()
-                jsonData = sparql2json(data)
-            except Exception:
-                data = None
-                jsonData = {'properties':{}, 'items':{}}
+        try:
+            data = sparql2json(self.context.execute_query())
+        except Exception:
+            data = {'properties':{}, 'items':{}}
 
-            result = u''
+        self.request.response.setHeader(
+            'Content-Type', 'application/json')
+        self.request.response.setHeader(
+            'Content-Disposition',
+            'attachment; filename="%s.json"' % self.context.title)
+        return json.dumps(data)
 
-            if download_format == 'exhibit':
-                self.request.response.setHeader(
-                    'Content-Type', 'application/json')
-                self.request.response.setHeader(
-                    'Content-Disposition',
-                        'attachment; filename="%s.json"' %title)
-                result = json.dumps(jsonData)
+    def sparql2html(self):
+        """ Download sparql results as HTML
+        """
+        try:
+            data = sparql2json(self.context.execute_query())
+        except Exception:
+            data = {'properties':{}, 'items':{}}
 
-            if download_format == 'html':
-                result += u"<style type='text/css'>\r\n"
-                result += u"table{border-collapse:collapse}\r\n"
-                result += u"th,td {border:1px solid black}\r\n"
-                result += u"</style>\r\n"
-                result += u"<table>\r\n"
-                result += u"\t<tr>\r\n"
-                for col in jsonData['properties'].keys():
-                    result += u"\t\t<th>" + col + u"</th>\r\n"
-                result += u"\t</tr>\r\n"
-                for row in jsonData['items']:
-                    result += u"\t<tr>\r\n"
-                    for col in jsonData['properties'].keys():
-                        result += u"\t\t<td>" + unicode(row[col]) + "</td>\r\n"
-                    result += u"\t</tr>\r\n"
-                result += u"</table>\r\n"
+        result = []
+        result.append(u"<style type='text/css'>")
+        result.append(u"table {border-collapse: collapse }")
+        result.append( u"th, td {border:1px solid black}")
+        result.append(u"</style>")
+        result.append(u"<table>")
+        result.append(u"\t<tr>")
+        for col in data['properties'].keys():
+            result.append(u"\t\t<th>" + col + u"</th>")
+        result.append(u"\t</tr>")
+        for row in data['items']:
+            result.append(u"\t<tr>")
+            for col in data['properties'].keys():
+                result.append(u"\t\t<td>" + unicode(row[col]) + "</td>")
+            result.append(u"\t</tr>")
+        result.append(u"</table>")
+        return '\n'.join(result)
 
-            if download_format in ['csv', 'tsv']:
-                self.request.response.setHeader(
-                    'Content-Type', 'application/csv')
-                self.request.response.setHeader(
-                    'Content-Disposition',
-                        'attachment; filename="%s.csv"' %title)
-                separator = ', '
-                if download_format == 'tsv':
-                    self.request.response.setHeader(
-                        'Content-Type', 'application/tsv')
-                    self.request.response.setHeader(
-                        'Content-Disposition',
-                            'attachment; filename="%s.tsv"' %title)
-                    separator = '\t'
-                first = True
-                for col in jsonData['properties'].keys():
-                    if not first:
-                        result += separator
-                    result += col + ":" + jsonData[
-                        'properties'][col]['valueType']
-                    first = False
+    def sparql2csv(self, dialect='excel'):
+        """ Download sparql results as Comma Separated File
+        """
+        try:
+            data = sparql2json(self.context.execute_query())
+        except Exception:
+            data = {'properties':{}, 'items':{}}
 
-                result += u"\r\n"
-                for row in jsonData['items']:
-                    first = True
-                    for col in jsonData['properties'].keys():
-                        if not first:
-                            result += separator
-                        result += unicode(row[col])
-                        first = False
+        if dialect == 'excel':
+            self.request.response.setHeader(
+                'Content-Type', 'application/csv')
+            self.request.response.setHeader(
+                'Content-Disposition',
+                'attachment; filename="%s.csv"' % self.context.title)
+        else:
+            self.request.response.setHeader(
+                'Content-Type', 'application/tsv')
+            self.request.response.setHeader(
+                'Content-Disposition',
+                'attachment; filename="%s.tsv"' % self.context.title)
 
-                    result += u"\r\n"
+        writter = csv.writer(self.request.response, dialect=dialect)
+        row = []
+        headers = data['properties'].keys()
+        for col in headers:
+            header = '%s:%s' % (col, data['properties'][col]['valueType'])
+            row.append(header)
+        writter.writerow(row)
 
-            return result
+        for item in data['items']:
+            row = []
+            for col in headers:
+                row.append(unicode(item[col]))
+            writter.writerow(row)
 
-        elif download_format in ['json', 'xml', 'xml_with_schema']:
-            endpoint = self.context.endpoint_url
-            query = 'query='+self.context.query
-            headers = ''
-            if download_format == 'json':
-                headers = {'Accept' : 'application/sparql-results+json'}
-                self.request.response.setHeader(
-                    'Content-Type', 'application/json')
-                self.request.response.setHeader(
-                    'Content-Disposition',
-                        'attachment; filename="%s.json"' %title)
+        return ''
 
-            if download_format == 'xml':
-                headers = {'Accept' : 'application/sparql-results+xml'}
-                self.request.response.setHeader(
-                    'Content-Type', 'application/xml')
-                self.request.response.setHeader(
-                    'Content-Disposition',
-                        'attachment; filename="%s.xml"' %title)
+    def sparql2tsv(self, dialect='excel.tsv'):
+        """ Download sparql results as Tab Separated File
+        """
+        return self.sparql2csv(dialect=dialect)
 
-            if download_format == 'xml_with_schema':
-                headers = {'Accept' : 'application/x-ms-access-export+xml'}
-                self.request.response.setHeader(
-                    'Content-Type', 'application/xml')
-                self.request.response.setHeader(
-                    'Content-Disposition',
-                        'attachment; filename="%s.xml"' %title)
+    def sparql2json(self):
+        """ Download sparql results as JSON
+        """
+        headers = {'Accept' : 'application/sparql-results+json'}
+        self.request.response.setHeader(
+            'Content-Type', 'application/json')
+        self.request.response.setHeader(
+            'Content-Disposition',
+            'attachment; filename="%s.json"' % self.context.title)
+        return self.sparql2response(headers=headers)
 
-            request = urllib2.Request(endpoint, query, headers)
-            results = ""
-            timeout = max(getattr(self.context, 'timeout', 10), 10)
-            try:
-                with contextlib.closing(urllib2.urlopen(
-                    request, timeout = timeout)) as conn:
-                    for data in conn:
-                        self.request.response.write(data)
-            except Exception:
-                # timeout
-                return results
-            return results
+    def sparql2xml(self):
+        """ Download sparql results as XML
+        """
+        headers = {'Accept' : 'application/sparql-results+xml'}
+        self.request.response.setHeader(
+            'Content-Type', 'application/xml')
+        self.request.response.setHeader(
+            'Content-Disposition',
+                'attachment; filename="%s.xml"' % self.context.title)
+        return self.sparql2response(headers=headers)
+
+    def sparql2xmlWithSchema(self):
+        """ Download sparql results as XML with schema
+        """
+        headers = {'Accept' : 'application/x-ms-access-export+xml'}
+        self.request.response.setHeader(
+            'Content-Type', 'application/xml')
+        self.request.response.setHeader(
+            'Content-Disposition',
+                'attachment; filename="%s.xml"' % self.context.title)
+        return self.sparql2response(headers=headers)
+
+    def sparql2response(self, headers=None):
+        """ Write
+        """
+        endpoint = self.context.endpoint_url
+        query = 'query=%s' % self.context.query
+        request = urllib2.Request(endpoint, query, headers or {})
+        results = ""
+        timeout = max(getattr(self.context, 'timeout', 10), 10)
+        try:
+            with contextlib.closing(urllib2.urlopen(
+                request, timeout = timeout)) as conn:
+                for data in conn:
+                    self.request.response.write(data)
+        except Exception, err:
+            logger.exception(err)
         return results
 
 class SparqlBookmarksFolder(Sparql):
