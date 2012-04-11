@@ -61,7 +61,7 @@ class Sparql(BrowserView):
     def sparql_download(self):
         """ Download sparql results in various formats
         """
-        download_format = self.request['format']
+        download_format = self.request.get('format', 'html')
         title = self.context.title
         results = ''
         if download_format in ['exhibit', 'html', 'tsv', 'csv']:
