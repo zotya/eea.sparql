@@ -11,8 +11,13 @@ from Products.Archetypes.atapi import SelectionWidget
 from Products.Archetypes.atapi import Schema
 from Products.Archetypes.atapi import StringField, StringWidget
 from Products.Archetypes.atapi import TextField, TextAreaWidget
-from Products.ZSPARQLMethod.Method import ZSPARQLMethod
-from Products.ZSPARQLMethod.Method import parse_arg_spec, map_arg_values
+from Products.ZSPARQLMethod.Method import ZSPARQLMethod, \
+                                        interpolate_query, \
+                                        run_with_timeout, \
+                                        query_and_get_result, \
+                                        parse_arg_spec, \
+                                        map_arg_values
+from AccessControl.Permissions import view
 from eea.sparql.cache import ramcache, cacheSparqlKey
 from eea.sparql.config import PROJECTNAME
 from eea.sparql.interfaces import ISparql, ISparqlBookmarksFolder
@@ -105,7 +110,6 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
     @ramcache(cacheSparqlKey, dependencies=['eea.sparql'])
     def execute_query(self, args=None):
         """execute query"""
-        self.timeout = max(getattr(self, 'timeout', 10), 10)
         arg_spec = parse_arg_spec(self.arg_spec)
         arg_values = map_arg_values(arg_spec, args)[1]
         return self.execute(**self.map_arguments(**arg_values))
@@ -122,6 +126,26 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
             self.timeout = int(value)
         except Exception:
             self.timeout = 10
+
+    security.declareProtected(view, 'execute')
+    def execute(self, **arg_values):
+        """
+        Override execute from ZSPARQLMethod in order to have a default timeout
+        """
+        cooked_query = interpolate_query(self.query, arg_values)
+        cache_key = {'query': cooked_query}
+        result = self.ZCacheable_get(keywords=cache_key)
+
+        if result is None:
+            args = (self.endpoint_url, cooked_query)
+            result = run_with_timeout(
+                max(getattr(self, 'timeout', 10), 10),
+                query_and_get_result,
+                *args)
+            self.ZCacheable_set(result, keywords=cache_key)
+
+        return result
+
 
 class SparqlBookmarksFolder(ATFolder, Sparql):
     """Sparql Bookmarks Folder"""
