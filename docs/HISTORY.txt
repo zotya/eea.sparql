@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.2-dev - (unreleased)
-----------------------
+1.2 - (2012-04-11)
+------------------
 * Bug fix: Invalidate memcache and varnish for Sparql instances and
   related items
   [voineali #5074]
@@ -24,10 +24,8 @@ Changelog
 * Upgrade step: Within ZMI > Site setup > Import types.
   For workflow change if have old content to migrate:
   Plone > Types > change workflow:
-
    - Sparql -> one_state_workflow
    - SparqlBookmarksFolder -> folder_workflow define the state mapping as you prefer.
-
 * Upgrade step: Within "Plone > Site setup > Add-ons" click on
   upgrade button available for eea.sparql
   [voineali #4968]
@@ -50,3 +48,4 @@ Changelog
 ------------------
 * Initial release
   [Zoltan Szabo]
+
