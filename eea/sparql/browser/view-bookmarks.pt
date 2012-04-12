@@ -103,7 +103,7 @@
         Exhibit JSON
     </a>
     <br/>
-    <a tal:attributes="href string:${context/absolute_url}/sparql.html">
+    <a tal:attributes="href string:${context/absolute_url}/sparql.table">
         HTML
     </a>
     <br/>

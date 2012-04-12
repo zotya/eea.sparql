@@ -126,3 +126,10 @@ p.sparql-has-result .boolean {
 #eea-sparql-overlay .loading {
     text-align: center;
 }
+
+.eea-sparql-table {
+    overflow: hidden;
+}
+
+.eea-sparql-downloads {
+}

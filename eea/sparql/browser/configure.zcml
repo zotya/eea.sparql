@@ -67,7 +67,7 @@
         />
 
     <browser:page
-        name="sparql.html"
+        name="sparql.table"
         for="eea.sparql.interfaces.ISparql"
         class=".sparql.Sparql"
         permission="zope2.View"
