@@ -3,8 +3,8 @@ Changelog
 
 1.3-dev - (unreleased)
 ----------------------
-* Bug fix: Split @@sparql-download into multiple views (sparql.tsv,
-  sparql.csv, etc) in order to easily cache and purge them with plone.app.caching
+* Bug fix: Split @@sparql-download into multiple views (download.tsv,
+  download.csv, etc) in order to easily cache and purge them with plone.app.caching
   [voineali #5074]
 * Bug fix: Set default format to html on download view
   [szabozo0 #5089]

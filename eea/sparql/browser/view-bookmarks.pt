@@ -95,31 +95,31 @@
     <br/>
     <label>Downloads:</label>
     <br/>
-    <a tal:attributes="href string:${context/absolute_url}/sparql.json">
+    <a tal:attributes="href string:${context/absolute_url}/download.json">
         JSON
     </a>
     <br/>
-    <a tal:attributes="href string:${context/absolute_url}/sparql.exhibit">
+    <a tal:attributes="href string:${context/absolute_url}/download.exhibit">
         Exhibit JSON
     </a>
     <br/>
-    <a tal:attributes="href string:${context/absolute_url}/sparql.table">
+    <a tal:attributes="href string:${context/absolute_url}/download.table">
         HTML
     </a>
     <br/>
-    <a tal:attributes="href string:${context/absolute_url}/sparql.xml">
+    <a tal:attributes="href string:${context/absolute_url}/download.xml">
         XML
     </a>
     <br/>
-    <a tal:attributes="href string:${context/absolute_url}/sparql.schema.xml">
+    <a tal:attributes="href string:${context/absolute_url}/download.schema.xml">
         XML with Schema
     </a>
     <br/>
-    <a tal:attributes="href string:${context/absolute_url}/sparql.csv">
+    <a tal:attributes="href string:${context/absolute_url}/download.csv">
         CSV
     </a>
     <br/>
-    <a tal:attributes="href string:${context/absolute_url}/sparql.tsv">
+    <a tal:attributes="href string:${context/absolute_url}/download.tsv">
         TSV
     </a>
     <br/>
