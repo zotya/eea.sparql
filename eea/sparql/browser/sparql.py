@@ -76,7 +76,7 @@ class Sparql(BrowserView):
             'Content-Type', 'application/json')
         self.request.response.setHeader(
             'Content-Disposition',
-            'attachment; filename="%s.json"' % self.context.title)
+            'attachment; filename="%s.exhibit.json"' % self.context.getId())
         return json.dumps(data)
 
     def sparql2html(self):
@@ -118,13 +118,13 @@ class Sparql(BrowserView):
                 'Content-Type', 'application/csv')
             self.request.response.setHeader(
                 'Content-Disposition',
-                'attachment; filename="%s.csv"' % self.context.title)
+                'attachment; filename="%s.csv"' % self.context.getId())
         else:
             self.request.response.setHeader(
                 'Content-Type', 'application/tsv')
             self.request.response.setHeader(
                 'Content-Disposition',
-                'attachment; filename="%s.tsv"' % self.context.title)
+                'attachment; filename="%s.tsv"' % self.context.getId())
 
         writter = csv.writer(self.request.response, dialect=dialect)
         row = []
@@ -155,7 +155,7 @@ class Sparql(BrowserView):
             'Content-Type', 'application/json')
         self.request.response.setHeader(
             'Content-Disposition',
-            'attachment; filename="%s.json"' % self.context.title)
+            'attachment; filename="%s.json"' % self.context.getId())
         return self.sparql2response(headers=headers)
 
     def sparql2xml(self):
@@ -166,7 +166,7 @@ class Sparql(BrowserView):
             'Content-Type', 'application/xml')
         self.request.response.setHeader(
             'Content-Disposition',
-                'attachment; filename="%s.xml"' % self.context.title)
+                'attachment; filename="%s.xml"' % self.context.getId())
         return self.sparql2response(headers=headers)
 
     def sparql2xmlWithSchema(self):
@@ -177,7 +177,7 @@ class Sparql(BrowserView):
             'Content-Type', 'application/xml')
         self.request.response.setHeader(
             'Content-Disposition',
-                'attachment; filename="%s.xml"' % self.context.title)
+                'attachment; filename="%s.schema.xml"' % self.context.getId())
         return self.sparql2response(headers=headers)
 
     def sparql2response(self, headers=None):
