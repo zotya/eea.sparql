@@ -102,7 +102,7 @@ p.sparql-has-result .boolean {
 }
 
 .eea-sparql-item:hover .photoAlbumEntryTitle {
-    padding-top: 2em;
+    padding-top: 1em;
     font-size: 16px;
 }
 
