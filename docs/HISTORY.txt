@@ -3,6 +3,10 @@ Changelog
 
 1.4-dev - (unreleased)
 ----------------------
+* Feature: Add visualizations column on sparql folder listing view
+  [voineali refs #5005]
+* Bug fix: Include dependencies within zcml and profile metadata
+  [voineali]
 
 1.3 - (2012-04-26)
 ------------------

@@ -7,6 +7,7 @@ from Products.ZSPARQLMethod.Method import interpolate_query_html
 from Products.ZSPARQLMethod.Method import map_arg_values
 from Products.ZSPARQLMethod.Method import parse_arg_spec
 from eea.sparql.converter.sparql2json import sparql2json
+from eea.versions import versions
 from Products.CMFCore.utils import getToolByName
 from time import time
 import json
@@ -233,6 +234,21 @@ class SparqlBookmarksFolder(Sparql):
         """Synchronize all Queries"""
         self.context.syncQueries()
         self.request.response.redirect(self.context.absolute_url() + "/@@view")
+
+    def getVisualizations(self, title):
+        """ Get Daviz Visualizations for sparql object
+        """
+        ob = None
+        for sparql in self.context.values():
+            if sparql.title == title:
+                ob = versions.get_versions_api(
+                    sparql).latest_version()
+                break
+        if not ob:
+            return []
+
+        return ob.getBRefs('relatesTo')
+
 
 class SparqlBookmarkFoldersSync(BrowserView):
     """ Sync all Bookmark Folders """

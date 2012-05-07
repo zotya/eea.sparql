@@ -21,13 +21,16 @@ table.sparql-results {
     border-collapse: collapse;
 }
 
-table.sparql-results th {
-border: 1px solid #999;
-background: #ececec;
-}
-
 table.sparql-results th, table.sparql-results td {
     padding: 3px;
+}
+
+table.sparql-results th {
+    text-align: center;
+}
+
+table.sparql-results td {
+    vertical-align: middle;
 }
 
 p.sparql-stats .number {
