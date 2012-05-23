@@ -60,7 +60,7 @@ class Sparql(BrowserView):
         }
         return options
 
-    def json(self):
+    def json(self, column_types=None):
         """json"""
         data = self.context.execute_query()
         return json.dumps(sparql2json(data))
