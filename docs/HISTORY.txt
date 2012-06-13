@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.4-dev - (unreleased)
-----------------------
+1.4 - (2012-06-13)
+------------------
 * Bug fix: fixed markup of HISTORY.txt file
   [ciobabog refs #5231]
 * Feature: Add visualizations column on sparql folder listing view
