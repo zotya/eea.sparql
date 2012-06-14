@@ -9,20 +9,20 @@
         <metal:old fill-slot="old" />
     </metal:versions>
 
-    <label>JSON Url:</label>
+    <label i18n:translate="json_url">JSON Url:</label>
     <br/>
     <a tal:attributes="href string:${context/absolute_url}/daviz-view.json"
        tal:content="string:${context/absolute_url}/daviz-view.json">link</a>
 
     <br/>
     <br/>
-    <label>Endpoint:</label>
+    <label i18n:translate="endpoint">Endpoint:</label>
     <br/>
     <span tal:content="context/endpoint_url">endpoint</span>
 
     <br/>
     <br/>
-    <label>Query:</label>
+    <label i18n:translate="query">Query:</label>
     <!--br/>
     <blockquote class="sparql-query"
             tal:content="context/query"/-->
@@ -39,7 +39,7 @@
                    tal:attributes="name input_name; value prev_value"/>
           </td>
         </tr>
-        <tr><td colspan="2"><input type="submit" value="Execute"/></td></tr>
+        <tr><td colspan="2"><input type="submit" value="Execute" i18n:attributes="value"/></td></tr>
       </table>
     </form>
 
@@ -48,7 +48,7 @@
             tal:content="structure options/query_with_comments"/>
 
 
-    <h3>Data preview</h3>
+    <h3 i18n:translate="data_preview">Data preview</h3>
 
     <p class="sparql-stats" tal:condition="options/data">
       Received
@@ -63,27 +63,22 @@
         <metal:table use-macro="here/@@sparql.preview/macros/table" />
       </div>
 
-      <h3>Downloads</h3>
+      <h3 i18n:translate="downloads">Downloads</h3>
       <div class="eea-sparql-downloads">
-        <a tal:attributes="href string:${context/absolute_url}/download.table">
-            HTML
-        </a>
-        <a tal:attributes="href string:${context/absolute_url}/download.csv">
-            CSV
-        </a>
-        <a tal:attributes="href string:${context/absolute_url}/download.tsv">
-            TSV
-        </a>
-        <a tal:attributes="href string:${context/absolute_url}/download.json">
-            JSON
-        </a>
-        <a tal:attributes="href string:${context/absolute_url}/download.exhibit">
-            Exhibit JSON
-        </a>
-        <a tal:attributes="href string:${context/absolute_url}/download.xml">
-            XML
-        </a>
-        <a tal:attributes="href string:${context/absolute_url}/download.schema.xml">
+        <a tal:attributes="href string:${context/absolute_url}/download.table"
+           tal:content="string:HTML"></a>
+        <a tal:attributes="href string:${context/absolute_url}/download.csv"
+           tal:content="string:CSV"></a>
+        <a tal:attributes="href string:${context/absolute_url}/download.tsv"
+           tal:content="string:TSV"></a>
+        <a tal:attributes="href string:${context/absolute_url}/download.json"
+           tal:content="string:JSON"></a>
+        <a tal:attributes="href string:${context/absolute_url}/download.exhibit"
+           tal:content="string:Exhibit JSON"></a>
+        <a tal:attributes="href string:${context/absolute_url}/download.xml"
+           tal:content="string:XML"></a>
+        <a tal:attributes="href string:${context/absolute_url}/download.schema.xml"
+           i18n:translate="xml_with_schema">
             XML with Schema
         </a>
       </div>
@@ -92,10 +87,14 @@
     <p class="sparql-has-result"
        tal:define="has_result options/data/has_result|nothing"
        tal:condition="python: has_result is not None">
-      Query
-      <span class="boolean">will<tal:block condition="not:has_result">
-        not</tal:block></span>
-      return a result.
+       
+          <tal:block condition="has_result" i18n:translate=""> 
+              Query <span class="boolean">will</span> return a result.
+          </tal:block>
+          <tal:block condition="not:has_result" i18n:translate="">
+              Query <span class="boolean">will not</span> return a result.
+          </tal:block>         
+       
     </p>
 
     <blockquote class="sparql-error"

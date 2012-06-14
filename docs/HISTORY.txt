@@ -3,6 +3,8 @@ Changelog
 
 1.5-dev - (unreleased)
 ----------------------
+* Bug Fix: Fixed i18n missing tags in eea.sparql 
+  [prospchr refs #5162]
 
 1.4 - (2012-06-13)
 ------------------

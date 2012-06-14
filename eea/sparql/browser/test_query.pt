@@ -18,7 +18,7 @@
                tal:attributes="name input_name; value prev_value"/>
       </td>
     </tr>
-    <tr><td colspan="2"><input type="submit" value="Execute"/></td></tr>
+    <tr><td colspan="2"><input type="submit" value="Execute" i18n:attributes="value"/></td></tr>
   </table>
 </form>
 
@@ -52,10 +52,14 @@
 <p class="sparql-has-result"
    tal:define="has_result options/data/has_result|nothing"
    tal:condition="python: has_result is not None">
-  Query
-  <span class="boolean">will<tal:block condition="not:has_result">
-    not</tal:block></span>
-  return a result.
+   
+      <tal:block condition="has_result" i18n:translate=""> 
+          Query <span class="boolean">will</span> return a result.
+      </tal:block>
+      <tal:block condition="not:has_result" i18n:translate="">
+          Query <span class="boolean">will not</span> return a result.
+      </tal:block>    
+   
 </p>
 
 <blockquote class="sparql-error"
