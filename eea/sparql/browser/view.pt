@@ -8,26 +8,68 @@
     <metal:versions use-macro="here/portlet_versions/macros/versions">
         <metal:old fill-slot="old" />
     </metal:versions>
+    
+     <h3 i18n:translate="">Download this dataset</h3>
+     <label>Formats suitable for human consumption</label>
+     <div class="eea-sparql-downloads">
+       <a tal:attributes="href string:${context/absolute_url}/download.table"
+           tal:content="string:HTML"></a>
+       <a tal:attributes="href string:${context/absolute_url}/download.csv"
+           tal:content="string:CSV"></a>
+       <a tal:attributes="href string:${context/absolute_url}/download.tsv"
+           tal:content="string:TSV"></a>
+    </div>
+    <label>Formats suitable for machine-to-machine communication</label>
+    <div class="eea-sparql-downloads">
+       <a tal:attributes="href string:${context/absolute_url}/download.json"
+           tal:content="string:JSON"></a>
+       <a tal:attributes="href string:${context/absolute_url}/download.exhibit"
+           tal:content="string:Exhibit JSON"></a>
+       <a tal:attributes="href string:${context/absolute_url}/download.xml"
+           tal:content="string:XML"></a>
+       <a tal:attributes="href string:${context/absolute_url}/download.schema.xml"
+           i18n:translate="xml_with_schema">
+            XML with Schema
+       </a>
+    </div>  
+    
+    <h3 i18n:translate="data_preview">Dataset preview</h3>
 
+    <div tal:define="data options/data" tal:condition="data">
+      <div class="eea-sparql-table" style="overflow: hidden">
+        <metal:table use-macro="here/@@sparql.preview/macros/table" />
+      </div>
+    </div>
+    
+    <p class="sparql-stats" tal:condition="options/data">
+      Received
+      <span class="number" tal:content="python:len(options['data']['rows'])"/>
+      rows<tal:block condition="python:'duration' in options"> in
+      <span class="number" tal:content="python:'%.3f' % options['duration']"/>
+      seconds</tal:block>.
+    </p>
+    
     <label i18n:translate="json_url">JSON Url:</label>
     <br/>
     <a tal:attributes="href string:${context/absolute_url}/daviz-view.json"
        tal:content="string:${context/absolute_url}/daviz-view.json">link</a>
-
+    
+    <h3 i18n:translate="">For data administrators and integrators</h3>
+    <label>Linked Data query (SPARQL)</label>
+    <p i18n:translate="">The following info can be used by a database administrator 
+    in order to retrieve this dataset programmatically from another system 
+    using Linked Data / Semantic web technologies.</p>
+    <p class="linkeddata-icon discreet">
+    For more info about SPARQL and Linked Data technology visit linkeddata.org
+    </p>   
     <br/>
-    <br/>
-    <label i18n:translate="endpoint">Endpoint:</label>
+    <label i18n:translate="sparql-endpoint">SPARQL Endpoint:</label>
     <br/>
     <span tal:content="context/endpoint_url">endpoint</span>
-
     <br/>
     <br/>
-    <label i18n:translate="query">Query:</label>
-    <!--br/>
-    <blockquote class="sparql-query"
-            tal:content="context/query"/-->
-
-
+    <label i18n:translate="SPARQL-query">SPARQL Query:</label>
+    
     <form tal:condition="options/arg_spec"
           name="method-arguments" method="get">
       <table>
@@ -48,42 +90,6 @@
             tal:content="structure options/query_with_comments"/>
 
 
-    <h3 i18n:translate="data_preview">Data preview</h3>
-
-    <p class="sparql-stats" tal:condition="options/data">
-      Received
-      <span class="number" tal:content="python:len(options['data']['rows'])"/>
-      rows<tal:block condition="python:'duration' in options"> in
-      <span class="number" tal:content="python:'%.3f' % options['duration']"/>
-      seconds</tal:block>.
-    </p>
-
-    <div tal:define="data options/data" tal:condition="data">
-      <div class="eea-sparql-table" style="overflow: hidden">
-        <metal:table use-macro="here/@@sparql.preview/macros/table" />
-      </div>
-
-      <h3 i18n:translate="downloads">Downloads</h3>
-      <div class="eea-sparql-downloads">
-        <a tal:attributes="href string:${context/absolute_url}/download.table"
-           tal:content="string:HTML"></a>
-        <a tal:attributes="href string:${context/absolute_url}/download.csv"
-           tal:content="string:CSV"></a>
-        <a tal:attributes="href string:${context/absolute_url}/download.tsv"
-           tal:content="string:TSV"></a>
-        <a tal:attributes="href string:${context/absolute_url}/download.json"
-           tal:content="string:JSON"></a>
-        <a tal:attributes="href string:${context/absolute_url}/download.exhibit"
-           tal:content="string:Exhibit JSON"></a>
-        <a tal:attributes="href string:${context/absolute_url}/download.xml"
-           tal:content="string:XML"></a>
-        <a tal:attributes="href string:${context/absolute_url}/download.schema.xml"
-           i18n:translate="xml_with_schema">
-            XML with Schema
-        </a>
-      </div>
-    </div>
-
     <p class="sparql-has-result"
        tal:define="has_result options/data/has_result|nothing"
        tal:condition="python: has_result is not None">
@@ -100,9 +106,9 @@
     <blockquote class="sparql-error"
             tal:condition="options/error|nothing"
             tal:content="options/error"/>
-
+ 
     <br/>
-
+    
     <metal:versions use-macro="here/portlet_versions/macros/versions">
         <metal:new fill-slot="new" />
     </metal:versions>

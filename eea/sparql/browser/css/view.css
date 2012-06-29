@@ -27,6 +27,8 @@ table.sparql-results th, table.sparql-results td {
 
 table.sparql-results th {
     text-align: center;
+    background-color: #787878;
+    color: #fff;
 }
 
 table.sparql-results td {
@@ -42,6 +44,12 @@ p.sparql-stats .number {
 p.sparql-has-result .boolean {
     font-weight: bold;
     color: #a50;
+}
+
+.linkeddata-icon {
+    background: transparent url(/++resource++eea.sparql.images/rdf-icon.gif) no-repeat left center;
+    position: relative;
+    padding:1em 1em 1em 2em;
 }
 
 .sparql-error {

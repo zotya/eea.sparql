@@ -3,6 +3,10 @@ Changelog
 
 1.5-dev - (unreleased)
 ----------------------
+* Change: layout changes to the view page to focus on the dataset download, 
+  clarify formats and the linked data information. 
+  better labels and descriptions.
+  [demarant fixes #5317]
 * Bug Fix: Fixed i18n missing tags in eea.sparql 
   [prospchr refs #5162]
 
