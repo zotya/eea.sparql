@@ -10,7 +10,7 @@
     </metal:versions>
     
      <h3 i18n:translate="">Download this dataset</h3>
-     <label>Formats suitable for human consumption</label>
+     <label i18n:translate="">Formats suitable for human consumption</label>
      <div class="eea-sparql-downloads">
        <a tal:attributes="href string:${context/absolute_url}/download.table"
            tal:content="string:HTML"></a>
@@ -19,7 +19,7 @@
        <a tal:attributes="href string:${context/absolute_url}/download.tsv"
            tal:content="string:TSV"></a>
     </div>
-    <label>Formats suitable for machine-to-machine communication</label>
+    <label i18n:translate="">Formats suitable for machine-to-machine communication</label>
     <div class="eea-sparql-downloads">
        <a tal:attributes="href string:${context/absolute_url}/download.json"
            tal:content="string:JSON"></a>
