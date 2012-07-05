@@ -30,7 +30,7 @@
               tal:content="row/name" target="_blank">bookmark</a>
           </td>
           <td tal:define="name row/name">
-            <div tal:repeat="vis python:view.getVisualizations(name)">
+            <ul><li tal:repeat="vis python:view.getVisualizations(name)">
                 <a tal:attributes="href vis/absolute_url; title vis/pretty_title_or_id">
                     <span tal:condition="exists:vis/image_tile">
                         <img tal:attributes="
@@ -38,9 +38,8 @@
                             alt vis/pretty_title_or_id;
                             src string:${vis/absolute_url}/image_tile" />
                     </span>
-                    <!--span tal:content="vis/pretty_title_or_id" /-->
                 </a>
-            </div>
+            </li></ul>
           </td>
           <td tal:condition="python: not isAnon" >
             <form action="addOrUpdateQueryFromBookmark" method="POST">
