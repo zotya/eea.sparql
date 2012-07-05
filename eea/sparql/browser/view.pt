@@ -60,7 +60,7 @@
     in order to retrieve this dataset programmatically from another system 
     using Linked Data / Semantic web technologies.</p>
     <p class="linkeddata-icon discreet">
-    For more info about SPARQL and Linked Data technology visit linkeddata.org
+    Are you new to Linked Data technology? visit http://linkeddata.org
     </p>   
     <br/>
     <label i18n:translate="sparql-endpoint">SPARQL Endpoint:</label>
