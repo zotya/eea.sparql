@@ -112,7 +112,7 @@
             tal:content="options/error"/>
 
     <br/>
-    <h3 i18n:translate="downloads">Downloads:</h3>
+    <h3 i18n:translate="">Downloads</h3>
     <div class="eea-sparql-downloads">
         <a tal:attributes="href string:${context/absolute_url}/download.json" 
            tal:content="string:JSON"></a>

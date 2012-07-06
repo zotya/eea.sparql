@@ -11,7 +11,7 @@ Changelog
   clarify formats and the linked data information. 
   better labels and descriptions.
   [demarant fixes #5317]
-* Bug Fix: Fixed i18n missing tags in eea.sparql 
+* Bug Fix: Fixed i18n missing tags and duplicate keys in *.pt 
   [prospchr refs #5162]
 
 1.4 - (2012-06-13)
