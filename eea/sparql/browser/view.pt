@@ -55,7 +55,7 @@
        tal:content="string:${context/absolute_url}/daviz-view.json">link</a>
     
     <h3 i18n:translate="">For system integrators</h3>
-    <label>Linked Data query (SPARQL)</label>
+    <label i18n:translate="">Linked Data query (SPARQL)</label>
     <p i18n:translate="">The following info can be used by a system developer /
     database administrator in order to retrieve this dataset programmatically 
     over the web using a SPARQL client.</p>
