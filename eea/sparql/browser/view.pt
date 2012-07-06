@@ -54,12 +54,12 @@
     <a tal:attributes="href string:${context/absolute_url}/daviz-view.json"
        tal:content="string:${context/absolute_url}/daviz-view.json">link</a>
     
-    <h3 i18n:translate="">For data administrators and integrators</h3>
+    <h3 i18n:translate="">For system integrators</h3>
     <label>Linked Data query (SPARQL)</label>
-    <p i18n:translate="">The following info can be used by a database administrator 
-    in order to retrieve this dataset programmatically from another system 
-    using Linked Data / Semantic web technologies.</p>
-    <p class="linkeddata-icon discreet">
+    <p i18n:translate="">The following info can be used by a system developer /
+    database administrator in order to retrieve this dataset programmatically 
+    over the web using a SPARQL client.</p>
+    <p class="linkeddata-icon discreet" i18n:translate="">
     Are you new to Linked Data technology? visit http://linkeddata.org
     </p>   
     <br/>
