@@ -56,7 +56,7 @@
     
     <h3 i18n:translate="">For system integrators</h3>
     <label i18n:translate="">Linked Data query (SPARQL)</label>
-    <p i18n:translate="">The following info can be used by a system developer /
+    <p i18n:translate="linked-data-desc">The following info can be used by a system developer /
     database administrator in order to retrieve this dataset programmatically 
     over the web using a SPARQL client.</p>
     <p class="linkeddata-icon discreet" i18n:translate="">
