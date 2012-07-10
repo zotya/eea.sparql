@@ -54,10 +54,10 @@
    tal:condition="python: has_result is not None">
    
       <tal:block condition="has_result" i18n:translate=""> 
-          Query <span class="boolean">will</span> return a result.
+          Query will return a result.
       </tal:block>
       <tal:block condition="not:has_result" i18n:translate="">
-          Query <span class="boolean">will not</span> return a result.
+          Query will not return a result.
       </tal:block>    
    
 </p>
