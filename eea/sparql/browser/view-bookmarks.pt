@@ -13,13 +13,13 @@
     <table class="listing" id="sparql-bookmarks" tal:condition="options/data">
       <thead>
         <tr>
-          <th style="width: 40%" i18n:translate="dataset">
+          <th style="width: 40%" i18n:translate="">
             Dataset
           </th>
-          <th style="width: 50%" i18n:translate="existing-visualizations">
+          <th style="width: 50%" i18n:translate="">
             Existing visualizations
           </th>
-          <th tal:condition="python: not isAnon" i18n:translate="action">Action</th>
+          <th tal:condition="python: not isAnon" i18n:translate="">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -54,7 +54,7 @@
     </table>
     
     <h3 i18n:translate="">Data repository info</h3>
-    <label i18n:translate="sparql-endpoint">SPARQL Endpoint:</label>
+    <label i18n:translate="">SPARQL Endpoint:</label>
     <br/>
     <span tal:content="context/endpoint_url">endpoint</span>
     <br/>
@@ -123,7 +123,7 @@
         <a tal:attributes="href string:${context/absolute_url}/download.xml"
            tal:content="string:XML"></a>
         <a tal:attributes="href string:${context/absolute_url}/download.schema.xml"
-           i18n:translate="xml_with_schema">
+           i18n:translate="">
             XML with Schema
         </a>
         <a tal:attributes="href string:${context/absolute_url}/download.csv"

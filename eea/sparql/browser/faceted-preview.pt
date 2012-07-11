@@ -19,7 +19,7 @@
       <img tal:replace="structure python:image_tag(scale='thumb', title=description)" />
     </span>
     <div class="preview ui-icon ui-icon-search" title="Preview"
-         i18n:attributes="title" i18n:translate="preview">Preview</div>
+         i18n:attributes="title" i18n:translate="">Preview</div>
     <script tal:content="string:
         jQuery('a[href=$url]').EEASparqlPreview();
     "></script>
