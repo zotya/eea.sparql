@@ -122,16 +122,32 @@ p.sparql-has-result .boolean {
 }
 
 #eea-sparql-overlay {
-    background: white;
+    background: transparent;
     width: 70%;
     height: 70%;
+}
+
+#eea-sparql-overlay .close {
+    background-image: url(/++resource++eea.sparql.images/close.png);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 35px;
+    height: 35px;
+}
+
+#eea-sparql-overlay .contentWrap {
+    background: white;
+    margin: 1.5em;
     overflow: auto;
 }
 
 #eea-sparql-overlay .contentWrap table,
 #eea-sparql-overlay .loading {
+    min-height: 200px;
+    background: white;
     width: 90%;
-    margin: 3em auto;
+    margin: 2em auto;
 }
 
 #eea-sparql-overlay .loading {

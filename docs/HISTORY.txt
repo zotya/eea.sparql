@@ -3,15 +3,17 @@ Changelog
 
 1.5-dev - (unreleased)
 ----------------------
+* Bug fix: Fixed sparql table preview CSS when used as jQuery overlay
+  [voineali]
 * Bug Fix: Improved layout of sparql bookmarks folder. Focus on datasets.
   Do not show administrative actions for anonymous. Removed unnecessary code.
   Improved i18n and labels.
   [demarant refs #5151]
-* Change: layout changes to the view page to focus on the dataset download, 
-  clarify formats and the linked data information. 
+* Change: layout changes to the view page to focus on the dataset download,
+  clarify formats and the linked data information.
   better labels and descriptions.
   [demarant fixes #5317]
-* Bug Fix: Fixed i18n missing tags and duplicate keys in *.pt 
+* Bug Fix: Fixed i18n missing tags and duplicate keys in *.pt
   [prospchr refs #5162]
 
 1.4 - (2012-06-13)
