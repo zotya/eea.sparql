@@ -1,6 +1,9 @@
 Changelog
 =========
 
+1.6-dev - (unreleased)
+----------------------
+
 1.5 - (2012-07-13)
 ------------------
 * Bug fix: Fixed sparql table preview CSS when used as jQuery overlay
