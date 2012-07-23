@@ -3,6 +3,8 @@ Changelog
 
 1.6-dev - (unreleased)
 ----------------------
+* Bug fix: Fixed sparql bookmarks view
+  [szabozo0 #5388]
 
 1.5 - (2012-07-13)
 ------------------
