@@ -7,6 +7,7 @@
 <div metal:fill-slot="content-core" 
      tal:define="isManager python: checkPermission('Manage portal', here);
                 options view/getBookmarks; 
+                isDaviz view/isDavizInstalled;
                 isAnon context/@@plone_portal_state/anonymous;
                 bookmarks_url python:'/'.join(['/'.join(context.endpoint_url.split('/')[0:-1]),'factsheet.action'])">
 
@@ -31,7 +32,13 @@
               tal:content="row/name" target="_blank">bookmark</a>
           </td>
           <td tal:define="name row/name">
-            <ul><li tal:repeat="vis python:view.getVisualizations(name)">
+            <ul><tal:block tal:condition="python: isDaviz and not isAnon">
+                    <form action="createVisualization" method="POST">
+                        <input type="hidden" name="title" tal:attributes="value python:row['name']"/>
+                        <input type="submit" value="Create Visualization" class="context"/>
+                    </form>
+                </tal:block>
+                <li tal:repeat="vis python:view.getVisualizations(name)">
                 <a tal:attributes="href vis/absolute_url; title vis/pretty_title_or_id">
                     <span tal:condition="exists:vis/image_tile">
                         <img tal:attributes="

@@ -212,6 +212,19 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
 
         return ob
 
+    def findQuery(self, title):
+        """Find the Query in the bookmarks folder
+        """
+
+        ob = None
+        for sparql in self.values():
+            if sparql.title == title:
+                latest_sparql = versions.get_versions_api(
+                    sparql).latest_version()
+                ob = latest_sparql
+                break
+        return ob
+
     def syncQueries(self):
         """sync all queries from bookmarks"""
         queries = self.execute()['rows']

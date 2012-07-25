@@ -143,4 +143,12 @@
         permission="zope.Public"
         />
 
+    <browser:page
+        name="createVisualization"
+        for="*"
+        class=".sparql.SparqlBookmarksFolder"
+        attribute="createVisualization"
+        permission="cmf.ModifyPortalContent"
+        />
+
 </configure>
