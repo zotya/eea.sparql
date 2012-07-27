@@ -252,18 +252,23 @@ class SparqlBookmarksFolder(Sparql):
     def isDavizInstalled(self):
         """ Check if Daviz is installed
         """
+        has_daviz = False
         try:
             from eea.daviz import interfaces
-            return True
+            has_daviz = bool(interfaces)
+
         except ImportError:
-            return False
+            has_daviz = False
+
+        return has_daviz
 
     def createVisualization(self):
         """ Create visualization with datasource
         """
         ob = self.context.findQuery(self.request['title'])
         if ob:
-            self.request.response.redirect(ob.absolute_url()+"/daviz-new-create-sparql.html")
+            self.request.response.redirect(ob.absolute_url() + 
+                "/daviz-new-create-sparql.html")
 
 class SparqlBookmarkFoldersSync(BrowserView):
     """ Sync all Bookmark Folders """
