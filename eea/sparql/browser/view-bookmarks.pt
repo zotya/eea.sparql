@@ -35,7 +35,7 @@
             <ul><tal:block tal:condition="python: isDaviz and not isAnon">
                     <form action="createVisualization" method="POST">
                         <input type="hidden" name="title" tal:attributes="value python:row['name']"/>
-                        <input type="submit" value="Create Visualization" class="context"/>
+                        <input type="submit" value="Create Visualization" i18n:attributes="value" class="context"/>
                     </form>
                 </tal:block>
                 <li tal:repeat="vis python:view.getVisualizations(name)">
