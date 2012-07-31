@@ -7,6 +7,7 @@ from Products.ZSPARQLMethod.Method import interpolate_query_html
 from Products.ZSPARQLMethod.Method import map_arg_values
 from Products.ZSPARQLMethod.Method import parse_arg_spec
 from eea.sparql.converter.sparql2json import sparql2json
+from eea.sparql.converter.sparql2json import sortProperties
 from eea.versions import versions
 from Products.CMFCore.utils import getToolByName
 from time import time
@@ -63,7 +64,7 @@ class Sparql(BrowserView):
     def json(self, column_types=None):
         """json"""
         data = self.context.execute_query()
-        return json.dumps(sparql2json(data))
+        return sortProperties(json.dumps(sparql2json(data)))
 
     def sparql2exhibit(self):
         """ Download sparql results as Exhibit JSON
@@ -95,13 +96,25 @@ class Sparql(BrowserView):
         result.append(u"</style>")
         result.append(u"<table>")
         result.append(u"\t<tr>")
-        for col in data['properties'].keys():
-            result.append(u"\t\t<th>" + col + u"</th>")
+
+        properties = []
+        def_order = 0
+        for key, item in data['properties'].items():
+            prop = []
+            prop.append(item.get('order', def_order))
+            prop.append(key)
+            prop.append(item['valueType'])
+            properties.append(prop)
+            def_order += 1
+        properties.sort()
+
+        for col in properties:
+            result.append(u"\t\t<th>" + col[1] + u"</th>")
         result.append(u"\t</tr>")
         for row in data['items']:
             result.append(u"\t<tr>")
-            for col in data['properties'].keys():
-                result.append(u"\t\t<td>" + unicode(row[col]) + "</td>")
+            for col in properties:
+                result.append(u"\t\t<td>" + unicode(row[col[1]]) + "</td>")
             result.append(u"\t</tr>")
         result.append(u"</table>")
         return '\n'.join(result)
