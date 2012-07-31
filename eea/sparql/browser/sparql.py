@@ -79,7 +79,7 @@ class Sparql(BrowserView):
         self.request.response.setHeader(
             'Content-Disposition',
             'attachment; filename="%s.exhibit.json"' % self.context.getId())
-        return json.dumps(data)
+        return sortProperties(json.dumps(data))
 
     def sparql2html(self):
         """ Download sparql results as HTML
