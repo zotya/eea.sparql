@@ -142,7 +142,22 @@ class Sparql(BrowserView):
 
         writter = csv.writer(self.request.response, dialect=dialect)
         row = []
-        headers = data['properties'].keys()
+
+        properties = []
+        def_order = 0
+        for key, item in data['properties'].items():
+            prop = []
+            prop.append(item.get('order', def_order))
+            prop.append(key)
+            prop.append(item['valueType'])
+            properties.append(prop)
+            def_order += 1
+        properties.sort()
+
+        headers = []
+        for prop in properties:
+            headers.append(prop[1])
+
         for col in headers:
             header = '%s:%s' % (col, data['properties'][col]['valueType'])
             row.append(header)
