@@ -2,6 +2,7 @@
 """
 
 import sparql
+import json as simplejson
 from Products.ZSPARQLMethod import Method
 
 #define our own converters
@@ -107,8 +108,47 @@ def sparql2json(data):
                     else:
                         propertyValueType = 'text'
                 properties[cols[idx].encode('utf8')] = \
-                    {"valueType" : propertyValueType}
+                    {"valueType" : propertyValueType, "order" : idx}
             idx += 1
 
         items.append(rowdata)
     return {'items':items, 'properties':properties}
+
+def sortProperties(strJson, indent = 0):
+    """
+    In the json string set the correct order of the columns
+    """
+    try:
+        json = simplejson.loads(strJson)
+        properties = json['properties']
+        indentStr1 = ""
+        indentStr2 = ""
+        indentStr3 = ""
+        if indent > 0:
+            indentStr1 = "\n" + " " * indent
+            indentStr2 = "\n" + " " * indent * 2
+            indentStr3 = "\n" + " " * indent * 3
+        newProperties = []
+        for key, item in properties.items():
+            prop = []
+            prop.append(item['order'])
+            prop.append(key)
+            prop.append(item['valueType'])
+            newProperties.append(prop)
+        newProperties.sort()
+        json['properties'] = ''
+        newJsonStr = simplejson.dumps(json, indent = indent)
+        newPropStr = '"properties": '
+        newPropStr += "{"
+        for prop in newProperties:
+            newPropStr += indentStr2 + '"' + prop[1] + '": '
+            newPropStr += '{'
+            newPropStr += indentStr3 + '"valueType": "' + prop[2] +'", '
+            newPropStr += indentStr3 + '"order": ' + str(prop[0]) + indentStr2
+            newPropStr += '}, '
+        newPropStr = newPropStr[:-2]
+        newPropStr += indentStr1 + "}"
+        newJsonStr = newJsonStr.replace('"properties": ""', newPropStr)
+        return newJsonStr
+    except Exception:
+        return strJson
