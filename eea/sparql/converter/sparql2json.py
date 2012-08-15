@@ -80,7 +80,7 @@ def sparql2json(data):
 
     idx = 0
     for col in cols:
-        if col.lower().endswith("label"):
+        if col.lower().endswith(":label") or col.lower()=="label":
             cols[idx] = 'label'
             hasLabel = True
         idx += 1

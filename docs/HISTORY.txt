@@ -3,10 +3,13 @@ Changelog
 
 1.8-dev - (unreleased)
 ----------------------
-
+* Bug fix: fixed issue with column names json coversion when ending with 
+  'label'. Now it uses simile exhibit explicit type formatting.
+  [demarant]
+  
 1.7 - (2012-08-10)
 ------------------
-* Bugfix: Fixed columns order
+* Bug fix: Fixed columns order
   [szabozo0 refs #5137]
 * Feature: Added shortcuts on sparql bookmarks for creating visualizations.
   [szabozo0 refs #5347]
