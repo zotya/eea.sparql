@@ -3,6 +3,12 @@ Changelog
 
 1.8-dev - (unreleased)
 ----------------------
+* Feature: Show action "create visuallization" for anonymous. This makes it
+  clear what functions are available and "call new users to action".
+  [demarant]
+* Bug fix: existing visualisation of sparql are now shown even though the
+  image tile is not available (valentine.imagescales). Use grid style for table.
+  [demarant fixes #5458]
 * Bug fix: fixed issue with column names json coversion when ending with 
   'label'. Now it uses simile exhibit explicit type formatting.
   [demarant]
