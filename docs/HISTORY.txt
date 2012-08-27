@@ -1,6 +1,9 @@
 Changelog
 =========
 
+1.9-dev - (unreleased)
+----------------------
+
 1.8 - (2012-08-27)
 ------------------
 * Feature: Show action "create visuallization" for anonymous. This makes it
