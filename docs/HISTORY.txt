@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.8-dev - (unreleased)
-----------------------
+1.8 - (2012-08-27)
+------------------
 * Feature: Show action "create visuallization" for anonymous. This makes it
   clear what functions are available and "call new users to action".
   [demarant]
@@ -12,7 +12,7 @@ Changelog
 * Bug fix: fixed issue with column names json coversion when ending with 
   'label'. Now it uses simile exhibit explicit type formatting.
   [demarant]
-  
+
 1.7 - (2012-08-10)
 ------------------
 * Bug fix: Fixed columns order
