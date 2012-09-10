@@ -35,7 +35,7 @@
             <ul>
                 <li tal:repeat="vis python:view.getVisualizations(name)">
                 <a tal:attributes="href vis/absolute_url; title vis/pretty_title_or_id">
-                  <tal:if define="image_tile vis/image_tile | nothing">
+                  <tal:if define="image_tile vis/cover.png | nothing">
                     <span tal:condition="image_tile">
                         <img tal:attributes="
                             title vis/pretty_title_or_id;
