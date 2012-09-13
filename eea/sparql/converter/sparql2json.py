@@ -3,6 +3,8 @@
 
 import sparql
 import json as simplejson
+from zope.component import queryUtility
+from eea.sparql.converter import IGuessType
 from Products.ZSPARQLMethod import Method
 
 #define our own converters
@@ -13,19 +15,19 @@ sparql_converters[sparql.XSD_DATETIME] = str
 sparql_converters[sparql.XSD_TIME] = str
 
 propertytype_dict = {
-                 '': 'text',
-                 sparql.XSD_STRING : 'text',
-                 sparql.XSD_INTEGER : 'number',
-                 sparql.XSD_INT : 'number',
-                 sparql.XSD_LONG : 'number',
-                 sparql.XSD_DOUBLE : 'number',
-                 sparql.XSD_FLOAT : 'number',
-                 sparql.XSD_DECIMAL : 'number',
-                 sparql.XSD_DATETIME : 'datetime',
-                 sparql.XSD_DATE : 'date',
-                 sparql.XSD_TIME : 'time',
-                 sparql.XSD_BOOLEAN : 'boolean'
-                 }
+    "": "text",
+    sparql.XSD_STRING: "text",
+    sparql.XSD_INTEGER: "number",
+    sparql.XSD_INT: "number",
+    sparql.XSD_LONG: "number",
+    sparql.XSD_DOUBLE: "number",
+    sparql.XSD_FLOAT: "number",
+    sparql.XSD_DECIMAL: "number",
+    sparql.XSD_DATETIME: "date",
+    sparql.XSD_DATE: "date",
+    sparql.XSD_TIME: "date",
+    sparql.XSD_BOOLEAN: "boolean",
+}
 
 class MethodResult (Method.MethodResult):
     """Override MethodResult with our sparql_converters"""
@@ -37,8 +39,10 @@ class MethodResult (Method.MethodResult):
         return sparql.unpack_row(self.rdfterm_rows[n],
                                  convert_type=sparql_converters)
 
-def sparql2json(data):
-    """ test the converter
+def sparql2json(data, column_types=None):
+    """
+    Converts sparql to JSON
+
         >>> from eea.sparql.converter import sparql2json
         >>> from eea.sparql.tests import mock_data
         >>> from eea.sparql.converter.sparql2json import sparql2json
@@ -78,41 +82,59 @@ def sparql2json(data):
     cols = mr.var_names
     properties = {}
 
-    idx = 0
-    for col in cols:
+    for index, col in enumerate(cols):
         if col.lower().endswith(":label") or col.lower()=="label":
-            cols[idx] = 'label'
+            cols[index] = 'label'
             hasLabel = True
-        idx += 1
+            break
 
-    index = 0
-    for row in mr:
-        index += 1
-
+    for index, row in enumerate(mr):
         rowdata = {}
         if not hasLabel:
             rowdata['label'] = index
-        idx = 0
-        for item in row:
-            rowdata[cols[idx].encode('utf8')] = item
-            if (index == 1):
-                propertyValueType = 'text'
-                if isinstance(data['rows'][0][idx], sparql.Literal):
-                    datatype = data['rows'][0][idx].datatype
-                    if not datatype:
-                        datatype = ''
-                    propertyValueType = propertytype_dict[datatype]
+
+        for idx, item in enumerate(row):
+            key = cols[idx].encode('utf8')
+            valueType = 'text'
+            if isinstance(data['rows'][0][idx], sparql.Literal):
+                datatype = data['rows'][0][idx].datatype
+                if not datatype:
+                    datatype = ''
+                valueType = propertytype_dict[datatype]
+            elif isinstance(data['rows'][0][idx], sparql.IRI):
+                valueType = 'url'
+
+            rowdata[key] = item
+
+            # Enforce column_types
+            columnType = valueType
+            if column_types:
+                newColumnType = column_types.get(key, columnType)
+                if newColumnType == columnType:
+                    continue
+
+                columnType = newColumnType
+                guess = queryUtility(IGuessType, name=columnType)
+                valueType = getattr(guess, 'valueType', valueType)
+                fmt = getattr(guess, 'fmt', None)
+                try:
+                    item = u'%s' % item
+                    item = (guess.convert(item, fallback=None, format=fmt)
+                            if guess else item)
+                except Exception, err:
+                    rowdata.pop(key)
                 else:
-                    if isinstance(data['rows'][0][idx], sparql.IRI):
-                        propertyValueType = 'url'
-                    else:
-                        propertyValueType = 'text'
-                properties[cols[idx].encode('utf8')] = \
-                    {"valueType" : propertyValueType, "order" : idx}
-            idx += 1
+                    rowdata[key] = item
+
+            properties[key] = {
+                'columnType': columnType,
+                "valueType" : valueType,
+                "order" : idx
+            }
 
         items.append(rowdata)
-    return {'items':items, 'properties':properties}
+
+    return {'items': items, 'properties': properties}
 
 def sortProperties(strJson, indent = 0):
     """

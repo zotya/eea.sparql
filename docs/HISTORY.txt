@@ -3,6 +3,8 @@ Changelog
 
 1.9-dev - (unreleased)
 ----------------------
+* Bug fix: Allow forcing Sparql column-types within daviz-view.json
+  [voineali refs #5511]
 * Bug fix: Fixed SPARQL bookmarks folder default view
   [szabozo0 #5512]
 
@@ -14,7 +16,7 @@ Changelog
 * Bug fix: existing visualisation of sparql are now shown even though the
   image tile is not available (valentine.imagescales). Use grid style for table.
   [demarant fixes #5458]
-* Bug fix: fixed issue with column names json coversion when ending with 
+* Bug fix: fixed issue with column names json coversion when ending with
   'label'. Now it uses simile exhibit explicit type formatting.
   [demarant]
 

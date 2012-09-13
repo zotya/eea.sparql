@@ -64,7 +64,7 @@ class Sparql(BrowserView):
     def json(self, column_types=None):
         """json"""
         data = self.context.execute_query()
-        return sortProperties(json.dumps(sparql2json(data)))
+        return sortProperties(json.dumps(sparql2json(data, column_types)))
 
     def sparql2exhibit(self):
         """ Download sparql results as Exhibit JSON
@@ -295,7 +295,7 @@ class SparqlBookmarksFolder(Sparql):
         """
         ob = self.context.findQuery(self.request['title'])
         if ob:
-            self.request.response.redirect(ob.absolute_url() + 
+            self.request.response.redirect(ob.absolute_url() +
                 "/daviz-new-create-sparql.html")
 
 class SparqlBookmarkFoldersSync(BrowserView):
