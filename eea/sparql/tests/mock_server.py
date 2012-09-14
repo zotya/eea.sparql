@@ -24,6 +24,8 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
         print json_str
         sys.stdout = stdout
 
+    def do_GET(self):
+        return self.do_POST()
 
 if __name__ == "__main__":
     httpd = BaseHTTPServer.HTTPServer(("", PORT), Handler)
