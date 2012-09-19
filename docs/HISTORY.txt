@@ -7,6 +7,8 @@ Changelog
   [voineali refs #5511]
 * Bug fix: Fixed SPARQL bookmarks folder default view
   [szabozo0 #5512]
+* Bug fix: don't break bookmarks view page when endpoint doesn't work
+  [tiberich #5534]
 
 1.8 - (2012-08-27)
 ------------------

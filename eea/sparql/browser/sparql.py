@@ -41,12 +41,15 @@ class Sparql(BrowserView):
             t0 = time()
 
             try:
-                data = self.context.execute(**arg_values)
-
+                res = self.context.execute(**arg_values)
+                print res   #debugging, will remove
             except Exception:
                 import traceback
                 error = traceback.format_exc()
-                data = None
+                data = {}
+            else:
+                data = res.get('result')
+                error = res.get('exception')
 
             dt = time() - t0
 
@@ -232,7 +235,7 @@ class SparqlBookmarksFolder(Sparql):
     def getBookmarks(self):
         """Get list of bookmarks and check if needs to be updated"""
         results = self.test_query()
-        queries = results['data']['rows']
+        queries = results['data'].get('rows',[])
         bookmarks = {}
         bookmarks['data'] = []
         bookmarks['arg_spec'] = results['arg_spec']
