@@ -40,16 +40,15 @@ class Sparql(BrowserView):
         else:
             t0 = time()
 
+            res, error = {}, None
             try:
                 res = self.context.execute(**arg_values)
-                print res   #debugging, will remove
             except Exception:
                 import traceback
                 error = traceback.format_exc()
-                data = {}
-            else:
-                data = res.get('result')
-                error = res.get('exception')
+
+            data = res.get('return')
+            error = error or res.get('exception')
 
             dt = time() - t0
 

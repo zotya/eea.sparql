@@ -1,6 +1,7 @@
 <metal:table define-macro="table">
+  <tal:def 
+    tal:define="data data | python:view.test_query().get('data', {})" >
   <table class="sparql-results"
-    tal:define="data data | python:view.test_query().get('data', {})"
     tal:condition="data">
     <thead>
       <tr>
@@ -15,4 +16,8 @@
       </tr>
     </tbody>
   </table>
+  <p tal:condition="not:data" style="color:red">
+      No results were found.
+  </p>
+  </tal:def>
 </metal:table>

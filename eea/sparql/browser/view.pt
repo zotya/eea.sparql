@@ -35,7 +35,7 @@
     
     <h3 i18n:translate="">Dataset preview</h3>
 
-    <div tal:define="data options/data" tal:condition="data">
+    <div tal:define="data options/data">
       <div class="eea-sparql-table" style="overflow: hidden">
         <metal:table use-macro="here/@@sparql.preview/macros/table" />
       </div>
@@ -103,12 +103,11 @@
        
     </p>
 
-    <blockquote class="sparql-error"
-            tal:condition="options/error|nothing"
-            tal:content="options/error"/>
+    <div tal:condition="options/error|nothing">
+        <h4 style="color:red">Error when running query:</h4>
+        <blockquote class="sparql-error" tal:content="options/error"/>
+    </div>
  
-    <br/>
-    
     <metal:versions use-macro="here/portlet_versions/macros/versions">
         <metal:new fill-slot="new" />
     </metal:versions>
