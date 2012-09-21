@@ -3,6 +3,9 @@ Changelog
 
 1.9-dev - (unreleased)
 ----------------------
+* Change: Merged daviz-view.json and daviz-relateditems.json into one single
+  json file called daviz.json
+  [voineali refs #5449]
 * Bug fix: Allow forcing Sparql column-types within daviz-view.json
   [voineali refs #5511]
 * Bug fix: Fixed SPARQL bookmarks folder default view
