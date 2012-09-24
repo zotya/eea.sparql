@@ -75,6 +75,7 @@ def sparql2json(data, column_types=None):
         'string': u''}]
 
     """
+    data_result = data['result']
     items = []
     hasLabel = False
     mr = MethodResult(data)
@@ -96,12 +97,12 @@ def sparql2json(data, column_types=None):
         for idx, item in enumerate(row):
             key = cols[idx].encode('utf8')
             valueType = 'text'
-            if isinstance(data['rows'][0][idx], sparql.Literal):
-                datatype = data['rows'][0][idx].datatype
+            if isinstance(data_result['rows'][0][idx], sparql.Literal):
+                datatype = data_result['rows'][0][idx].datatype
                 if not datatype:
                     datatype = ''
                 valueType = propertytype_dict[datatype]
-            elif isinstance(data['rows'][0][idx], sparql.IRI):
+            elif isinstance(data_result['rows'][0][idx], sparql.IRI):
                 valueType = 'url'
 
             rowdata[key] = item

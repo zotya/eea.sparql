@@ -3,6 +3,8 @@ Changelog
 
 1.9-dev - (unreleased)
 ----------------------
+* Bug fix: Updated converter for results containing exceptions
+  [szabozo0 refs #5515]
 * Change: Merged daviz-view.json and daviz-relateditems.json into one single
   json file called daviz.json
   [voineali refs #5449]
