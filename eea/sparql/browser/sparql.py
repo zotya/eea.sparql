@@ -46,8 +46,7 @@ class Sparql(BrowserView):
             except Exception:
                 import traceback
                 error = traceback.format_exc()
-
-            data = res.get('return')
+            data = res.get('result')
             error = error or res.get('exception')
 
             dt = time() - t0
