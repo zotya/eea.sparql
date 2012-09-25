@@ -297,7 +297,7 @@ class SparqlBookmarksFolder(Sparql):
         ob = self.context.findQuery(self.request['title'])
         if ob:
             self.request.response.redirect(ob.absolute_url() +
-                "/daviz-new-create-sparql.html")
+                "/daviz-create-new.html")
 
 class SparqlBookmarkFoldersSync(BrowserView):
     """ Sync all Bookmark Folders """
