@@ -25,6 +25,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
         sys.stdout = stdout
 
     def do_GET(self):
+        """ GET"""
         return self.do_POST()
 
 if __name__ == "__main__":

@@ -247,7 +247,7 @@ class SparqlBookmarksFolder(Sparql):
     def getBookmarks(self):
         """Get list of bookmarks and check if needs to be updated"""
         results = self.test_query()
-        queries = results['data'].get('rows',[])
+        queries = results['data'].get('rows', [])
         bookmarks = {}
         bookmarks['data'] = []
         bookmarks['arg_spec'] = results['arg_spec']
