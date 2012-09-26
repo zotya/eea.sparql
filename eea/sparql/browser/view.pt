@@ -4,7 +4,9 @@
   i18n:domain="eea">
 
 <body>
-<div metal:fill-slot="content-core"  tal:define="options view/test_query">
+<div metal:fill-slot="content-core"  
+        tal:define="options view/test_query;
+                    isDaviz view/isDavizInstalled">
     <metal:versions use-macro="here/portlet_versions/macros/versions">
         <metal:old fill-slot="old" />
     </metal:versions>
@@ -111,6 +113,13 @@
     <metal:versions use-macro="here/portlet_versions/macros/versions">
         <metal:new fill-slot="new" />
     </metal:versions>
+
+    <tal:block tal:condition="python: isDaviz">
+        <br/>
+        <br/>
+        <input type="button" class="context" value="Create Another Visualization"
+            tal:attributes="onclick string:javascript:document.location='${context/absolute_url}/daviz-create-new.html';"/>
+    </tal:block>
 
 </div>
 </body>

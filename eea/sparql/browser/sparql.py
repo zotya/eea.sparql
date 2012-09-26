@@ -227,6 +227,20 @@ class Sparql(BrowserView):
             logger.exception(err)
         return results
 
+    def isDavizInstalled(self):
+        """ Check if Daviz is installed
+        """
+        has_daviz = False
+        try:
+            from eea.daviz import interfaces
+            has_daviz = bool(interfaces)
+
+        except ImportError:
+            has_daviz = False
+
+        return has_daviz
+
+
 class SparqlBookmarksFolder(Sparql):
     """SparqlBookmarksFolder view"""
 
@@ -277,19 +291,6 @@ class SparqlBookmarksFolder(Sparql):
             return []
 
         return ob.getBRefs('relatesTo')
-
-    def isDavizInstalled(self):
-        """ Check if Daviz is installed
-        """
-        has_daviz = False
-        try:
-            from eea.daviz import interfaces
-            has_daviz = bool(interfaces)
-
-        except ImportError:
-            has_daviz = False
-
-        return has_daviz
 
     def createVisualization(self):
         """ Create visualization with datasource
