@@ -122,7 +122,7 @@ def sparql2json(data, column_types=None):
                     item = u'%s' % item
                     item = (guess.convert(item, fallback=None, format=fmt)
                             if guess else item)
-                except Exception, err:
+                except Exception:
                     rowdata.pop(key)
                 else:
                     rowdata[key] = item

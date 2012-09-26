@@ -3,6 +3,8 @@ Changelog
 
 1.9-dev - (unreleased)
 ----------------------
+* Feature: Added Visualization data source provenance adapter for Sparql objects
+  [voineali refs #5490]
 * Bug fix: Updated converter for results containing exceptions
   [szabozo0 refs #5515]
 * Change: Merged daviz-view.json and daviz-relateditems.json into one single

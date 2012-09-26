@@ -10,6 +10,7 @@
   <include package=".browser" />
   <include package=".cache" />
   <include package=".content" />
+  <include package=".data" />
   <include package=".upgrades" />
 
 </configure>
