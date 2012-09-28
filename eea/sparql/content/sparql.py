@@ -227,7 +227,7 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
 
     def syncQueries(self):
         """sync all queries from bookmarks"""
-        queries = self.execute()['rows']
+        queries = self.execute()['result']['rows']
         for query in queries:
             query_name = query[0].value
             query_sparql = query[2].value
