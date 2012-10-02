@@ -117,7 +117,7 @@
     <tal:block tal:condition="python: isDaviz">
         <br/>
         <br/>
-        <input type="button" class="context" value="Create Another Visualization"
+        <input type="button" class="context" value="Create New Visualization"
             tal:attributes="onclick string:javascript:document.location='${context/absolute_url}/daviz-create-new.html';"/>
     </tal:block>
 
