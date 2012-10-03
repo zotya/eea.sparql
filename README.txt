@@ -1,11 +1,9 @@
+==========
 EEA Sparql
 ==========
-EEA Sparql is a plone product for fetching data from Linked open data servers 
+EEA Sparql is a plone product for fetching data from Linked open data servers
 (sparql endpoints).
 
-
-Contents
-========
 
 .. contents::
 
@@ -13,9 +11,9 @@ Contents
 Introduction
 ============
 
-It is simple to use, you only have to specify the sparql endpoint url and the 
+It is simple to use, you only have to specify the sparql endpoint url and the
 sparql query.
-The results will be converted in an exhibit json, what can easily be reused 
+The results will be converted in an exhibit json, what can easily be reused
 (ex. by eea.daviz).
 
 
@@ -25,11 +23,11 @@ Main features
 The main features are:
 
   1. create sparql queries
-  2. create sparql bookmark folders, sparql queries are created automatically, 
-     and can be synchronized manually or automatically (with a cronjob). 
-     If a query is changed, a new version of the object is created, 
+  2. create sparql bookmark folders, sparql queries are created automatically,
+     and can be synchronized manually or automatically (with a cronjob).
+     If a query is changed, a new version of the object is created,
      so older ones are not lost.
-  3. results are downloadable in various formats: 
+  3. results are downloadable in various formats:
      JSON, Exhibit JSON, HTML, XML, XML with Schema, CSV, TSV
 
 
@@ -95,7 +93,8 @@ Source code
 ===========
 
 Latest source code (Plone 4 compatible):
-   https://svn.eionet.europa.eu/repositories/Zope/trunk/eea.sparql/trunk
+- `Plone Collective on Github <https://github.com/collective/eea.sparql>`_
+- `EEA on Github <https://github.com/eea/eea.sparql>`_
 
 
 Copyright and license
@@ -124,7 +123,7 @@ Links
 Funding
 =======
 
-  EEA_ - European Enviroment Agency (EU)
+  EEA_ - European Environment Agency (EU)
 
 .. _EEA: http://www.eea.europa.eu/
 
