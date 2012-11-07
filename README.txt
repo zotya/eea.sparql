@@ -1,6 +1,11 @@
 ==========
 EEA Sparql
 ==========
+.. image:: http://ci.eionet.europa.eu/job/eea.sparql-www/badge/icon
+  :target: http://ci.eionet.europa.eu/job/eea.sparql-www/lastBuild
+.. image:: http://ci.eionet.europa.eu/job/eea.sparql-plone4/badge/icon
+  :target: http://ci.eionet.europa.eu/job/eea.sparql-plone4/lastBuild
+
 EEA Sparql is a plone product for fetching data from Linked open data servers
 (sparql endpoints).
 
