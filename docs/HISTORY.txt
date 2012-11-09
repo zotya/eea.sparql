@@ -3,6 +3,8 @@ Changelog
 
 2.1-dev - (unreleased)
 ----------------------
+* Feature: Added i18n translations
+  [avoinea]
 
 2.0 - (2012-10-08)
 ------------------
