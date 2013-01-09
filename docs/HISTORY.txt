@@ -3,6 +3,9 @@ Changelog
 
 2.2-dev - (unreleased)
 ----------------------
+* Change:  moved the olderVersions to the portalMessage div that displays the 
+  old versions link for eea.sparql templates
+  [ichimdav #10182]
 
 2.1 - (2012-11-09)
 ------------------

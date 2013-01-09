@@ -7,8 +7,8 @@
 <div metal:fill-slot="content-core"  
         tal:define="options view/test_query;
                     isDaviz view/isDavizInstalled">
+
     <metal:versions use-macro="here/portlet_versions/macros/versions">
-        <metal:old fill-slot="old" />
     </metal:versions>
 
      <h3 i18n:translate="">Download this dataset</h3>
@@ -109,10 +109,6 @@
         <h4 style="color:red">Error when running query:</h4>
         <blockquote class="sparql-error" tal:content="options/error"/>
     </div>
-
-    <metal:versions use-macro="here/portlet_versions/macros/versions">
-        <metal:new fill-slot="new" />
-    </metal:versions>
 
     <tal:block tal:condition="python: isDaviz">
         <br/>
