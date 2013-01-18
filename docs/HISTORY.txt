@@ -3,6 +3,8 @@ Changelog
 
 2.3-dev - (unreleased)
 ----------------------
+* Bug fix: Fixed compatibility with jquery 1.7.2
+  [szabozo0]
 
 2.2 - (2013-01-10)
 ------------------
