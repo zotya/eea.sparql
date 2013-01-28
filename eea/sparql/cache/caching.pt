@@ -12,7 +12,10 @@
     <div metal:fill-slot="main" >
       <form method="POST" action="" tal:attributes="action string:${context/absolute_url}/@@caching">
 
-        <input type="submit" name="submit" value="Invalidate cache"
+        <input type="submit" name="invalidate_cache" value="Invalidate cache"
+               i18n:attributes="value"  />
+        <br/>
+        <input type="submit" name="invalidate_last_working_results" value="Invalidate last working result"
                i18n:attributes="value"  />
 
       </form>

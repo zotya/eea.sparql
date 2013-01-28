@@ -163,11 +163,10 @@ class Sparql(BrowserView):
             header = '%s:%s' % (col, data['properties'][col]['valueType'])
             row.append(header)
         writter.writerow(row)
-
         for item in data['items']:
             row = []
             for col in headers:
-                row.append(unicode(item[col]))
+                row.append(unicode(item[col]).encode('utf'))
             writter.writerow(row)
 
         return ''
