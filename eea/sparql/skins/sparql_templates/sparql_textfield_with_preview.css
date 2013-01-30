@@ -1,0 +1,12 @@
+.sparql-preview-div {
+    background-color:#DDD;
+    float:left;
+}
+
+.sparql-preview-label {
+    font-size:14px;
+}
+
+.sparql-readonly-field {
+    background-color:#DDD;
+}

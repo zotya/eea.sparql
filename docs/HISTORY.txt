@@ -4,7 +4,9 @@ Changelog
 2.4-dev - (unreleased)
 ----------------------
 * Upgrade step:
-  ZMI > portal_setup > profile "EEA Sparql" > import Diff tool & CMFEditions Repository Tool
+  ZMI > portal_setup > profile "EEA Sparql" > import Skins & Diff tool & CMFEditions Repository Tool
+* Feature: Added quick preview for sparql queries
+  [szabozo0 refs #9608]
 * Feature: Data persistence and versioning
     - Added versioning for sparql results
     - Possibility to select static & live queries

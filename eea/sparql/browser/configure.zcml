@@ -151,4 +151,20 @@
         permission="cmf.ModifyPortalContent"
         />
 
+    <browser:page
+        name="sparql.quick_preview"
+        for="*"
+        class=".sparql.QuickPreview"
+        attribute="preview"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        name="sparql.related_items"
+        for="*"
+        class=".sparql.Sparql"
+        attribute="relatedItems"
+        permission="zope2.View"
+        />
+
 </configure>

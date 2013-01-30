@@ -68,6 +68,9 @@ SparqlBaseSchema = atapi.Schema((
         allowable_content_types = ('text/plain',),
 
         widget=TextAreaWidget(
+            macro="sparql_textfield_with_preview",
+            helper_js=("sparql_textfield_with_preview.js",),
+            helper_css=("sparql_textfield_with_preview.css",),
             label="Query",
         ),
         required=1
@@ -217,21 +220,21 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
                     new_sparql_results = new_sparql_results[0:-3] + "\n"
                     self.setSparql_results(new_sparql_results)
                 pr = getToolByName(self, 'portal_repository')
+                if self.portal_type in pr.getVersionableContentTypes():
+                    comment = "Result changed"
+                    comment = comment.encode('utf')
 
-                comment = "Result changed"
-                comment = comment.encode('utf')
-
-                oldSecurityManager = getSecurityManager()
-                newSecurityManager(self.REQUEST, SpecialUsers.system)
-                try:
-                    pr.save(obj=self, comment=comment)
-                except FileTooLargeToVersionError:
-                    commands = view.getCommandSet('plone')
-                    commands.issuePortalMessage(
-                        """Changes Saved. Versioning for this file 
-                           has been disabled because it is too large.""",
-                        msgtype="warn")
-                setSecurityManager(oldSecurityManager)
+                    oldSecurityManager = getSecurityManager()
+                    newSecurityManager(self.REQUEST, SpecialUsers.system)
+                    try:
+                        pr.save(obj=self, comment=comment)
+                    except FileTooLargeToVersionError:
+                        commands = view.getCommandSet('plone')
+                        commands.issuePortalMessage(
+                            """Changes Saved. Versioning for this file 
+                               has been disabled because it is too large.""",
+                            msgtype="warn")
+                    setSecurityManager(oldSecurityManager)
 
             if new_result.get('exception', None):
                 self.cached_result['exception'] = new_result['exception']

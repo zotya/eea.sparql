@@ -6,6 +6,10 @@ from Products.Five import BrowserView
 from Products.ZSPARQLMethod.Method import interpolate_query_html
 from Products.ZSPARQLMethod.Method import map_arg_values
 from Products.ZSPARQLMethod.Method import parse_arg_spec
+from Products.ZSPARQLMethod.Method import interpolate_query
+from Products.ZSPARQLMethod.Method import run_with_timeout
+from Products.ZSPARQLMethod.Method import query_and_get_result
+
 from eea.sparql.converter.sparql2json import sparql2json
 from eea.sparql.converter.sparql2json import sortProperties
 from eea.versions import versions
@@ -14,6 +18,7 @@ from time import time
 import json
 import urllib2
 import contextlib
+import cgi
 
 logger = logging.getLogger('eea.sparql')
 
@@ -239,6 +244,11 @@ class Sparql(BrowserView):
 
         return has_daviz
 
+    def relatedItems(self):
+        """ Items what are back related to this query
+        """
+        return json.dumps([[x.title, x.absolute_url()]
+                            for x in self.context.getBRefs()])
 
 class SparqlBookmarksFolder(Sparql):
     """SparqlBookmarksFolder view"""
@@ -311,3 +321,61 @@ class SparqlBookmarkFoldersSync(BrowserView):
             except Exception, err:
                 logger.exception(err)
         return "Sync done"
+
+class QuickPreview(BrowserView):
+    """ Quick Preview For Query
+    """
+
+    def preview(self):
+        """preview"""
+        tmp_query = self.request.get("sparql_query", "")
+        tmp_arg_spec = self.request.get("arg_spec", "")
+        tmp_endpoint = self.request.get("endpoint", "")
+        tmp_timeout = int(self.request.get("timeout", "0"))
+
+        arg_spec = parse_arg_spec(tmp_arg_spec)
+        missing, arg_values = map_arg_values(arg_spec, self.request.form)
+        error = None
+        if missing:
+            error = ""
+            for missing_arg in missing:
+                error = error + "<div>Argument '%s' missing</div>" % missing_arg
+        else:
+            result = {}
+            data = []
+            error = None
+            cooked_query = interpolate_query(tmp_query, arg_values)
+            args = (tmp_endpoint, cooked_query)
+            try:
+                result, error = {}, None
+                result = run_with_timeout(tmp_timeout,
+                                            query_and_get_result,
+                                            *args)
+                data = result.get('result')
+                error = error or result.get('exception')
+            except Exception:
+                import traceback
+                error = traceback.format_exc()
+
+        if error:
+            return "<blockquote class='sparql-error'> %s </blockquote>" % error
+
+        result = []
+        result.append(u"<table class='sparql-results'>")
+        result.append(u"<thead>")
+        result.append(u"<tr>")
+        for var_name in data.get('var_names', []):
+            result.append(u"<th> %s </th>" %var_name)
+        result.append(u"</tr>")
+        result.append(u"</thead>")
+        result.append(u"<tbody>")
+        for row in data.get('rows', []):
+            result.append(u"<tr class='row_0'>")
+            for value in row:
+                result.append(u"<td> %s </td>" %cgi.escape(value.n3()))
+            result.append(u"</tr>")
+        result.append(u"</tbody>")
+        result.append(u"</table>")
+        return "\n".join(result)
+
+
