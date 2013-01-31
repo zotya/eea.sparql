@@ -24,11 +24,14 @@ class CacheView(BrowserView):
     """ Caching for sparql query results
     """
     def __call__(self):
-        if not "submit" in self.request.form:
-            return self.index()
+        if "invalidate_cache" in self.request.form:
+            event.notify(ObjectModifiedEvent(self.context))
+            IStatusMessage(self.request).addStatusMessage("Cache invalidated")
+        if "invalidate_last_working_results" in self.request.form:
+            self.context.invalidateWorkingResult()
+            message = "Last working results invalidated"
+            IStatusMessage(self.request).addStatusMessage(message)
 
-        event.notify(ObjectModifiedEvent(self.context))
-        IStatusMessage(self.request).addStatusMessage("Cache invalidated")
         return self.index()
 
 def purgeRelatedItems(obj, evt):

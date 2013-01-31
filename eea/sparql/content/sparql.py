@@ -9,13 +9,14 @@ from Products.Archetypes import atapi
 from Products.Archetypes.atapi import IntegerField
 from Products.Archetypes.atapi import SelectionWidget
 from Products.Archetypes.atapi import Schema
-from Products.Archetypes.atapi import StringField, StringWidget
+from Products.Archetypes.atapi import StringField, StringWidget, \
+                                        BooleanWidget, BooleanField
 from Products.Archetypes.atapi import TextField, TextAreaWidget
 from Products.ZSPARQLMethod.Method import ZSPARQLMethod, \
                                         interpolate_query, \
                                         run_with_timeout, \
-                                        query_and_get_result, \
                                         parse_arg_spec, \
+                                        query_and_get_result, \
                                         map_arg_values
 from AccessControl.Permissions import view
 from eea.sparql.cache import ramcache, cacheSparqlKey
@@ -25,6 +26,14 @@ from eea.versions.interfaces import IVersionEnhanced
 from eea.versions import versions
 
 from zope.interface import implements
+
+from Products.CMFCore.utils import getToolByName
+from Products.CMFEditions.interfaces.IModifier import FileTooLargeToVersionError
+
+from AccessControl import SpecialUsers
+from AccessControl import getSecurityManager
+from AccessControl.SecurityManagement import newSecurityManager, \
+                                            setSecurityManager
 
 SparqlBaseSchema = atapi.Schema((
     StringField(
@@ -59,9 +68,30 @@ SparqlBaseSchema = atapi.Schema((
         allowable_content_types = ('text/plain',),
 
         widget=TextAreaWidget(
+            macro="sparql_textfield_with_preview",
+            helper_js=("sparql_textfield_with_preview.js",),
+            helper_css=("sparql_textfield_with_preview.css",),
             label="Query",
         ),
         required=1
+    ),
+    BooleanField(
+        name='sparql_static',
+        widget=BooleanWidget(
+            label='Static query',
+            description='The data will be fetched only once',
+        ),
+        default=False,
+        required=0
+    ),
+    TextField(
+        name='sparql_results',
+        widget=TextAreaWidget(
+            label="Results",
+            visible={'edit': 'invisible', 'view': 'invisible' }
+        ),
+        required=0,
+
     ),
 ))
 
@@ -77,6 +107,8 @@ SparqlBookmarksFolderSchema = getattr(ATFolder, 'schema', Schema(())).copy() + \
         SparqlBaseSchema.copy()
 SparqlBookmarksFolderSchema['sparql_query'].widget.description = \
         'The query should return label, bookmark url, query'
+SparqlBookmarksFolderSchema['sparql_static'].widget.visible['edit'] = \
+        'invisible'
 
 class Sparql(base.ATCTContent, ZSPARQLMethod):
     """Sparql"""
@@ -127,25 +159,86 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
         except Exception:
             self.timeout = 10
 
+    security.declareProtected(view, 'invalidateWorkingResult')
+    def invalidateWorkingResult(self):
+        """ invalidate working results"""
+        self.cached_result = {}
+        self.setSparql_results("")
+        pr = getToolByName(self, 'portal_repository')
+        comment = "Invalidated last working result"
+        comment = comment.encode('utf')
+        try:
+            pr.save(obj=self, comment=comment)
+        except FileTooLargeToVersionError:
+            commands = view.getCommandSet('plone')
+            commands.issuePortalMessage(
+                """Changes Saved. Versioning for this file 
+                   has been disabled because it is too large.""",
+                msgtype="warn")
+
     security.declareProtected(view, 'execute')
     def execute(self, **arg_values):
         """
         Override execute from ZSPARQLMethod in order to have a default timeout
         """
+        cached_result = getattr(self, 'cached_result', {})
         cooked_query = interpolate_query(self.query, arg_values)
-        cache_key = {'query': cooked_query}
-        result = self.ZCacheable_get(keywords=cache_key)
 
-        if result is None:
+        force_requery = False
+
+        if not self.getSparql_static():
+            force_requery = True
+
+        if cached_result == {}:
+            force_requery = True
+
+        if force_requery:
             args = (self.endpoint_url, cooked_query)
-            result = run_with_timeout(
+            new_result = run_with_timeout(
                 max(getattr(self, 'timeout', 10), 10),
                 query_and_get_result,
                 *args)
-            self.ZCacheable_set(result, keywords=cache_key)
 
-        return result
+            force_save = False
 
+            if new_result.get("result", {}) != {}:
+                if new_result != cached_result:
+                    if len(new_result.get("result", {}).get("rows", {})) > 0:
+                        force_save = True
+                    else:
+                        if len(cached_result.get('result', {}).\
+                            get('rows', {})) == 0:
+                            force_save = True
+
+            if force_save:
+                self.cached_result = new_result
+                new_sparql_results = u""
+                for row in self.cached_result.get('result', {}).get('rows', {}):
+                    for val in row:
+                        new_sparql_results = new_sparql_results + \
+                            unicode(val) + " | "
+                    new_sparql_results = new_sparql_results[0:-3] + "\n"
+                    self.setSparql_results(new_sparql_results)
+                pr = getToolByName(self, 'portal_repository')
+                if self.portal_type in pr.getVersionableContentTypes():
+                    comment = "Result changed"
+                    comment = comment.encode('utf')
+
+                    oldSecurityManager = getSecurityManager()
+                    newSecurityManager(self.REQUEST, SpecialUsers.system)
+                    try:
+                        pr.save(obj=self, comment=comment)
+                    except FileTooLargeToVersionError:
+                        commands = view.getCommandSet('plone')
+                        commands.issuePortalMessage(
+                            """Changes Saved. Versioning for this file 
+                               has been disabled because it is too large.""",
+                            msgtype="warn")
+                    setSecurityManager(oldSecurityManager)
+
+            if new_result.get('exception', None):
+                self.cached_result['exception'] = new_result['exception']
+        return self.cached_result
 
 class SparqlBookmarksFolder(ATFolder, Sparql):
     """Sparql Bookmarks Folder"""
