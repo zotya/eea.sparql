@@ -14,4 +14,16 @@
 
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+    source="1001"
+    destination="2400"
+    profile="eea.sparql:default">
+
+    <genericsetup:upgradeDepends
+      title="Import all steps from eea.sparql profile"
+      import_profile="eea.sparql:default"
+      />
+
+  </genericsetup:upgradeSteps>
+
 </configure>
