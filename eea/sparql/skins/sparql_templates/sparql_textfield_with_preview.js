@@ -10,11 +10,15 @@ function preview_sparql(){
     jQuery.each(args_list, function(idx, arg){
         ajax_data[arg.split("=")[0]] = arg.split("=")[1];
     });
+
+    var loading_msg = jQuery("<div class='sparql-preview-loading'><div>Executing query...</div></div>");
+    jQuery(loading_msg).appendTo("body");
     jQuery.ajax({
         url:portal_url + "/sparql.quick_preview",
         type:"POST",
         data: ajax_data,
         success:function(data){
+            jQuery(".sparql-preview-loading").remove();
             var sparql_preview = jQuery("<div class='sparql_preview'></div>");
             jQuery(data).appendTo(sparql_preview);
             sparql_preview.dialog({
