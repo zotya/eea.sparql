@@ -67,9 +67,12 @@ class Sparql(BrowserView):
         }
         return options
 
-    def json(self, column_types=None):
+    def json(self, **kwargs):
         """json"""
         data = self.context.execute_query()
+
+        column_types = kwargs.get('column_types')
+        #annotations = kwargs.get('annotations')
         return sortProperties(json.dumps(sparql2json(data, column_types)))
 
     def sparql2exhibit(self):
