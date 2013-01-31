@@ -5,6 +5,8 @@ Changelog
 ----------------------
 * Upgrade step: Within "Plone > Site setup > Add-ons" click on
   upgrade button available for eea.sparql.
+* Bug fix: Fixed preview for queries returning empty fields
+  [szabozo0 refs #9608]
 * Feature: Added quick preview for sparql queries
   [szabozo0 refs #9608]
 * Feature: Data persistence and versioning

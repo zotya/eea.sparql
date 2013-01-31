@@ -332,6 +332,9 @@ class QuickPreview(BrowserView):
     def preview(self):
         """preview"""
         tmp_query = self.request.get("sparql_query", "")
+        tmp_query = "\n".join(x for x in tmp_query.splitlines()
+                         if not x.strip().startswith("#"))
+
         tmp_arg_spec = self.request.get("arg_spec", "")
         tmp_endpoint = self.request.get("endpoint", "")
         tmp_timeout = int(self.request.get("timeout", "0"))
@@ -375,7 +378,10 @@ class QuickPreview(BrowserView):
         for row in data.get('rows', []):
             result.append(u"<tr class='row_0'>")
             for value in row:
-                result.append(u"<td> %s </td>" %cgi.escape(value.n3()))
+                try:
+                    result.append(u"<td> %s </td>" %cgi.escape(value.n3()))
+                except Exception, err:
+                    result.append(u"<td> %s </td>" %value)
             result.append(u"</tr>")
         result.append(u"</tbody>")
         result.append(u"</table>")
