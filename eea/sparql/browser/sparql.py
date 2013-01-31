@@ -377,7 +377,7 @@ class QuickPreview(BrowserView):
             for value in row:
                 try:
                     result.append(u"<td> %s </td>" %cgi.escape(value.n3()))
-                except:
+                except Exception, err:
                     result.append(u"<td> %s </td>" %value)
             result.append(u"</tr>")
         result.append(u"</tbody>")
