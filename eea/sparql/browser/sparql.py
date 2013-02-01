@@ -72,8 +72,12 @@ class Sparql(BrowserView):
         data = self.context.execute_query()
 
         column_types = kwargs.get('column_types')
-        #annotations = kwargs.get('annotations')
-        return sortProperties(json.dumps(sparql2json(data, column_types)))
+        annotations = kwargs.get('annotations')
+        return sortProperties(json.dumps(
+            sparql2json(data,
+                        column_types=column_types,
+                        annotations=annotations)
+        ))
 
     def sparql2exhibit(self):
         """ Download sparql results as Exhibit JSON
@@ -381,6 +385,7 @@ class QuickPreview(BrowserView):
                 try:
                     result.append(u"<td> %s </td>" %cgi.escape(value.n3()))
                 except Exception, err:
+                    logger.debug(err)
                     result.append(u"<td> %s </td>" %value)
             result.append(u"</tr>")
         result.append(u"</tbody>")

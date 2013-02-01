@@ -39,7 +39,30 @@ class MethodResult (Method.MethodResult):
         return sparql.unpack_row(self.rdfterm_rows[n],
                                  convert_type=sparql_converters)
 
-def sparql2json(data, column_types=None):
+def text_annotation(text, annotations=()):
+    """ Extract text and annotation from given text based on
+    annotations dict
+
+    >>> text_annotation('4438868(s)', annotations=[
+    ...   {'name': u'(s)', 'title': u'Eurostat estimate'},
+    ...   {'name': u':', 'title': u'Not available'},
+    ... ])
+    (u'4438868', u'Eurostat estimate')
+
+    """
+    for annotation in annotations:
+        name = annotation.get('name')
+        if not name:
+            continue
+
+        if not isinstance(text, (str, unicode)):
+            text = repr(text)
+
+        if text.find(name) != -1:
+            return text.replace(name, ''), annotation.get('title', name)
+    return text, u''
+
+def sparql2json(data, **kwargs):
     """
     Converts sparql to JSON
 
@@ -75,6 +98,9 @@ def sparql2json(data, column_types=None):
         'string': u''}]
 
     """
+    column_types = kwargs.get('column_types')
+    annotations = kwargs.get('annotations')
+
     data_result = data['result']
     items = []
     hasLabel = False
@@ -83,20 +109,38 @@ def sparql2json(data, column_types=None):
     cols = mr.var_names
     properties = {}
 
+    columns = []
     for index, col in enumerate(cols):
         if col.lower().endswith(":label") or col.lower()=="label":
-            cols[index] = 'label'
+            columns.append('label')
             hasLabel = True
-            break
+        else:
+            columns.append(col)
+
+        if col in annotations:
+            columns.append(annotations[col].get('name'))
 
     for index, row in enumerate(mr):
         rowdata = {}
         if not hasLabel:
             rowdata['label'] = index
 
-        for idx, item in enumerate(row):
-            key = cols[idx].encode('utf8')
+        row = iter(row)
+
+        idx = -1
+        for order, key in enumerate(columns):
+            key = key.encode('utf8')
             valueType = 'text'
+
+            if key.endswith('__annotations__'):
+                continue
+
+            try:
+                item = row.next()
+            except StopIteration:
+                item = u''
+
+            idx += 1
             if isinstance(data_result['rows'][0][idx], sparql.Literal):
                 datatype = data_result['rows'][0][idx].datatype
                 if not datatype:
@@ -104,6 +148,13 @@ def sparql2json(data, column_types=None):
                 valueType = propertytype_dict[datatype]
             elif isinstance(data_result['rows'][0][idx], sparql.IRI):
                 valueType = 'url'
+
+            # Annotations
+            anno = annotations.get(key, None)
+            if anno:
+                item, annotation = text_annotation(
+                    item, anno.get('annotations', []))
+                rowdata[anno.get('name')] = annotation
 
             rowdata[key] = item
 
@@ -132,6 +183,14 @@ def sparql2json(data, column_types=None):
                 "valueType" : valueType,
                 "order" : idx
             }
+
+            if anno:
+                properties[anno.get('name')] = {
+                    "valueType": anno.get('valueType', u'text'),
+                    "columnType": anno.get('columnType', u'annotations'),
+                    "label": anno.get('label', key + u':annotations'),
+                    "order": order + 1
+                }
 
         items.append(rowdata)
 

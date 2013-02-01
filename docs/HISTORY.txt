@@ -5,6 +5,8 @@ Changelog
 ----------------------
 * Upgrade step: Within "Plone > Site setup > Add-ons" click on
   upgrade button available for eea.sparql.
+* Feature: Handling specific annotations for data values
+  [voineali refs #9558]
 * Bug fix: Fixed preview for queries returning empty fields
   [szabozo0 refs #9608]
 * Feature: Added quick preview for sparql queries
@@ -21,7 +23,7 @@ Changelog
 
 2.2 - (2013-01-10)
 ------------------
-* Change:  moved the olderVersions to the portalMessage div that displays the 
+* Change:  moved the olderVersions to the portalMessage div that displays the
   old versions link for eea.sparql templates
   [ichimdav #10182]
 
