@@ -43,6 +43,7 @@ def text_annotation(text, annotations=()):
     """ Extract text and annotation from given text based on
     annotations dict
 
+    >>> from eea.sparql.converter.sparql2json import text_annotation
     >>> text_annotation('4438868(s)', annotations=[
     ...   {'name': u'(s)', 'title': u'Eurostat estimate'},
     ...   {'name': u':', 'title': u'Not available'},
