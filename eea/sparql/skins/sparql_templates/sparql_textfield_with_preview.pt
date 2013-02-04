@@ -137,11 +137,12 @@
           <script type="text/javascript" tal:content="string: var portal_url = '${context/portal_url}'; var absolute_url = '${context/absolute_url}'">
           </script>
 
-          <label class="sparql-preview-label">Quick Preview</label><br/>
-          <label class="sparql-preview-arguments-label">Arguments for preview</label><br/>
+          <label class="sparql-preview-label">Test and preview the query</label><br/>
+          <span class="sparql-preview-arguments-helper formHelper">This will run the query on the endpoint without saving the query in plone.</span><br/>
+          <input class="sparql-query-results-preview" type="button" value="Test and preview query"/><br/>
+          <label class="sparql-preview-arguments-label">Arguments for preview (optional)</label><br/>
           <span class="sparql-preview-arguments-helper formHelper">Arguments for preview should look like: arg1=value1&amp;arg2=value2</span><br/>
           <input class="sparql-preview-arguments" type="text"> <br/>
-          <input class="sparql-query-results-preview" type="button" value="Preview Query Results"/>
       </div>
     </metal:define>
 
