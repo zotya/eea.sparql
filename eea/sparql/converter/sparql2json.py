@@ -99,8 +99,8 @@ def sparql2json(data, **kwargs):
         'string': u''}]
 
     """
-    column_types = kwargs.get('column_types')
-    annotations = kwargs.get('annotations')
+    column_types = kwargs.get('column_types', [])
+    annotations = kwargs.get('annotations', {})
 
     data_result = data['result']
     items = []
