@@ -5,6 +5,8 @@ Changelog
 ----------------------
 * Upgrade step: Within "Plone > Site setup > Add-ons" click on
   upgrade button available for eea.sparql.
+* Bug fix: Fixed tests for eea.sparql
+  [szabozo0 refs #9424]
 * Feature: Handling specific annotations for data values
   [voineali refs #9558]
 * Bug fix: Fixed preview for queries returning empty fields
