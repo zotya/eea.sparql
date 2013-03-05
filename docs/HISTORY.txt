@@ -6,6 +6,8 @@ Changelog
 
 2.4 - (2013-02-05)
 ------------------
+* Feature: added information for contributors
+  [ciobabog refs #13892]
 * Upgrade step: Within "Plone > Site setup > Add-ons" click on
   upgrade button available for eea.sparql.
 * Bug fix: Fixed tests for eea.sparql
