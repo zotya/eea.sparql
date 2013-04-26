@@ -354,9 +354,9 @@ class QuickPreview(BrowserView):
             result = {}
             data = []
             error = None
-            cooked_query = interpolate_query(tmp_query, arg_values)
-            args = (tmp_endpoint, cooked_query)
             try:
+                cooked_query = interpolate_query(tmp_query, arg_values)
+                args = (tmp_endpoint, cooked_query)
                 result, error = {}, None
                 result = run_with_timeout(tmp_timeout,
                                             query_and_get_result,
