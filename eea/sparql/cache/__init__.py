@@ -1,8 +1,7 @@
 """ Caching module
 """
 try:
-    from eea.cache import cache as eeacache
-    from lovely.memcached import event
+    from eea.cache import cache as eeacache, event
     # pyflakes
     InvalidateCacheEvent = event.InvalidateCacheEvent
     ramcache = eeacache

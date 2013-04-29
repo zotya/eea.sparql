@@ -3,6 +3,8 @@ Changelog
 
 2.5-dev - (unreleased)
 ----------------------
+* Feature: Removed lovely.memcached dependency
+  [voineali refs #14343]
 
 2.4 - (2013-02-05)
 ------------------
