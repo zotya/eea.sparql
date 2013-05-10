@@ -22,7 +22,7 @@ from AccessControl.Permissions import view
 from eea.sparql.cache import ramcache, cacheSparqlKey
 from eea.sparql.config import PROJECTNAME
 from eea.sparql.interfaces import ISparql, ISparqlBookmarksFolder
-from eea.versions.interfaces import IVersionEnhanced
+from eea.versions.interfaces import IVersionEnhanced, IGetVersions
 from eea.versions import versions
 
 from zope.interface import implements
@@ -256,8 +256,7 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
         changed = True
         for sparql in self.values():
             if sparql.title == title:
-                latest_sparql = versions.get_versions_api(
-                    sparql).latest_version()
+                latest_sparql = IGetVersions(sparql).latest_version()
                 found = True
                 if latest_sparql.query_with_comments == query:
                     changed = False
@@ -279,8 +278,7 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
         changed = True
         for sparql in self.values():
             if sparql.title == title:
-                latest_sparql = versions.get_versions_api(
-                    sparql).latest_version()
+                latest_sparql = IGetVersions(sparql).latest_version()
                 ob = latest_sparql
                 if latest_sparql.query_with_comments == query:
                     changed = False
@@ -312,8 +310,7 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
         ob = None
         for sparql in self.values():
             if sparql.title == title:
-                latest_sparql = versions.get_versions_api(
-                    sparql).latest_version()
+                latest_sparql = IGetVersions(sparql).latest_version()
                 ob = latest_sparql
                 break
         return ob
