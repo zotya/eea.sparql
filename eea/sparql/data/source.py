@@ -115,3 +115,18 @@ class SparqlDataProvenance(object):
 
         """
         return
+
+class SparqlMultiDataProvenance(object):
+    def __init__(self, context):
+        self.context = context
+
+    @property
+    def provenances(self):
+        title=self.context.title_or_id()
+        link=self.context.absolute_url()
+        owner=self.context.getField('endpoint_url').getAccessor(self.context)()
+        return ({'title': title, 'link': link, 'owner': owner},)
+
+    @provenances.setter
+    def provenances(self, value):
+        return

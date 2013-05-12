@@ -3,6 +3,8 @@ Changelog
 
 2.5-dev - (unreleased)
 ----------------------
+* Feature: Changed data provenance to allow multiple data provenances
+  [szabozo0 #9561]
 * Feature: Removed lovely.memcached dependency
   [voineali refs #14343]
 * Bugfix: Fixed preview for sparql queries when arguments are missing
