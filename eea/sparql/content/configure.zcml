@@ -23,4 +23,10 @@
     handler=".events.bookmarksfolder_added"
     />
 
+  <!-- Multiple data source schema extender -->
+  <adapter
+    for="..interfaces.ISparql"
+    factory="eea.daviz.content.schema.MultiDataProvenanceSchemaExtender"
+    />
+
 </configure>

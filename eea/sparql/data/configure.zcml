@@ -11,7 +11,7 @@
     factory=".source.SparqlDataProvenance"
     />
 
-  <!-- Data source adapters -->
+  <!-- Multiple data source adapters -->
   <adapter
     zcml:condition="installed eea.app.visualization"
     for="eea.sparql.interfaces.ISparql"
