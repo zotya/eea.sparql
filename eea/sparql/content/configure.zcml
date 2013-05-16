@@ -1,6 +1,7 @@
 <configure
   xmlns="http://namespaces.zope.org/zope"
   xmlns:five="http://namespaces.zope.org/five"
+  xmlns:zcml="http://namespaces.zope.org/zcml"
   i18n_domain="eea.sparql">
 
   <class class=".sparql.Sparql">
@@ -25,6 +26,7 @@
 
   <!-- Multiple data source schema extender -->
   <adapter
+    zcml:condition="installed eea.app.visualization"
     for="..interfaces.ISparql"
     factory="eea.daviz.content.schema.MultiDataProvenanceSchemaExtender"
     />
