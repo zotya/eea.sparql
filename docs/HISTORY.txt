@@ -1,6 +1,9 @@
 Changelog
 =========
 
+2.6-dev - (unreleased)
+----------------------
+
 2.5 - (2013-05-20)
 ------------------
 * Feature: Removed lovely.memcached dependency
