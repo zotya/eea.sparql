@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.5-dev - (unreleased)
-----------------------
+2.5 - (2013-05-20)
+------------------
 * Feature: Removed lovely.memcached dependency
   [voineali refs #14343]
 * Bugfix: Fixed preview for sparql queries when arguments are missing
