@@ -28,8 +28,8 @@ Changelog
 * Feature: Added quick preview for sparql queries
   [szabozo0 refs #9608]
 * Feature: Data persistence and versioning
-    - Added versioning for sparql results
-    - Possibility to select static & live queries
+  - Added versioning for sparql results
+  - Possibility to select static & live queries
   [szabozo0 refs #9424]
 
 2.3 - (2013-01-18)
