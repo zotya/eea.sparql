@@ -3,6 +3,8 @@ Changelog
 
 2.6-dev - (unreleased)
 ----------------------
+* Bug fix: Updated for eea.versions v6.0
+  [szabozo0 refs #14627]
 
 2.5 - (2013-05-20)
 ------------------

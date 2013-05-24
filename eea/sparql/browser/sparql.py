@@ -12,7 +12,7 @@ from Products.ZSPARQLMethod.Method import query_and_get_result
 
 from eea.sparql.converter.sparql2json import sparql2json
 from eea.sparql.converter.sparql2json import sortProperties
-from eea.versions import versions
+from eea.versions.interfaces import IGetVersions
 from Products.CMFCore.utils import getToolByName
 from time import time
 import json
@@ -300,8 +300,7 @@ class SparqlBookmarksFolder(Sparql):
         ob = None
         for sparql in self.context.values():
             if sparql.title == title:
-                ob = versions.get_versions_api(
-                    sparql).latest_version()
+                ob = IGetVersions(sparql).latest_version()
                 break
         if not ob:
             return []
