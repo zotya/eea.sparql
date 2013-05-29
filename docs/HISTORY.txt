@@ -1,10 +1,18 @@
 Changelog
 =========
 
-2.5-dev - (unreleased)
+2.7-dev - (unreleased)
 ----------------------
 * Feature: Changed data provenance to allow multiple data provenances
   [szabozo0 #9561]
+
+2.6 - (2013-05-24)
+------------------
+* Bug fix: Updated for eea.versions v6.0
+  [szabozo0 refs #14627]
+
+2.5 - (2013-05-20)
+------------------
 * Feature: Removed lovely.memcached dependency
   [voineali refs #14343]
 * Bugfix: Fixed preview for sparql queries when arguments are missing
@@ -27,8 +35,8 @@ Changelog
 * Feature: Added quick preview for sparql queries
   [szabozo0 refs #9608]
 * Feature: Data persistence and versioning
-    - Added versioning for sparql results
-    - Possibility to select static & live queries
+  - Added versioning for sparql results
+  - Possibility to select static & live queries
   [szabozo0 refs #9424]
 
 2.3 - (2013-01-18)
