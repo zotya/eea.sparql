@@ -26,7 +26,7 @@
 
   <!-- Multiple data source schema extender -->
   <adapter
-    zcml:condition="installed eea.app.visualization"
+    zcml:condition="installed eea.daviz"
     for="..interfaces.ISparql"
     factory="eea.daviz.content.schema.MultiDataProvenanceSchemaExtender"
     />
