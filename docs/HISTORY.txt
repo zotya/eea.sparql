@@ -3,6 +3,8 @@ Changelog
 
 2.7-dev - (unreleased)
 ----------------------
+* Feature: Changed data provenance to allow multiple data provenances
+  [szabozo0 #9561]
 
 2.6 - (2013-05-24)
 ------------------
