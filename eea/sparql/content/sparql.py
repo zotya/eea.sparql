@@ -50,7 +50,7 @@ SparqlBaseSchema = atapi.Schema((
         ),
         default=10,
         required=1,
-        vocabulary=['10', '20', '30', '40', '50', '60'],
+        vocabulary=['10', '20', '30', '40', '50', '60', '300', '600'],
         accessor='getTimeout',
         edit_accessor='getTimeout',
         mutator='setTimeout'
@@ -213,12 +213,18 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
             if force_save:
                 self.cached_result = new_result
                 new_sparql_results = u""
-                for row in self.cached_result.get('result', {}).get('rows', {}):
-                    for val in row:
-                        new_sparql_results = new_sparql_results + \
-                            unicode(val) + " | "
-                    new_sparql_results = new_sparql_results[0:-3] + "\n"
+                rows = self.cached_result.get('result', {}).get('rows', {})
+                if len(rows) < 201:
+                    for row in rows:
+                        for val in row:
+                            new_sparql_results = new_sparql_results + \
+                                unicode(val) + " | "
+                        new_sparql_results = new_sparql_results[0:-3] + "\n"
                     self.setSparql_results(new_sparql_results)
+                else:
+                    self.setSparql_results(\
+                        "Too many rows (%s), comparation is disabled" \
+                        %len(rows))
                 pr = getToolByName(self, 'portal_repository')
                 if self.portal_type in pr.getVersionableContentTypes():
                     comment = "Result changed"

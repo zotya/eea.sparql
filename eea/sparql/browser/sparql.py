@@ -1,5 +1,6 @@
 """ sparql
 """
+import re
 import logging
 import csv
 from Products.Five import BrowserView
@@ -354,6 +355,11 @@ class QuickPreview(BrowserView):
             data = []
             error = None
             try:
+                m = re.search("limit\s(\d+)", tmp_query, re.IGNORECASE)
+                if m:
+                    tmp_query = tmp_query[:m.start(1)]+'10'+tmp_query[m.end(1):]
+                else:
+                    tmp_query = tmp_query + " LIMIT 5"
                 cooked_query = interpolate_query(tmp_query, arg_values)
                 args = (tmp_endpoint, cooked_query)
                 result, error = {}, None

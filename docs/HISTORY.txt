@@ -3,6 +3,10 @@ Changelog
 
 2.8-dev - (unreleased)
 ----------------------
+* Change:
+    On preview use a LIMIT 10 to have faster response
+    When a new resultset is too large don't store it's text version for comparasion is it takes a lot of time, and blocks the instance
+  [szabozo0 #14826]
 
 2.7 - (2013-06-17)
 ------------------
