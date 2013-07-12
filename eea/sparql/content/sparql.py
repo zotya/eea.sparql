@@ -1,7 +1,13 @@
 """Definition of the Sparql content type
 """
 
+import DateTime
+import datetime, pytz
 from AccessControl import ClassSecurityInfo
+from zope.component import getUtility
+
+from plone.app.async.interfaces import IAsyncService
+
 from Products.ATContentTypes.content import schemata, base
 from Products.ATContentTypes.content.folder import ATFolder
 
@@ -30,10 +36,6 @@ from zope.interface import implements
 from Products.CMFCore.utils import getToolByName
 from Products.CMFEditions.interfaces.IModifier import FileTooLargeToVersionError
 
-from AccessControl import SpecialUsers
-from AccessControl import getSecurityManager
-from AccessControl.SecurityManagement import newSecurityManager, \
-                                            setSecurityManager
 
 SparqlBaseSchema = atapi.Schema((
     StringField(
@@ -80,6 +82,7 @@ SparqlBaseSchema = atapi.Schema((
         widget=BooleanWidget(
             label='Static query',
             description='The data will be fetched only once',
+            visible={'edit': 'invisible', 'view': 'invisible' }
         ),
         default=False,
         required=0
@@ -92,6 +95,15 @@ SparqlBaseSchema = atapi.Schema((
         ),
         required=0,
 
+    ),
+    StringField(
+        name='refresh_rate',
+        widget=SelectionWidget(
+            label="Refresh the results",
+        ),
+        default='Daily',
+        required=1,
+        vocabulary=['Once', 'Hourly', 'Daily', 'Weekly'],
     ),
 ))
 
@@ -176,75 +188,112 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
                    has been disabled because it is too large.""",
                 msgtype="warn")
 
-    security.declareProtected(view, 'execute')
-    def execute(self, **arg_values):
-        """
-        Override execute from ZSPARQLMethod in order to have a default timeout
+        async = getUtility(IAsyncService)
+
+        self.scheduled_at = DateTime.DateTime()
+        async.queueJob(async_updateLastWorkingResults,
+                        self,
+                        scheduled_at = self.scheduled_at)
+
+
+    security.declareProtected(view, 'updateLastWorkingResults')
+    def updateLastWorkingResults(self, **arg_values):
+        """ update cached last workign results of a query
         """
         cached_result = getattr(self, 'cached_result', {})
         cooked_query = interpolate_query(self.query, arg_values)
 
-        force_requery = False
+        args = (self.endpoint_url, cooked_query)
+        new_result = run_with_timeout(
+            max(getattr(self, 'timeout', 10), 10),
+            query_and_get_result,
+            *args)
 
-        if not self.getSparql_static():
-            force_requery = True
+        force_save = False
 
-        if cached_result == {}:
-            force_requery = True
-
-        if force_requery:
-            args = (self.endpoint_url, cooked_query)
-            new_result = run_with_timeout(
-                max(getattr(self, 'timeout', 10), 10),
-                query_and_get_result,
-                *args)
-
-            force_save = False
-
-            if new_result.get("result", {}) != {}:
-                if new_result != cached_result:
-                    if len(new_result.get("result", {}).get("rows", {})) > 0:
-                        force_save = True
-                    else:
-                        if len(cached_result.get('result', {}).\
-                            get('rows', {})) == 0:
-                            force_save = True
-
-            if force_save:
-                self.cached_result = new_result
-                new_sparql_results = u""
-                rows = self.cached_result.get('result', {}).get('rows', {})
-                if len(rows) < 201:
-                    for row in rows:
-                        for val in row:
-                            new_sparql_results = new_sparql_results + \
-                                unicode(val) + " | "
-                        new_sparql_results = new_sparql_results[0:-3] + "\n"
-                    self.setSparql_results(new_sparql_results)
+        if new_result.get("result", {}) != {}:
+            if new_result != cached_result:
+                if len(new_result.get("result", {}).get("rows", {})) > 0:
+                    force_save = True
                 else:
-                    self.setSparql_results(\
-                        "Too many rows (%s), comparation is disabled" \
-                        %len(rows))
-                pr = getToolByName(self, 'portal_repository')
-                if self.portal_type in pr.getVersionableContentTypes():
-                    comment = "Result changed"
-                    comment = comment.encode('utf')
+                    if len(cached_result.get('result', {}).\
+                        get('rows', {})) == 0:
+                        force_save = True
 
-                    oldSecurityManager = getSecurityManager()
-                    newSecurityManager(self.REQUEST, SpecialUsers.system)
-                    try:
-                        pr.save(obj=self, comment=comment)
-                    except FileTooLargeToVersionError:
-                        commands = view.getCommandSet('plone')
-                        commands.issuePortalMessage(
-                            """Changes Saved. Versioning for this file 
-                               has been disabled because it is too large.""",
-                            msgtype="warn")
-                    setSecurityManager(oldSecurityManager)
+        if force_save:
+            self.cached_result = new_result
+            new_sparql_results = u""
+            rows = self.cached_result.get('result', {}).get('rows', {})
+            if len(rows) < 201:
+                for row in rows:
+                    for val in row:
+                        new_sparql_results = new_sparql_results + \
+                            unicode(val) + " | "
+                    new_sparql_results = new_sparql_results[0:-3] + "\n"
+                self.setSparql_results(new_sparql_results)
+            else:
+                self.setSparql_results(\
+                    "Too many rows (%s), comparation is disabled" \
+                    %len(rows))
+            pr = getToolByName(self, 'portal_repository')
+            if self.portal_type in pr.getVersionableContentTypes():
+                comment = "Result changed"
+                comment = comment.encode('utf')
 
-            if new_result.get('exception', None):
-                self.cached_result['exception'] = new_result['exception']
-        return self.cached_result
+                try:
+                    pr.save(obj=self, comment=comment)
+                except FileTooLargeToVersionError:
+                    commands = view.getCommandSet('plone')
+                    commands.issuePortalMessage(
+                        """Changes Saved. Versioning for this file 
+                           has been disabled because it is too large.""",
+                        msgtype="warn")
+
+        if new_result.get('exception', None):
+            self.cached_result['exception'] = new_result['exception']
+
+    security.declareProtected(view, 'execute')
+    def execute(self, **arg_values):
+        """ override execute, if possible return the last working results
+        """
+        cached_result = getattr(self, 'cached_result', {})
+        if len(arg_values) == 0:
+            return cached_result
+
+        self.updateLastWorkingResults(**arg_values)
+        return getattr(self, 'cached_result', {})
+
+
+def async_updateLastWorkingResults(obj, scheduled_at):
+    """ Async update last working results
+    """
+    if obj.scheduled_at == scheduled_at:
+        obj.updateLastWorkingResults()
+
+        refresh_rate = getattr(obj, "refresh_rate", "Daily")
+
+        if (len(obj.cached_result.get('result', {}).get('rows', {})) == 0) and \
+            (refresh_rate == 'Once'):
+            refresh_rate = 'Hourly'
+
+        before = datetime.datetime.now(pytz.UTC)
+
+#        delay = before + datetime.timedelta(seconds=10)
+        delay = before + datetime.timedelta(hours=1)
+        if refresh_rate == "Daily":
+            delay = before + datetime.timedelta(days=1)
+#            delay = before + datetime.timedelta(seconds=60)
+        if refresh_rate == "Weekly":
+#            delay = before + datetime.timedelta(seconds=120)
+            delay = before + datetime.timedelta(weeks=1)
+        if refresh_rate != "Once":
+            async = getUtility(IAsyncService)
+            obj.scheduled_at = DateTime.DateTime()
+            async.queueJobWithDelay(None,
+                                    delay,
+                                    async_updateLastWorkingResults,
+                                    obj,
+                                    scheduled_at = obj.scheduled_at)
 
 class SparqlBookmarksFolder(ATFolder, Sparql):
     """Sparql Bookmarks Folder"""
@@ -257,11 +306,13 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
            0 - missing
            1 - exists
            2 - exists but changed"""
-
         found = False
         changed = True
         for sparql in self.values():
-            if sparql.title == title:
+#            if title.startswith("Swed") and sparql.title.startswith("Swed"):
+#                xxx = sparql.title
+#                import pdb; pdb.set_trace()
+            if sparql.title == title.encode('utf8'):
                 latest_sparql = IGetVersions(sparql).latest_version()
                 found = True
                 if latest_sparql.query_with_comments == query:
@@ -284,7 +335,8 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
         changed = True
         for sparql in self.values():
             if sparql.title == title:
-                latest_sparql = IGetVersions(sparql).latest_version()
+                x1 = IGetVersions(sparql)
+                latest_sparql = x1.latest_version()
                 ob = latest_sparql
                 if latest_sparql.query_with_comments == query:
                     changed = False
@@ -300,13 +352,14 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
                 sparql_query   = query,
             )
             ob._renameAfterCreation(check_auto_id=True)
+            ob.invalidateWorkingResult()
         else:
             if changed:
                 ob = versions.create_version(ob)
                 ob.edit(
                     sparql_query   = query,
                 )
-
+                ob.invalidateWorkingResult()
         return ob
 
     def findQuery(self, title):
@@ -323,7 +376,7 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
 
     def syncQueries(self):
         """sync all queries from bookmarks"""
-        queries = self.execute()['result']['rows']
+        queries = self.execute().get('result', {}).get('rows', {})
         for query in queries:
             query_name = query[0].value
             query_sparql = query[2].value

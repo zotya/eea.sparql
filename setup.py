@@ -40,7 +40,8 @@ setup(name=NAME,
       install_requires=[
           'setuptools',
           'Products.ZSPARQLMethod',
-          'eea.versions'
+          'eea.versions',
+          'plone.app.async'
       ],
       extras_require={
           'test': [

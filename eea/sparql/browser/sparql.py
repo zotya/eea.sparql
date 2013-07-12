@@ -264,23 +264,25 @@ class SparqlBookmarksFolder(Sparql):
     def getBookmarks(self):
         """Get list of bookmarks and check if needs to be updated"""
         results = self.test_query()
-        queries = results['data'].get('rows', [])
+        results_data = results.get('data', {})
         bookmarks = {}
         bookmarks['data'] = []
         bookmarks['arg_spec'] = results['arg_spec']
         bookmarks['error'] = results['error']
         bookmarks['duration'] = results['duration']
         query_endpoint = self.context.endpoint_url
-        for query in queries:
-            query_details = {}
-            query_details['name'] = query[0].value
-            query_details['sparql'] = query[2].value
-            query_details['bookmark'] = query[1].value
-            query_details['status'] = self.context.checkQuery(
-                                        query_details['name'],
-                                        query_endpoint,
-                                        query_details['sparql'])
-            bookmarks['data'].append(query_details)
+        if results_data is not None:
+            queries = results_data.get('rows', [])
+            for query in queries:
+                query_details = {}
+                query_details['name'] = query[0].value
+                query_details['sparql'] = query[2].value
+                query_details['bookmark'] = query[1].value
+                query_details['status'] = self.context.checkQuery(
+                                            query_details['name'],
+                                            query_endpoint,
+                                            query_details['sparql'])
+                bookmarks['data'].append(query_details)
         return bookmarks
 
     def addOrUpdateQuery(self):

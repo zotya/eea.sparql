@@ -3,7 +3,9 @@ Changelog
 
 2.9-dev - (unreleased)
 ----------------------
-
+* TODO: Migration step
+* Change: Update the latest working results with plone.app.async
+  [szabozo0 #14826]
 2.8 - (2013-07-08)
 ------------------
 * Change: On preview use a LIMIT 10 to have faster response.
