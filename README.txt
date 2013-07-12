@@ -77,13 +77,31 @@ recipe to manage your project, you can do this:
       recipe = plone.recipe.zope2instance
       zcml = eea.sparql
 
-  * Re-run buildout, e.g. with::
-
-      $ ./bin/buildout
 
 You can skip the ZCML slug if you are going to explicitly include the package
 from another package's configure.zcml file.
 
+You will also need a worker instance to be set up. This is required for the async
+update of the last working results.
+
+  * For both, normal and worker instances, the plone.app.async should be added in
+    the EGG slug:
+        eggs = ...
+               plone.app.async
+
+  * For the normal instances, the plone.app.async-single_db_instance should be
+    added in the ZCML slug:
+        zcml = ...
+               plone.app.async-single_db_instance
+
+  * For the worker instances, the plone.app.async-single_db_worker should be
+    added in the ZCML slug:
+        zcml = ...
+               plone.app.async-single_db_worker
+
+  * Re-run buildout, e.g. with::
+
+      $ ./bin/buildout
 
 Dependecies
 ===========
@@ -92,7 +110,7 @@ Dependecies
   2. Products.ZSPARQLMethod
   3. eea.cache
   4. eea.versions
-
+  5. plone.app.async
 
 Source code
 ===========
