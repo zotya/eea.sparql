@@ -20,7 +20,7 @@
 
   <subscriber
     for="eea.sparql.interfaces.ISparqlBookmarksFolder
-         Products.Archetypes.interfaces.IObjectInitializedEvent"
+         eea.sparql.interfaces.ISparqlBookmarksFolderAdded"
     handler=".events.bookmarksfolder_added"
     />
 

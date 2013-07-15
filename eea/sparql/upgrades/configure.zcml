@@ -26,4 +26,16 @@
 
   </genericsetup:upgradeSteps>
 
+  <!-- * => 2900 -->
+  <genericsetup:upgradeSteps
+    source="*"
+    destination="2900"
+    profile="eea.sparql:default">
+
+    <genericsetup:upgradeStep
+      title="create async tasks to update latest working results for existing "
+      handler="eea.sparql.upgrades.evolve2900.migrate_sparqls"
+      />
+  </genericsetup:upgradeSteps>
+
 </configure>

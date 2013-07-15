@@ -4,7 +4,10 @@
 import DateTime
 import datetime, pytz
 from AccessControl import ClassSecurityInfo
+
+from zope.interface import implements
 from zope.component import getUtility
+from zope.event import notify
 
 from plone.app.async.interfaces import IAsyncService
 
@@ -24,17 +27,17 @@ from Products.ZSPARQLMethod.Method import ZSPARQLMethod, \
                                         parse_arg_spec, \
                                         query_and_get_result, \
                                         map_arg_values
+from Products.CMFCore.utils import getToolByName
+from Products.CMFEditions.interfaces.IModifier import FileTooLargeToVersionError
+
 from AccessControl.Permissions import view
 from eea.sparql.cache import ramcache, cacheSparqlKey
 from eea.sparql.config import PROJECTNAME
 from eea.sparql.interfaces import ISparql, ISparqlBookmarksFolder
+from eea.sparql.events import SparqlBookmarksFolderAdded
+
 from eea.versions.interfaces import IVersionEnhanced, IGetVersions
 from eea.versions import versions
-
-from zope.interface import implements
-
-from Products.CMFCore.utils import getToolByName
-from Products.CMFEditions.interfaces.IModifier import FileTooLargeToVersionError
 
 
 SparqlBaseSchema = atapi.Schema((
@@ -193,7 +196,8 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
         self.scheduled_at = DateTime.DateTime()
         async.queueJob(async_updateLastWorkingResults,
                         self,
-                        scheduled_at = self.scheduled_at)
+                        scheduled_at = self.scheduled_at,
+                        bookmarks_folder_added = False)
 
 
     security.declareProtected(view, 'updateLastWorkingResults')
@@ -264,7 +268,7 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
         return getattr(self, 'cached_result', {})
 
 
-def async_updateLastWorkingResults(obj, scheduled_at):
+def async_updateLastWorkingResults(obj, scheduled_at, bookmarks_folder_added = False):
     """ Async update last working results
     """
     if obj.scheduled_at == scheduled_at:
@@ -275,6 +279,10 @@ def async_updateLastWorkingResults(obj, scheduled_at):
         if (len(obj.cached_result.get('result', {}).get('rows', {})) == 0) and \
             (refresh_rate == 'Once'):
             refresh_rate = 'Hourly'
+        else:
+            if bookmarks_folder_added:
+                notify(SparqlBookmarksFolderAdded(obj))
+                bookmarks_folder_added = False
 
         before = datetime.datetime.now(pytz.UTC)
 
@@ -293,7 +301,25 @@ def async_updateLastWorkingResults(obj, scheduled_at):
                                     delay,
                                     async_updateLastWorkingResults,
                                     obj,
-                                    scheduled_at = obj.scheduled_at)
+                                    scheduled_at = obj.scheduled_at,
+                                    bookmarks_folder_added = \
+                                        bookmarks_folder_added)
+
+from random import random
+def generateUniqueId(type_name):
+    """ generateUniqueIds for sparqls
+    """
+    now = DateTime.DateTime()
+    time = '%s.%s' % (now.strftime('%Y-%m-%d'), str(now.millis())[7:])
+    rand = str(random())[2:6]
+    prefix = ''
+    suffix = ''
+
+    if type_name is not None:
+        prefix = type_name.replace(' ', '_') + '.'
+    prefix = prefix.lower()
+
+    return prefix + time + rand + suffix
 
 class SparqlBookmarksFolder(ATFolder, Sparql):
     """Sparql Bookmarks Folder"""
@@ -309,9 +335,6 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
         found = False
         changed = True
         for sparql in self.values():
-#            if title.startswith("Swed") and sparql.title.startswith("Swed"):
-#                xxx = sparql.title
-#                import pdb; pdb.set_trace()
             if sparql.title == title.encode('utf8'):
                 latest_sparql = IGetVersions(sparql).latest_version()
                 found = True
@@ -329,7 +352,6 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
     def addOrUpdateQuery(self, title, endpoint, query):
         """Update an already existing query
            Create new version"""
-
         ob = None
 
         changed = True
@@ -343,7 +365,7 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
                 break
 
         if not ob:
-            _id = self.generateUniqueId("Sparql")
+            _id = generateUniqueId("Sparql")
             _id = self.invokeFactory(type_name="Sparql", id=_id)
             ob = self[_id]
             ob.edit(
