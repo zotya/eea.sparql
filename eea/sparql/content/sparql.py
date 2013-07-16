@@ -268,7 +268,9 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
         return getattr(self, 'cached_result', {})
 
 
-def async_updateLastWorkingResults(obj, scheduled_at, bookmarks_folder_added = False):
+def async_updateLastWorkingResults(obj, \
+                                scheduled_at, \
+                                bookmarks_folder_added = False):
     """ Async update last working results
     """
     if obj.scheduled_at == scheduled_at:

@@ -53,7 +53,9 @@ def migrate_sparqls(context):
                                     scheduled_at = obj.scheduled_at,
                                     bookmarks_folder_added = False)
 
-    logger.info('Migrated %s Sparqls ...', len(brains) - already_migrated - has_args)
+    logger.info('Migrated %s Sparqls ...', len(brains) - \
+                                            already_migrated - \
+                                            has_args)
     logger.info('Sparqls with arguments: %s...', has_args)
     logger.info('Already Migrated %s Sparqls ...', already_migrated)
     return "Sparql Migration Done"
