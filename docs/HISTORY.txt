@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.9-dev - (unreleased)
-----------------------
+2.9 - (2013-08-08)
+------------------
 * Change: Update the latest working results with plone.app.async
   [szabozo0 #14826]
 
@@ -187,3 +187,4 @@ Changelog
 ------------------
 * Initial release
   [Zoltan Szabo]
+
