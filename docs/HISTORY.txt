@@ -1,6 +1,9 @@
 Changelog
 =========
 
+3.0-dev - (unreleased)
+----------------------
+
 2.9 - (2013-08-08)
 ------------------
 * Change: Update the latest working results with plone.app.async
