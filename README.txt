@@ -85,19 +85,25 @@ You will also need a worker instance to be set up. This is required for the asyn
 update of the last working results.
 
   * For both, normal and worker instances, the plone.app.async should be added in
-    the EGG slug:
-        eggs = ...
-               plone.app.async
+    the EGG slug::
+
+        eggs =
+          ...
+          plone.app.async
 
   * For the normal instances, the plone.app.async-single_db_instance should be
-    added in the ZCML slug:
-        zcml = ...
-               plone.app.async-single_db_instance
+    added in the ZCML slug::
+
+        zcml =
+          ...
+          plone.app.async-single_db_instance
 
   * For the worker instances, the plone.app.async-single_db_worker should be
-    added in the ZCML slug:
-        zcml = ...
-               plone.app.async-single_db_worker
+    added in the ZCML slug::
+
+        zcml =
+          ...
+          plone.app.async-single_db_worker
 
   * Re-run buildout, e.g. with::
 
@@ -149,5 +155,3 @@ Funding
   EEA_ - European Environment Agency (EU)
 
 .. _EEA: http://www.eea.europa.eu/
-
-
