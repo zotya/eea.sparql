@@ -3,6 +3,8 @@ Changelog
 
 3.0-dev - (unreleased)
 ----------------------
+* Bugfix: Fixed syncing of sparql bookmark folders
+  [szabozo0 refs #17260]
 
 2.9 - (2013-08-08)
 ------------------

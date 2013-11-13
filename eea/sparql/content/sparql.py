@@ -4,6 +4,9 @@
 import DateTime
 import datetime, pytz
 from AccessControl import ClassSecurityInfo
+from AccessControl import SpecialUsers
+from AccessControl import getSecurityManager
+from AccessControl.SecurityManagement import newSecurityManager, setSecurityManager
 
 from zope.interface import implements
 from zope.component import getUtility
@@ -245,7 +248,10 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
                 comment = comment.encode('utf')
 
                 try:
+                    oldSecurityManager = getSecurityManager()
+                    newSecurityManager(None, SpecialUsers.system)
                     pr.save(obj=self, comment=comment)
+                    setSecurityManager(oldSecurityManager)
                 except FileTooLargeToVersionError:
                     commands = view.getCommandSet('plone')
                     commands.issuePortalMessage(
@@ -354,6 +360,9 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
     def addOrUpdateQuery(self, title, endpoint, query):
         """Update an already existing query
            Create new version"""
+        oldSecurityManager = getSecurityManager()
+        newSecurityManager(None, SpecialUsers.system)
+
         ob = None
 
         changed = True
@@ -384,6 +393,8 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
                     sparql_query   = query,
                 )
                 ob.invalidateWorkingResult()
+
+        setSecurityManager(oldSecurityManager)
         return ob
 
     def findQuery(self, title):
