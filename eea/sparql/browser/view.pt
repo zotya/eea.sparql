@@ -8,9 +8,6 @@
         tal:define="options view/test_query;
                     isDaviz view/isDavizInstalled">
 
-    <metal:versions use-macro="here/portlet_versions/macros/versions">
-    </metal:versions>
-
      <h3 i18n:translate="">Download this dataset</h3>
      <label i18n:translate="">Formats suitable for human consumption</label>
      <div class="eea-sparql-downloads">

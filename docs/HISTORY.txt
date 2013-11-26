@@ -3,6 +3,8 @@ Changelog
 
 3.1-dev - (unreleased)
 ----------------------
+* removed versions macro; now using viewlet 
+ [simiamih refs #17321]
 
 3.0 - (2013-11-20)
 ------------------
