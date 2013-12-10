@@ -3,11 +3,13 @@ Changelog
 
 3.2-dev - (unreleased)
 ----------------------
+* Bug fix: fixed ReST markup of HISTORY.txt
+  [ghicaale refs #17716]
 
 3.1 - (2013-12-10)
 ------------------
-* removed versions macro; now using viewlet 
- [simiamih refs #17321]
+* Change: removed versions macro; now using viewlet
+  [simiamih refs #17321]
 
 3.0 - (2013-11-20)
 ------------------
