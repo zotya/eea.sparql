@@ -1,6 +1,9 @@
 Changelog
 =========
 
+3.4-dev - (unreleased)
+----------------------
+
 3.3 - (2014-01-21)
 ------------------
 * Bug fix: removed wrongly added blockquotes within README.rst
