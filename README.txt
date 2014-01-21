@@ -27,13 +27,13 @@ Main features
 
 The main features are:
 
-  1. create sparql queries
-  2. create sparql bookmark folders, sparql queries are created automatically,
-     and can be synchronized manually or automatically (with a cronjob).
-     If a query is changed, a new version of the object is created,
-     so older ones are not lost.
-  3. results are downloadable in various formats:
-     JSON, Exhibit JSON, HTML, XML, XML with Schema, CSV, TSV
+1. create sparql queries
+2. create sparql bookmark folders, sparql queries are created automatically,
+   and can be synchronized manually or automatically (with a cronjob).
+   If a query is changed, a new version of the object is created,
+   so older ones are not lost.
+3. results are downloadable in various formats:
+   JSON, Exhibit JSON, HTML, XML, XML with Schema, CSV, TSV
 
 
 Installation
@@ -42,23 +42,23 @@ Installation
 To install eea.sparql into the global Python environment (or a workingenv),
 using a traditional Zope 2 instance, you can do this:
 
- * When you're reading this you have probably already run
-   ``easy_install eea.sparql``. Find out how to install setuptools
-   (and EasyInstall) here:
-   http://peak.telecommunity.com/DevCenter/EasyInstall
+* When you're reading this you have probably already run
+  ``easy_install eea.sparql``. Find out how to install setuptools
+  (and EasyInstall) here:
+  http://peak.telecommunity.com/DevCenter/EasyInstall
 
- * If you are using Zope 2.9 (not 2.10), get `pythonproducts`_ and install it
-   via::
+* If you are using Zope 2.9 (not 2.10), get `pythonproducts`_ and install it
+  via::
 
-       python setup.py install --home /path/to/instance
+      python setup.py install --home /path/to/instance
 
-   into your Zope instance.
+  into your Zope instance.
 
- * Create a file called ``eea.sparql-configure.zcml`` in the
-   ``/path/to/instance/etc/package-includes`` directory.  The file
-   should only contain this::
+* Create a file called ``eea.sparql-configure.zcml`` in the
+  ``/path/to/instance/etc/package-includes`` directory.  The file
+  should only contain this::
 
-       <include package="eea.sparql" />
+      <include package="eea.sparql" />
 
 .. _pythonproducts: http://plone.org/products/pythonproducts
 
@@ -66,16 +66,16 @@ using a traditional Zope 2 instance, you can do this:
 Alternatively, if you are using zc.buildout and the plone.recipe.zope2instance
 recipe to manage your project, you can do this:
 
-  * Add ``eea.sparql`` to the list of eggs to install, e.g.::
+* Add ``eea.sparql`` to the list of eggs to install, e.g.::
 
-      [buildout]
-      eggs = eea.sparql
+    [buildout]
+    eggs = eea.sparql
 
-  * Tell the plone.recipe.zope2instance recipe to install a ZCML slug::
+* Tell the plone.recipe.zope2instance recipe to install a ZCML slug::
 
-      [instance]
-      recipe = plone.recipe.zope2instance
-      zcml = eea.sparql
+    [instance]
+    recipe = plone.recipe.zope2instance
+    zcml = eea.sparql
 
 
 You can skip the ZCML slug if you are going to explicitly include the package
@@ -84,39 +84,39 @@ from another package's configure.zcml file.
 You will also need a worker instance to be set up. This is required for the async
 update of the last working results.
 
-  * For both, normal and worker instances, the plone.app.async should be added in
-    the EGG slug::
+* For both, normal and worker instances, the plone.app.async should be added in
+  the EGG slug::
 
-        eggs =
-          ...
-          plone.app.async
+      eggs =
+        ...
+        plone.app.async
 
-  * For the normal instances, the plone.app.async-single_db_instance should be
-    added in the ZCML slug::
+* For the normal instances, the plone.app.async-single_db_instance should be
+  added in the ZCML slug::
 
-        zcml =
-          ...
-          plone.app.async-single_db_instance
+      zcml =
+        ...
+        plone.app.async-single_db_instance
 
-  * For the worker instances, the plone.app.async-single_db_worker should be
-    added in the ZCML slug::
+* For the worker instances, the plone.app.async-single_db_worker should be
+  added in the ZCML slug::
 
-        zcml =
-          ...
-          plone.app.async-single_db_worker
+      zcml = 
+        ...
+        plone.app.async-single_db_worker
 
-  * Re-run buildout, e.g. with::
+* Re-run buildout, e.g. with::
 
-      $ ./bin/buildout
+    $ ./bin/buildout
 
 Dependecies
 ===========
 
-  1. Plone 4.x
-  2. Products.ZSPARQLMethod
-  3. eea.cache
-  4. eea.versions
-  5. plone.app.async
+1. Plone 4.x
+2. Products.ZSPARQLMethod
+3. eea.cache
+4. eea.versions
+5. plone.app.async
 
 Source code
 ===========
@@ -144,14 +144,14 @@ More details under docs/License.txt
 Links
 =====
 
-  1. http://en.wikipedia.org/wiki/SPARQL
-  2. http://sparql.org/
-  3. http://www.w3.org/TR/rdf-sparql-query/
+1. http://en.wikipedia.org/wiki/SPARQL
+2. http://sparql.org/
+3. http://www.w3.org/TR/rdf-sparql-query/
 
 
 Funding
 =======
 
-  EEA_ - European Environment Agency (EU)
+EEA_ - European Environment Agency (EU)
 
 .. _EEA: http://www.eea.europa.eu/
