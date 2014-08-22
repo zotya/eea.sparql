@@ -6,7 +6,8 @@ import datetime, pytz
 from AccessControl import ClassSecurityInfo
 from AccessControl import SpecialUsers
 from AccessControl import getSecurityManager
-from AccessControl.SecurityManagement import newSecurityManager, setSecurityManager
+from AccessControl.SecurityManagement import newSecurityManager
+from AccessControl.SecurityManagement import setSecurityManager
 
 from zope.interface import implements
 from zope.component import getUtility
@@ -190,7 +191,7 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
         except FileTooLargeToVersionError:
             commands = view.getCommandSet('plone')
             commands.issuePortalMessage(
-                """Changes Saved. Versioning for this file 
+                """Changes Saved. Versioning for this file
                    has been disabled because it is too large.""",
                 msgtype="warn")
 
@@ -255,7 +256,7 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
                 except FileTooLargeToVersionError:
                     commands = view.getCommandSet('plone')
                     commands.issuePortalMessage(
-                        """Changes Saved. Versioning for this file 
+                        """Changes Saved. Versioning for this file
                            has been disabled because it is too large.""",
                         msgtype="warn")
 

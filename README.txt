@@ -101,7 +101,7 @@ update of the last working results.
 * For the worker instances, the plone.app.async-single_db_worker should be
   added in the ZCML slug::
 
-      zcml = 
+      zcml =
         ...
         plone.app.async-single_db_worker
 
@@ -112,11 +112,10 @@ update of the last working results.
 Dependecies
 ===========
 
-1. Plone 4.x
-2. Products.ZSPARQLMethod
-3. eea.cache
-4. eea.versions
-5. plone.app.async
+* Products.ZSPARQLMethod
+* eea.versions
+* plone.app.async
+* eea.cache 7.0+ (optional)
 
 Source code
 ===========
