@@ -32,6 +32,27 @@ csv.register_dialect("excel.tsv", ExcelTSV)
 class Sparql(BrowserView):
     """Sparql view"""
 
+    def getArgumentMap(self):
+        """Returns the arguments and their values"""
+        arg_dict = {}
+        curr_args = self.context.arg_spec.split()
+        for k in curr_args:
+            arg = k.split(':')[0]
+            arg_dict[arg] = self.request.get(arg, None)
+        return arg_dict
+
+
+    def getArguments(self):
+        """Returns the SPARQL arguments as text"""
+        value = ""
+        cur_args = self.context.arg_spec.split()
+        for k in cur_args:
+            arg = k.split(':')[0]
+            val = self.request.get(arg, None)
+            if val:
+                value += '%s=%s&' % (arg, val)
+        return value
+
     def test_query(self):
         """test query"""
         arg_spec = parse_arg_spec(self.context.arg_spec)
@@ -83,8 +104,10 @@ class Sparql(BrowserView):
     def sparql2exhibit(self):
         """ Download sparql results as Exhibit JSON
         """
+
         try:
-            data = sparql2json(self.context.execute_query())
+            data = sparql2json(self.context.execute_query(
+                self.getArgumentMap()))
         except Exception:
             data = {'properties':{}, 'items':{}}
 
@@ -99,7 +122,8 @@ class Sparql(BrowserView):
         """ Download sparql results as HTML
         """
         try:
-            data = sparql2json(self.context.execute_query())
+            data = sparql2json(self.context.execute_query(
+                self.getArgumentMap()))
         except Exception:
             data = {'properties':{}, 'items':{}}
 
@@ -137,7 +161,8 @@ class Sparql(BrowserView):
         """ Download sparql results as Comma Separated File
         """
         try:
-            data = sparql2json(self.context.execute_query())
+            data = sparql2json(self.context.execute_query(
+                self.getArgumentMap()))
         except Exception:
             data = {'properties':{}, 'items':{}}
 
