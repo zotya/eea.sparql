@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.5-dev - (unreleased)
-----------------------
+3.5 - (2014-09-15)
+------------------
 * Bug fix: Fixed html, csv, tsv and exhibit json exports
   [pasoviul refs #19537] 
 
