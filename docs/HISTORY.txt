@@ -1,6 +1,9 @@
 Changelog
 =========
 
+3.6-dev - (unreleased)
+----------------------
+
 3.5 - (2014-09-15)
 ------------------
 * Bug fix: Fixed html, csv, tsv and exhibit json exports
