@@ -2,6 +2,18 @@
   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
   i18n_domain="eea">
 
+  <!-- 3.6 => 3.7 -->
+  <genericsetup:upgradeSteps
+    source="3600"
+    destination="3700"
+    profile="eea.sparql:default">
+
+    <genericsetup:upgradeStep
+      title="Update old sparqls with the new arguments format "
+      handler="eea.sparql.upgrades.evolve3700.migrate_sparqls"
+      />
+  </genericsetup:upgradeSteps>
+
   <!-- 2.9 => 3.6 -->
   <genericsetup:upgradeSteps
     source="2900"

@@ -35,9 +35,8 @@ class Sparql(BrowserView):
     def getArgumentMap(self):
         """Returns the arguments and their values"""
         arg_dict = {}
-        curr_args = self.context.arg_spec.split()
-        for k in curr_args:
-            arg = k.split(':')[0]
+        for k in self.context.arg_spec:
+            arg = k['name'].split(':')[0]
             arg_dict[arg] = self.request.get(arg, None)
         return arg_dict
 
@@ -45,17 +44,45 @@ class Sparql(BrowserView):
     def getArguments(self):
         """Returns the SPARQL arguments as text"""
         value = ""
-        cur_args = self.context.arg_spec.split()
-        for k in cur_args:
-            arg = k.split(':')[0]
+        for k in self.context.arg_spec:
+            arg = k['name'].split(':')[0]
             val = self.request.get(arg, None)
             if val:
                 value += '%s=%s&' % (arg, val)
         return value
 
+    def getQueryMap(self):
+        """Returns the SPARQL arguments and their queries"""
+        query_dict = {}
+        for k in self.context.arg_spec:
+            arg = k['name'].split(':')[0]
+            query = ' '.join(k['query'])
+            query_dict[arg] = query
+        return query_dict
+
+    def hasResults(self, argument=None):
+        if len(self.getQueryResults(argument)) > 0:
+            return True
+        return False
+
+    def getQueryResults(self, argument=None):
+        """Returns the results for the arguments's query"""
+        results = []
+        if argument != None:
+            arg_query = self.getQueryMap()[argument]
+            query_args = (self.context.endpoint_url, arg_query)
+            data = run_with_timeout(10, query_and_get_result, *query_args)
+            if 'result' in data:
+                my_results = data['result']['rows']
+                results = [element[0].value for element in my_results]
+        return results
+
+
+
     def test_query(self):
         """test query"""
-        arg_spec = parse_arg_spec(self.context.arg_spec)
+        arg_string = ' '.join([arg['name'] for arg in self.context.arg_spec])
+        arg_spec = parse_arg_spec(arg_string)
         missing, arg_values = map_arg_values(arg_spec, self.request.form)
         error = None
 

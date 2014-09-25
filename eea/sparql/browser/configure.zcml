@@ -132,6 +132,16 @@
         file="js/view.js"
     />
 
+    <browser:resource
+        name="eea.sparql.datasource.css"
+        file="css/datasource.css"
+    />
+
+    <browser:resource
+        name="eea.sparql.datasource.js"
+        file="js/datasource.js"
+    />
+
     <browser:resourceDirectory
         name="eea.sparql.images"
         directory="./img" />

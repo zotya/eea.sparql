@@ -9,8 +9,8 @@ from AccessControl import getSecurityManager
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import setSecurityManager
 
-from zope.interface import implements
-from zope.component import getUtility
+from zope.interface import implements, Interface
+from zope.component import getUtility, queryAdapter
 from zope.event import notify
 
 from plone.app.async.interfaces import IAsyncService
@@ -33,8 +33,14 @@ from Products.ZSPARQLMethod.Method import ZSPARQLMethod, \
                                         map_arg_values
 from Products.CMFCore.utils import getToolByName
 from Products.CMFEditions.interfaces.IModifier import FileTooLargeToVersionError
+from Products.DataGridField import DataGridField, DataGridWidget
+from Products.DataGridField.Column import Column
+from Products.DataGridField.LinesColumn import LinesColumn
+
+from archetypes.schemaextender.field import ExtensionField
 
 from AccessControl.Permissions import view
+from eea.app.visualization.interfaces import IMultiDataProvenance
 from eea.sparql.cache import ramcache, cacheSparqlKey
 from eea.sparql.config import PROJECTNAME
 from eea.sparql.interfaces import ISparql, ISparqlBookmarksFolder
@@ -64,12 +70,25 @@ SparqlBaseSchema = atapi.Schema((
         edit_accessor='getTimeout',
         mutator='setTimeout'
     ),
-    StringField(
+    DataGridField (
         name='arg_spec',
-        widget=StringWidget(
+        widget=DataGridWidget(
             label="Arguments",
-        ),
-        required=0
+            description="""Provide names, types and queries for the arguments.
+                        Names and types are mandatory, but you can leave the
+                        query field empty""",
+            auto_insert=False,
+            i18n_domain='eea',
+            columns={
+                'name': Column("Name"),
+                'query': LinesColumn("Query")
+            },
+            helper_js=( '++resource++eea.sparql.datasource.js',
+                        'datagridwidget.js',),
+            helper_css=('++resource++eea.sparql.datasource.css',
+                        'datagridwidget.css')
+            ),
+        columns=("name", "query")
     ),
     TextField(
         name='sparql_query',

@@ -76,10 +76,19 @@
       <table>
         <tr tal:repeat="arg options/arg_spec">
           <td class="form-label" tal:content="arg"/>
-          <td tal:define="input_name python:'%s:utf8:ustring' % (arg,)">
-            <input size="50"
+          <td tal:define="input_name python:'%s:utf8:ustring' % (arg,); has_results python:view.hasResults(arg)">
+            <input tal:condition="not: has_results"
+                   size="50"
                    tal:define="prev_value python:request.form.get(arg)"
                    tal:attributes="name input_name; value prev_value"/>
+            <select tal:condition="has_results"
+                    tal:attributes="name input_name">
+              <option value="default">Please select a value for the argument</option>
+              <option tal:repeat="result python:view.getQueryResults(arg)"
+                      tal:attributes="value result; selected python:(result == request.form.get(arg))"
+                      tal:content="result"
+                      size="50"/>
+            </select>
           </td>
         </tr>
         <tr><td colspan="2"><input type="submit" value="Execute" i18n:attributes="value"/></td></tr>
