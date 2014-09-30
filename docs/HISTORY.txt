@@ -3,11 +3,14 @@ Changelog
 
 3.6-dev - (unreleased)
 ----------------------
+* Feature: removed "Caching" action. We are now using the more complex "Cache"
+  action registered by eea.cache
+  [ghicaale refs #21143]
 
 3.5 - (2014-09-15)
 ------------------
 * Bug fix: Fixed html, csv, tsv and exhibit json exports
-  [pasoviul refs #19537] 
+  [pasoviul refs #19537]
 
 3.4 - (2014-08-27)
 ------------------
