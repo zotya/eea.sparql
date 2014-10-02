@@ -9,8 +9,6 @@ from AccessControl import getSecurityManager
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import setSecurityManager
 
-from zope.interface import implements, Interface
-from zope.component import getUtility, queryAdapter
 from zope.event import notify
 
 from plone.app.async.interfaces import IAsyncService
@@ -37,10 +35,7 @@ from Products.DataGridField import DataGridField, DataGridWidget
 from Products.DataGridField.Column import Column
 from Products.DataGridField.LinesColumn import LinesColumn
 
-from archetypes.schemaextender.field import ExtensionField
-
 from AccessControl.Permissions import view
-from eea.app.visualization.interfaces import IMultiDataProvenance
 from eea.sparql.cache import ramcache, cacheSparqlKey
 from eea.sparql.config import PROJECTNAME
 from eea.sparql.interfaces import ISparql, ISparqlBookmarksFolder

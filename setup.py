@@ -40,6 +40,7 @@ setup(name=NAME,
       install_requires=[
           'setuptools',
           'Products.ZSPARQLMethod',
+          'Products.DataGridField',
           'eea.versions',
           'plone.app.async'
       ],
