@@ -10,6 +10,7 @@ from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import setSecurityManager
 
 from zope.interface import implements
+from zope.component import getUtility
 
 from zope.event import notify
 
