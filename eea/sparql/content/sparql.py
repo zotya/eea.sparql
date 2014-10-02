@@ -9,6 +9,8 @@ from AccessControl import getSecurityManager
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import setSecurityManager
 
+from zope.interface import implements
+
 from zope.event import notify
 
 from plone.app.async.interfaces import IAsyncService
