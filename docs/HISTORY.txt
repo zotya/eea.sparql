@@ -3,9 +3,9 @@ Changelog
 
 3.7-dev - (unreleased)
 ----------------------
-* Change: updated sparqls to provide queries for arguments, besides names and types
-  [pasoviul refs #19537]
 * Bugfix: fixed argument handling between sparq and ZSPARQL
+  [pasoviul refs #19537]
+* Change: updated sparqls to provide queries for arguments, besides names and types
   [pasoviul refs #19537]
 
 3.6 - (2014-10-01)

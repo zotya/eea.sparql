@@ -17,6 +17,7 @@ from eea.versions.interfaces import IGetVersions
 from Products.CMFCore.utils import getToolByName
 from time import time
 import json
+import urllib
 import urllib2
 import contextlib
 import cgi
@@ -48,8 +49,8 @@ class Sparql(BrowserView):
             arg = k['name'].split(':')[0]
             val = self.request.get(arg, None)
             if val:
-                value += '%s=%s&' % (arg, val)
-        return value
+                value += '%s=%s&' % (arg, urllib.quote(val))
+        return value[:-1]
 
     def getQueryMap(self):
         """Returns the SPARQL arguments and their queries"""
@@ -77,8 +78,6 @@ class Sparql(BrowserView):
                 my_results = data['result']['rows']
                 results = [element[0].value for element in my_results]
         return results
-
-
 
     def test_query(self):
         """test query"""
@@ -119,7 +118,7 @@ class Sparql(BrowserView):
 
     def json(self, **kwargs):
         """json"""
-        data = self.context.execute_query()
+        data = self.context.execute_query(self.getArgumentMap())
 
         column_types = kwargs.get('column_types')
         annotations = kwargs.get('annotations')

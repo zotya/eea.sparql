@@ -181,12 +181,7 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
         arg_string = ' '.join([arg['name'] for arg in self.arg_spec])
         arg_spec = parse_arg_spec(arg_string)
         arg_values = map_arg_values(arg_spec, args)[1]
-        spec = self.arg_spec
-        self.arg_spec = arg_string
-        result = self.execute(**self.map_arguments(**arg_values))
-        self.arg_spec = spec
-
-        return result
+        return self.execute(**self.map_arguments(**arg_values))
 
     security.declarePublic("getTimeout")
     def getTimeout(self):
@@ -296,6 +291,18 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
 
         self.updateLastWorkingResults(**arg_values)
         return getattr(self, 'cached_result', {})
+
+    security.declareProtected(view, 'map_arguments')
+    def map_arguments(self, **arg_values):
+        """ overides map_arguments to match the name:type - query data model
+        """
+        arg_string = ' '.join([arg['name'] for arg in self.arg_spec])
+        arg_spec = parse_arg_spec(arg_string)
+        missing, arg_values = map_arg_values(arg_spec, arg_values)
+        if missing:
+            raise KeyError("Missing arguments: %r" % missing)
+        else:
+            return arg_values
 
 
 def async_updateLastWorkingResults(obj, \
