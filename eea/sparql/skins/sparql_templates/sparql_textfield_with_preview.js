@@ -2,13 +2,20 @@ function preview_sparql(){
     var ajax_data = {
             "endpoint" : jQuery("#endpoint_url").attr("value"),
             "timeout" : jQuery("#timeout").attr("value"),
-            "arg_spec" : jQuery("#arg_spec").attr("value"),
+            "arg_spec" : "",
             "sparql_query" : jQuery("#sparql_query").attr("value")
     };
     var preview_arguments = jQuery(".sparql-preview-arguments").attr("value");
     var args_list = preview_arguments.split("&");
     jQuery.each(args_list, function(idx, arg){
-        ajax_data[arg.split("=")[0]] = arg.split("=")[1];
+        args = arg.split("=");
+        ajax_data[args[0]] = args[1];
+    });
+    var argspec = jQuery("input[name='arg_spec.name:records']");
+    jQuery.each(argspec, function(idx, spec) {
+        value = jQuery(spec).attr("value");
+        if (value != undefined)
+            ajax_data["arg_spec"] += jQuery(spec).attr("value") + " ";
     });
 
     var loading_msg = jQuery("<div class='sparql-preview-loading'><div>Executing query...</div></div>");

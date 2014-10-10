@@ -75,8 +75,7 @@ class Sparql(BrowserView):
             query_args = (self.context.endpoint_url, arg_query)
             data = run_with_timeout(10, query_and_get_result, *query_args)
             if 'result' in data:
-                my_results = data['result']['rows']
-                results = [element[0].value for element in my_results]
+                return data['result']['rows']
         return results
 
     def test_query(self):
@@ -308,7 +307,7 @@ class Sparql(BrowserView):
         """ Items what are back related to this query
         """
         return json.dumps([[x.title, x.absolute_url()]
-                            for x in self.context.getBRefs()])
+                            for x in self.context.getBRefs() if x])
 
 class SparqlBookmarksFolder(Sparql):
     """SparqlBookmarksFolder view"""
@@ -392,7 +391,6 @@ class QuickPreview(BrowserView):
         tmp_query = self.request.get("sparql_query", "")
         tmp_query = "\n".join(x for x in tmp_query.splitlines()
                          if not x.strip().startswith("#"))
-
         tmp_arg_spec = self.request.get("arg_spec", "")
         tmp_endpoint = self.request.get("endpoint", "")
         tmp_timeout = int(self.request.get("timeout", "0"))

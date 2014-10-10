@@ -85,8 +85,8 @@
                     tal:attributes="name input_name; id input_name">
               <option value="default">Please select a value for the argument</option>
               <option tal:repeat="result python:view.getQueryResults(arg)"
-                      tal:attributes="value result; selected python:(result == request.form.get(arg))"
-                      tal:content="result"
+                      tal:attributes="value python:result[0]; selected python:(str(result[0]) == request.form.get(arg))"
+                      tal:content="python:result[1]"
                       size="50"/>
             </select>
           </td>

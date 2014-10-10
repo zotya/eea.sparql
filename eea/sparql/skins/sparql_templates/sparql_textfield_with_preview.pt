@@ -142,7 +142,7 @@
           <input class="sparql-query-results-preview" type="button" value="Test and preview query"/><br/>
           <label class="sparql-preview-arguments-label">Arguments for preview (optional)</label><br/>
           <span class="sparql-preview-arguments-helper formHelper">Arguments for preview should look like: arg1=value1&amp;arg2=value2</span><br/>
-          <input class="sparql-preview-arguments" type="text"> <br/>
+          <input class="sparql-preview-arguments" type="text"/> <br/>
       </div>
     </metal:define>
 

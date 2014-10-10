@@ -3,6 +3,10 @@ Changelog
 
 3.7-dev - (unreleased)
 ----------------------
+* Feature: changed dropdown values to labels insted of URIs
+  [pasoviul refs #19537]
+* Bugfix: fixed error on 'Test and preview query'
+  [pasoviul refs #19537]
 * Bugfix: fixed argument handling between sparq and ZSPARQL
   [pasoviul refs #19537]
 * Change: updated sparqls to provide queries for arguments, besides names and types
