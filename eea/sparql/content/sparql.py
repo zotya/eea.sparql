@@ -74,7 +74,9 @@ SparqlBaseSchema = atapi.Schema((
             label="Arguments",
             description="""Provide names, types and queries for the arguments.
                         Names and types are mandatory, but you can leave the
-                        query field empty""",
+                        query field empty.
+                        Details and a full tutorial on how to work with arguments
+                        <a href="++resource++eea.sparql.documentation/index.html" title="tutorial">here.</a> """,
             auto_insert=False,
             i18n_domain='eea',
             columns={
