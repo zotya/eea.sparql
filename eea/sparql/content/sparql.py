@@ -310,7 +310,7 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
 
 def async_updateLastWorkingResults(obj, \
                                 scheduled_at, \
-                                bookmarks_folder_added = False):
+                                bookmarks_folder_added=False):
     """ Async update last working results
     """
     if obj.scheduled_at == scheduled_at:
@@ -343,8 +343,8 @@ def async_updateLastWorkingResults(obj, \
                                     delay,
                                     async_updateLastWorkingResults,
                                     obj,
-                                    scheduled_at = obj.scheduled_at,
-                                    bookmarks_folder_added = \
+                                    scheduled_at=obj.scheduled_at,
+                                    bookmarks_folder_added=\
                                         bookmarks_folder_added)
 
 from random import random
