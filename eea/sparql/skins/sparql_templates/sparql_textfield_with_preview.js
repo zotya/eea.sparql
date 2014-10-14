@@ -82,9 +82,9 @@ function check_relations(){
                         '</dd>'+
                     '</dl>');
                 jQuery("#sparql-base-edit").prepend(warningMessage);
-                jQuery.each(back_rels, function(idx, rel){
+                jQuery.each(back_rels, function(idx, rel) {
                     var rel_msg = jQuery(
-                        '<li><a href="'+rel[1]+'">'+rel[0]+'</a></li>'
+                        '<li><a href="' + rel[1] + '">' + rel[0] + '</a></li>'
                     );
                     rel_msg.appendTo(".sparql-back-relations");
                 });

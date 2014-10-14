@@ -68,23 +68,24 @@ SparqlBaseSchema = atapi.Schema((
         edit_accessor='getTimeout',
         mutator='setTimeout'
     ),
-    DataGridField (
+    DataGridField(
         name='arg_spec',
         widget=DataGridWidget(
             label="Arguments",
             description="""Provide names, types and queries for the arguments.
                         Names and types are mandatory, but you can leave the
                         query field empty.
-                        Details and a full tutorial on how to work with arguments
-                        <a href="++resource++eea.sparql.documentation/index.html" title="tutorial">here.</a> """,
+                        Details and a full tutorial on how to work with
+                        arguments <a href="++resource++eea.sparql.documentation
+                        /index.html" title="tutorial">here.</a> """,
             auto_insert=False,
             i18n_domain='eea',
             columns={
                 'name': Column("Name"),
                 'query': LinesColumn("Query")
             },
-            helper_js=( '++resource++eea.sparql.datasource.js',
-                        'datagridwidget.js',),
+            helper_js=('++resource++eea.sparql.datasource.js',
+                       'datagridwidget.js',),
             helper_css=('++resource++eea.sparql.datasource.css',
                         'datagridwidget.css')
             ),
@@ -92,8 +93,8 @@ SparqlBaseSchema = atapi.Schema((
     ),
     TextField(
         name='sparql_query',
-        default_content_type = 'text/plain',
-        allowable_content_types = ('text/plain',),
+        default_content_type='text/plain',
+        allowable_content_types=('text/plain',),
 
         widget=TextAreaWidget(
             macro="sparql_textfield_with_preview",
@@ -108,7 +109,7 @@ SparqlBaseSchema = atapi.Schema((
         widget=BooleanWidget(
             label='Static query',
             description='The data will be fetched only once',
-            visible={'edit': 'invisible', 'view': 'invisible' }
+            visible={'edit':'invisible', 'view':'invisible'}
         ),
         default=False,
         required=0
@@ -117,7 +118,7 @@ SparqlBaseSchema = atapi.Schema((
         name='sparql_results',
         widget=TextAreaWidget(
             label="Results",
-            visible={'edit': 'invisible', 'view': 'invisible' }
+            visible={'edit':'invisible', 'view':'invisible'}
         ),
         required=0,
 
@@ -219,9 +220,9 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
 
         self.scheduled_at = DateTime.DateTime()
         async.queueJob(async_updateLastWorkingResults,
-                        self,
-                        scheduled_at = self.scheduled_at,
-                        bookmarks_folder_added = False)
+                       self,
+                       scheduled_at=self.scheduled_at,
+                       bookmarks_folder_added=False)
 
 
     security.declareProtected(view, 'updateLastWorkingResults')
