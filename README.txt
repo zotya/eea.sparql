@@ -121,16 +121,9 @@ Source code
 ===========
 
 Latest source code (Plone 4 compatible):
-
 - `Plone Collective on Github <https://github.com/collective/eea.sparql>`_
 - `EEA on Github <https://github.com/eea/eea.sparql>`_
 
-
-Builing a Sparql with arguments
-===============================
-
-A tutorial on how to deal with arguments on Sparqls can be found
-`here <api/index.html>`_.
 
 Copyright and license
 =====================
