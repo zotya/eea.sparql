@@ -15,10 +15,12 @@ function preview_sparql() {
     jQuery.each(argspec, function(idx, spec) {
         value = jQuery(spec).attr("value");
         if (value !== undefined)
-            ajax_data["arg_spec"] += jQuery(spec).attr("value") + " ";
+            ajax_data.arg_spec += jQuery(spec).attr("value") + " ";
     });
 
-    var loading_msg = jQuery("<div class='sparql-preview-loading'><div>Executing query...</div></div>");
+    var loading_msg = jQuery(
+        "<div class='sparql-preview-loading'>" +
+        "<div>Executing query...</div></div>");
     jQuery(loading_msg).appendTo("body");
     jQuery.ajax({
         url: portal_url + "/sparql.quick_preview",
