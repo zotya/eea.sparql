@@ -4,18 +4,19 @@ function preview_sparql() {
             "timeout" : jQuery("#timeout").attr("value"),
             "arg_spec" : "",
             "sparql_query" : jQuery("#sparql_query").attr("value")
-    };
-    var preview_arguments = jQuery(".sparql-preview-arguments").attr("value");
-    var args_list = preview_arguments.split("&");
+        };
+        preview_arguments = jQuery(".sparql-preview-arguments").attr("value"),
+        args_list = preview_arguments.split("&"),
+        argspec = jQuery("input[name='arg_spec.name:records']");
     jQuery.each(args_list, function(idx, arg) {
-        args = arg.split("=");
+        var args = arg.split("=");
         ajax_data[args[0]] = args[1];
     });
-    var argspec = jQuery("input[name='arg_spec.name:records']");
     jQuery.each(argspec, function(idx, spec) {
-        value = jQuery(spec).attr("value");
-        if (value !== undefined)
+        var value = jQuery(spec).attr("value");
+        if (value !== undefined) {
             ajax_data.arg_spec += jQuery(spec).attr("value") + " ";
+        }
     });
 
     var loading_msg = jQuery(
