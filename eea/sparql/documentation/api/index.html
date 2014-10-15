@@ -1,4 +1,4 @@
-<tal:block define="context python: request.PARENTS[2]; here nocall:context">
+<tal:block define="context python: request.PARENTS[1]; here nocall:context">
 <html metal:use-macro="context/main_template/macros/master"
       i18n:domain="plone">
 
@@ -44,11 +44,11 @@
             </div>
         </div>
     </div>
-
+  
     <div class="container">
         <div class="content row">
                 <div class="span9">
-
+                    
   <div class="section" id="eea-sparql-documentation-working-with-arguments">
 <h1>EEA Sparql Documentation - working with arguments<a class="headerlink" href="#eea-sparql-documentation-working-with-arguments" title="Permalink to this headline">¶</a></h1>
 <p>EEA Sparql has a wide array of APIs that let you extend it&#8217;s functionality.</p>
@@ -176,7 +176,7 @@ query&#8217;s output with the defined argument values.</p>
         </div>
     </div>
     <div class="footer">
-
+        
         <div class="container">
                     &copy;
                         Copyright 2012, European Environment Agency.
