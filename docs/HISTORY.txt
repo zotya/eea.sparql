@@ -1,6 +1,9 @@
 Changelog
 =========
 
+3.8-dev - (unreleased)
+----------------------
+
 3.7 - (2014-10-15)
 ------------------
 * Feature: added a howto for building Sparqls with arguments
