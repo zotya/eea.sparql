@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.7-dev - (unreleased)
-----------------------
+3.7 - (2014-10-15)
+------------------
 * Feature: added a howto for building Sparqls with arguments
   [pasoviul refs #19537]
 * Feature: changed dropdown values to labels insted of URIs
