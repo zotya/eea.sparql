@@ -3,6 +3,8 @@ Changelog
 
 3.8-dev - (unreleased)
 ----------------------
+* Bug fix: fixed "add new argument" CSS
+  [ghicaale refs #20945]
 
 3.7 - (2014-10-15)
 ------------------

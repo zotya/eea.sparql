@@ -88,10 +88,10 @@ td.datagridwidget-manipulator {
 
 a.datagridwidget-sparql-add-button, a.datagridwidget-sparql-add-button:hover {
   text-decoration: none;
-    background: #f3f3f3 url(http://eea.devel:8090/www/linkOpaque.gif) 9px 1px no-repeat;
+    background: #f3f3f3 url(linkOpaque.gif) 5px 4px no-repeat;
     cursor: pointer;
     font-size: 85%;
-    padding: 1px 1px 1px 15px;
+    padding: 1px 3px 1px 15px;
     text-transform: lowercase;
     float: right;
 }
