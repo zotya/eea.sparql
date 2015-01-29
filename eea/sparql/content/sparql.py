@@ -251,6 +251,8 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
                         get('rows', {})) == 0:
                         force_save = True
 
+        pr = getToolByName(self, 'portal_repository')
+        comment = "query has run - no result changes"
         if force_save:
             self.cached_result = new_result
             new_sparql_results = u""
@@ -266,22 +268,21 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
                 self.setSparql_results(\
                     "Too many rows (%s), comparation is disabled" \
                     %len(rows))
-            pr = getToolByName(self, 'portal_repository')
-            if self.portal_type in pr.getVersionableContentTypes():
-                comment = "Result changed"
-                comment = comment.encode('utf')
+            comment = "query has run - result changed"
+        if self.portal_type in pr.getVersionableContentTypes():
+            comment = comment.encode('utf')
 
-                try:
-                    oldSecurityManager = getSecurityManager()
-                    newSecurityManager(None, SpecialUsers.system)
-                    pr.save(obj=self, comment=comment)
-                    setSecurityManager(oldSecurityManager)
-                except FileTooLargeToVersionError:
-                    commands = view.getCommandSet('plone')
-                    commands.issuePortalMessage(
-                        """Changes Saved. Versioning for this file
-                           has been disabled because it is too large.""",
-                        msgtype="warn")
+            try:
+                oldSecurityManager = getSecurityManager()
+                newSecurityManager(None, SpecialUsers.system)
+                pr.save(obj=self, comment=comment)
+                setSecurityManager(oldSecurityManager)
+            except FileTooLargeToVersionError:
+                commands = view.getCommandSet('plone')
+                commands.issuePortalMessage(
+                    """Changes Saved. Versioning for this file
+                       has been disabled because it is too large.""",
+                    msgtype="warn")
 
         if new_result.get('exception', None):
             self.cached_result['exception'] = new_result['exception']

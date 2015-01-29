@@ -3,6 +3,8 @@ Changelog
 
 3.9-dev - (unreleased)
 ----------------------
+* Feature: refined history messages for results
+  [szabozo0 refs #22240]
 
 3.8 - (2014-11-20)
 ------------------
