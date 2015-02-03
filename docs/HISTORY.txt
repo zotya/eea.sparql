@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.9-dev - (unreleased)
-----------------------
+3.9 - (2015-02-03)
+------------------
 * Feature: refined history messages for results
   [szabozo0 refs #22240]
 
