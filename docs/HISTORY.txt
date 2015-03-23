@@ -3,6 +3,9 @@ Changelog
 
 4.1.dev0 - (unreleased)
 -----------------------
+* Change: Updated Multiple data source schema extender adapter to correlate with
+  the changes in eea.daviz
+  [olimpiurob refs #24121]
 
 4.0 - (2015-03-17)
 ------------------

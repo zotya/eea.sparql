@@ -28,6 +28,7 @@
   <adapter
     zcml:condition="installed eea.daviz"
     for="..interfaces.ISparql"
+    provides="archetypes.schemaextender.interfaces.ISchemaExtender"
     factory="eea.daviz.content.schema.MultiDataProvenanceSchemaExtender"
     />
 
