@@ -3,6 +3,9 @@ Changelog
 
 4.2.dev0 - (unreleased)
 -----------------------
+* Change: download links for datasets no longer carry
+  a question mark if there are no arguments massed
+  [ichimdav refs #18753]
 
 4.1 - (2015-04-02)
 ------------------

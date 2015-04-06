@@ -7,23 +7,24 @@
 <div metal:fill-slot="content-core"
         tal:define="options view/test_query;
                     isDaviz view/isDavizInstalled;
-                    arguments view/getArguments">
+                    arguments view/getArguments;
+                    arguments python: '?' + arguments if arguments else ''">
 
      <h3 i18n:translate="">Download this dataset</h3>
      <label i18n:translate="">Formats suitable for human consumption</label>
      <div class="eea-sparql-downloads">
-       <a tal:attributes="href string:${context/absolute_url}/download.table?${arguments}"
+       <a tal:attributes="href string:${context/absolute_url}/download.table${arguments}"
            tal:content="string:HTML"></a>
-       <a tal:attributes="href string:${context/absolute_url}/download.csv?${arguments}"
+       <a tal:attributes="href string:${context/absolute_url}/download.csv${arguments}"
            tal:content="string:CSV"></a>
-       <a tal:attributes="href string:${context/absolute_url}/download.tsv?${arguments}"
+       <a tal:attributes="href string:${context/absolute_url}/download.tsv${arguments}"
            tal:content="string:TSV"></a>
     </div>
     <label i18n:translate="">Formats suitable for machine-to-machine communication</label>
     <div class="eea-sparql-downloads">
        <a tal:attributes="href string:${context/absolute_url}/download.json"
            tal:content="string:JSON"></a>
-       <a tal:attributes="href string:${context/absolute_url}/download.exhibit?${arguments}"
+       <a tal:attributes="href string:${context/absolute_url}/download.exhibit${arguments}"
            tal:content="string:Exhibit JSON"></a>
        <a tal:attributes="href string:${context/absolute_url}/download.xml"
            tal:content="string:XML"></a>
