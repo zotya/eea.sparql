@@ -54,6 +54,7 @@ SparqlBaseSchema = atapi.Schema((
         widget=StringWidget(
             label="Sparql endpoint URL",
         ),
+        validators=('isURL',),
         required=1
     ),
     IntegerField(

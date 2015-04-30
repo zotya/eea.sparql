@@ -3,6 +3,9 @@ Changelog
 
 4.2.dev0 - (unreleased)
 -----------------------
+* Change: endpoint_url now uses the isURL validator in order to
+  ensure that the endpoint url is a proper link
+  [ichimdav refs #24130]
 * Change: download links for datasets no longer carry
   a question mark if there are no arguments massed
   [ichimdav refs #18753]
