@@ -3,6 +3,8 @@ Changelog
 
 4.2.dev0 - (unreleased)
 -----------------------
+* Bugfix: quote the query when user tries to download the dataset
+  [szabozo0]
 * Change: endpoint_url now uses the isURL validator in order to
   ensure that the endpoint url is a proper link
   [ichimdav refs #24130]

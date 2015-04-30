@@ -280,7 +280,7 @@ class Sparql(BrowserView):
         url_protocol = endpoint.split('://')
         if len(url_protocol) < 2:
             endpoint = "http://" + endpoint
-        query = 'query=%s' % self.context.query
+        query = 'query=%s' % urllib.quote(self.context.query)
         request = urllib2.Request(endpoint, query, headers or {})
         results = ""
         timeout = max(getattr(self.context, 'timeout', 10), 10)
