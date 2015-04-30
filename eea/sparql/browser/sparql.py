@@ -277,6 +277,9 @@ class Sparql(BrowserView):
         """ Write
         """
         endpoint = self.context.endpoint_url
+        url_protocol = endpoint.split('://')
+        if len(url_protocol) < 2:
+            endpoint = "http://" + endpoint
         query = 'query=%s' % self.context.query
         request = urllib2.Request(endpoint, query, headers or {})
         results = ""
