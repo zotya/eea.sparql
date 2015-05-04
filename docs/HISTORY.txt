@@ -3,6 +3,9 @@ Changelog
 
 4.2.dev0 - (unreleased)
 -----------------------
+* Bugfix: updateLastWorkingResults now checks for Querytimeout exception
+  in order to avoid crash of async_updateLastWorkingResults
+  [ichimdav refs #25018]
 * Bugfix: quote the query when user tries to download the dataset
   [szabozo0]
 * Change: endpoint_url now uses the isURL validator in order to

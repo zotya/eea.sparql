@@ -31,7 +31,7 @@ from Products.ZSPARQLMethod.Method import ZSPARQLMethod, \
                                         run_with_timeout, \
                                         parse_arg_spec, \
                                         query_and_get_result, \
-                                        map_arg_values
+                                        map_arg_values, QueryTimeout
 from Products.CMFCore.utils import getToolByName
 from Products.CMFEditions.interfaces.IModifier import FileTooLargeToVersionError
 from Products.DataGridField import DataGridField, DataGridWidget
@@ -230,16 +230,20 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
 
     security.declareProtected(view, 'updateLastWorkingResults')
     def updateLastWorkingResults(self, **arg_values):
-        """ update cached last workign results of a query
+        """ update cached last working results of a query
         """
         cached_result = getattr(self, 'cached_result', {})
         cooked_query = interpolate_query(self.query, arg_values)
 
         args = (self.endpoint_url, cooked_query)
-        new_result = run_with_timeout(
-            max(getattr(self, 'timeout', 10), 10),
-            query_and_get_result,
-            *args)
+        try:
+            new_result = run_with_timeout(
+                max(getattr(self, 'timeout', 10), 10),
+                query_and_get_result,
+                *args)
+        except QueryTimeout:
+            new_result = {'exception': "query has ran - an timeout has"
+                                       " been received"}
 
         force_save = False
 
@@ -266,9 +270,9 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
                     new_sparql_results = new_sparql_results[0:-3] + "\n"
                 self.setSparql_results(new_sparql_results)
             else:
-                self.setSparql_results(\
-                    "Too many rows (%s), comparation is disabled" \
-                    %len(rows))
+                self.setSparql_results(
+                    "Too many rows (%s), comparation is disabled"
+                    % len(rows))
             comment = "query has run - result changed"
         if self.portal_type in pr.getVersionableContentTypes():
             comment = comment.encode('utf')
@@ -312,8 +316,8 @@ class Sparql(base.ATCTContent, ZSPARQLMethod):
             return arg_values
 
 
-def async_updateLastWorkingResults(obj, \
-                                scheduled_at, \
+def async_updateLastWorkingResults(obj,
+                                scheduled_at,
                                 bookmarks_folder_added=False):
     """ Async update last working results
     """
@@ -438,7 +442,6 @@ class SparqlBookmarksFolder(ATFolder, Sparql):
     def findQuery(self, title):
         """Find the Query in the bookmarks folder
         """
-
         ob = None
         for sparql in self.values():
             if sparql.title == title:
