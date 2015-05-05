@@ -1,8 +1,8 @@
 Changelog
 =========
 
-4.2.dev0 - (unreleased)
------------------------
+4.2 - (2015-05-05)
+------------------
 * Bugfix: updateLastWorkingResults now checks for Querytimeout exception
   in order to avoid crash of async_updateLastWorkingResults
   [ichimdav refs #25018]
