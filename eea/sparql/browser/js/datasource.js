@@ -24,13 +24,13 @@ $(document).ready(function() {
 
   }
 
-  $('.datagridwidget-add-button').text('Add new argument');
-  $('.datagridwidget-add-button').addClass('datagridwidget-sparql-add-button');
-  $('.datagridwidget-sparql-add-button').removeClass('datagridwidget-add-button');
+  $('#archetypes-fieldname-arg_spec .datagridwidget-add-button').text('Add new argument');
+  $('#archetypes-fieldname-arg_spec .datagridwidget-add-button').addClass('datagridwidget-sparql-add-button');
+  $('#archetypes-fieldname-arg_spec .datagridwidget-sparql-add-button').removeClass('datagridwidget-add-button');
 
-  $(document)
+  $("#archetypes-fieldname-arg_spec")
     .delegate('.datagridwidget-manipulator img', 'click', setColumnClasses);
-  $(document)
+  $("#archetypes-fieldname-arg_spec")
     .delegate('.datagridwidget-sparql-add-button', 'click', setColumnClasses);
   setDataGridWidgetTRLabels();
 

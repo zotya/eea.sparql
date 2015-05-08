@@ -46,12 +46,12 @@ td.datagridwidget-cell{
     display:inline;
 }
 
-.datagridwidget-column-1.datagridwidget-cell:before{
+#datagridwidget-tbody-arg_spec .datagridwidget-column-1.datagridwidget-cell:before{
     content: "Argument name";
     font-weight:bold;
 }
 
-.datagridwidget-column-2.datagridwidget-cell:before{
+#datagridwidget-tbody-arg_spec .datagridwidget-column-2.datagridwidget-cell:before{
     content: "Argument query";
     font-weight:bold;
 }
