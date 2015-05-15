@@ -1,8 +1,8 @@
 Changelog
 =========
 
-4.3.dev0 - (unreleased)
------------------------
+4.3 - (2015-05-15)
+------------------
 * Bugfix: Fixed a conflict between provenance info for sparql and arguments for sparql queries
   [szabozo0 refs #25341]
 
