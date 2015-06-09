@@ -2,6 +2,18 @@
   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
   i18n_domain="eea">
 
+  <!-- 3.7 => 4.4 -->
+  <genericsetup:upgradeSteps
+    source="3700"
+    destination="4400"
+    profile="eea.sparql:default">
+
+    <genericsetup:upgradeStep
+      title="Restart all sparqls which were not upgraded since 2 weeks "
+      handler="eea.sparql.upgrades.evolve4400.restart_sparqls"
+      />
+  </genericsetup:upgradeSteps>
+
   <!-- 3.6 => 3.7 -->
   <genericsetup:upgradeSteps
     source="3600"
