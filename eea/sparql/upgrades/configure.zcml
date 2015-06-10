@@ -9,7 +9,7 @@
     profile="eea.sparql:default">
 
     <genericsetup:upgradeStep
-      title="Restart all sparqls which were not upgraded since 2 weeks "
+      title="Restart all sparqls queries "
       handler="eea.sparql.upgrades.evolve4400.restart_sparqls"
       />
   </genericsetup:upgradeSteps>
